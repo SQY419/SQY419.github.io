@@ -276,7 +276,7 @@
             storage.AssetType.Sound,
             storage.AssetType.Font
           ].filter(i => i),
-          (asset) => new URL('./assets/' + asset.assetId + '.' + asset.dataFormat, location).href
+          (asset) => new URL('/TFGS/assets/' + asset.assetId + '.' + asset.dataFormat, location).href
         );
         return () => new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -296,7 +296,7 @@
           }
         };
         xhr.responseType = 'arraybuffer';
-        xhr.open('GET', "./assets/project.json");
+        xhr.open('GET', "/TFGS/assets/project.json");
         xhr.send();
       });
       })();
