@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'math';
+    src: url('/cmunss.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'jb';
+    src: url('/JetBrainsMono-Regular.woff2') format('woff');
+}
+
+.math {
+    font-family: 'math';
+}
+
+.jb {
+    font-family: 'jb', serif;
+}
