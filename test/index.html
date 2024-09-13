@@ -1,22 +1,52 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>使用KaTeX显示数学公式</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body);"></script>
-</head>
-<body>
-    <h1>使用KaTeX显示数学公式</h1>
-    <p>下面是一些数学公式的示例：</p>
-    <p>行内公式示例：这是一个行内公式 
-        $ E = mc^2 $。</p>
-    <p>块级公式示例：</p>
-    <p>$$
-    \int_a^b f(x) \, dx = F(b) - F(a)
-    $$</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+	<button id="a-1-1-A" onclick="copyText1(this.id)">点击复制id，兼容写法</button>
+    <script>
+ 
+		function handleCopyValue(text) {
+			//浏览器禁用了非安全域的 navigator.clipboard 对象
+			//在线上环境会报错 TypeError: Cannot read properties of undefined (reading 'writeText')
+			if (!navigator.clipboard && window.isSecureContext) {
+			  return navigator.clipboard.writeText(text);
+			} else {
+			  // 判断是否支持拷贝
+			  if (!document.execCommand('copy')) return Promise.reject()
+			  // 创建标签，并隐藏
+			  const textArea = document.createElement('textarea')
+			  textArea.style.position = 'fixed'
+			  textArea.style.top = textArea.style.left = '-100vh'
+			  textArea.style.opacity = '0'
+			  textArea.value = text
+			  document.body.appendChild(textArea)
+			  // 聚焦、复制
+			  textArea.focus()
+			  textArea.select()
+			  return new Promise((resolve, reject) => {
+				// 不知为何，必须写这个三目，不然copy不上
+				document.execCommand('copy') ? resolve() : reject()
+				textArea.remove()
+			  })
+			}
+		}
+ 
+		/*点击复制 ，val是需要复制的值 */
+		function copyText1(val){
+			 handleCopyValue(val)
+			  .then(() => {
+				alert('复制成功')
+			  })
+			  .catch(() => {
+				alert('自动复制失败，请手动')
+})
+}
+</script>
 </body>
 </html>
