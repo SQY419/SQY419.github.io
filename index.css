@@ -8,8 +8,18 @@
     src: url('/JetBrainsMono-Regular.woff2') format('woff');
 }
 
+
+@font-face {
+    font-family: 'fz';
+    src: url('/fzletter.ttf') format('truetype');
+}
+
 .math {
     font-family: 'math';
+}
+
+.fz {
+    font-family: 'fz';
 }
 
 .jb {
