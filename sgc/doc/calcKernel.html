@@ -39,9 +39,9 @@
   <h1 class="fz">用户定义函数</h1>
     <p class="fz">若要定义一个函数，先给你的函数起一个名字，然后使用像 f1(x,y,z)=xy-z 这样的形式来定义函数.</p>
     <h4 class="fz">如何给函数起名字？</h4>
-    <p class="fz">Just use some letters and numbers to name, if you want to make a name which include mathematical functions, you must add a "_". e.g:f1,aaa,sin_a,myfunc_1</p>
-    <h4 class="fz">Others you should know to make a UserFunction</h4>
-     <p class="fz">SGC supported make more than two arguments for a UserFunction, and the names of arguments cannot be the same as the names of variable.</p>
+    <p class="fz">是用字母和数字的组合，不能只包含数字，但是可以全是字母。第一个字不能是数字。如果你的函数名字包含数学函数，需要在名称中加入下划线"_". e.g:f1,aaa,sin_a,myfunc_1</p>
+    <h4 class="fz">其他关于自定义函数</h4>
+     <p class="fz">SGC支持为一个自定义函数添加多个参数，全局参数数量最多9007199254740991个，支持定义无限个函数。函数的参数只能是实数，在定义式中请不要省略必要的称号，以免引发歧义。参数不能和变量重名，否则这个定义式中，变量将强行转化为虚拟参数。 e.g. 定义a=0，定义f(k)=1+k*a, 此函数为一个自变量为k的函数，a依然是全局变量。再定义一个g(a,k)=a*k，此时函数自变量为a和k，全局变量在这里失效。</p>
     </div>
   </body>
 
