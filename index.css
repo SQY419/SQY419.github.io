@@ -40,3 +40,168 @@ p{
     word-wrap: break-word;
     word-break: break-all;
 }
+
+/*   
+ * 设置全局样式，将所有元素的外边距和内边距都设置为0，  
+ * 并设置盒模型为border-box，使得元素的宽度和高度  
+ * 包括内容、内边距和边框，但不包括外边距。  
+ */  
+* {  
+    margin: 0;                   /* 清除所有元素的外边距 */  
+    padding: 0;                 /* 清除所有元素的内边距 */  
+    box-sizing: border-box;      /* 设置盒模型为border-box */  
+}  
+  
+/*   
+ * 设置body样式，使其占据整个视口的高度，  
+ * 并使用Flexbox居中显示内容。  
+ * 背景色设置为深灰色。  
+ */  
+body {  
+    height: 100vh;               /* 视口高度 */  
+    display: flex;               /* 使用Flexbox布局 */  
+    justify-content: center;     /* 水平居中 */  
+    align-items: center;         /* 垂直居中 */  
+    background-color: #212121;   /* 背景色为深灰色 */  
+}  
+  
+/*   
+ * 容器元素，使用Flexbox布局，允许内容换行。  
+ * 内容在容器中居中显示。  
+ */  
+.container {  
+    display: flex;               /* 使用Flexbox布局 */  
+    flex-wrap: wrap;             /* 允许内容换行 */  
+    justify-content: center;     /* 水平居中 */  
+}  
+  
+/*   
+ * 卡片元素的基本样式，包括尺寸、背景色、文字颜色等。  
+ * 设置了溢出隐藏和光标为手形，表示可点击。  
+ * 使用相对定位以便内部元素可以绝对定位。  
+ */  
+.card {  
+    width: 310px;                /* 卡片宽度 */  
+    height: 220px;               /* 卡片高度 */  
+    overflow: hidden;            /* 溢出内容隐藏 */  
+    margin: 10px;                /* 外边距 */  
+    background-color: #000;      /* 背景色为黑色 */  
+    color: #fff;                 /* 文字颜色为白色 */  
+    cursor: pointer;             /* 光标为手形，表示可点击 */  
+    position: relative;          /* 相对定位 */  
+}  
+  
+/*   
+ * 卡片内的图片样式，设置图片的尺寸，并添加过渡效果。  
+ */  
+.card img {  
+    width: 100%;                 /* 图片宽度为卡片宽度 */  
+    height: 100%;                /* 图片高度为卡片高度 */  
+    transition: 0.35s;           /* 过渡效果持续0.35秒 */  
+}  
+  
+/*   
+ * 卡片内的文本容器样式，绝对定位在卡片内部，  
+ * 并设置了内边距。  
+ */  
+.card .text {  
+    position: absolute;          /* 绝对定位 */  
+    top: 30px;                   /* 距离顶部30px */  
+    left: 30px;                  /* 距离左侧30px */  
+    bottom: 30px;                /* 距离底部30px */  
+    right: 30px;                 /* 距离右侧30px */  
+    padding: 0 18px;             /* 左右内边距为18px */  
+}  
+  
+/*   
+ * 文本容器前的伪元素样式，用于制作渐变效果。  
+ * 初始状态为完全透明并位于卡片外部。  
+ */  
+.card .text::before {  
+    content: "";                 /* 伪元素内容为空 */  
+    position: absolute;          /* 绝对定位 */  
+    top: 0;                      /* 顶部与文本容器对齐 */  
+    bottom: 0;                   /* 底部与文本容器对齐 */  
+    right: 0;                    /* 初始位置在右侧 */  
+    left: 100%;                  /* 初始位置完全在容器外部 */  
+    border-left: 4px solid rgba(255, 255, 255, 0.8); /* 左侧边框 */  
+    background-color: rgba(255, 255, 255, 0.5);     /* 背景色为半透明白色 */  
+    opacity: 0;                  /* 初始透明度为0，完全透明 */  
+    transition: 0.5s;            /* 过渡效果持续0.5秒 */  
+    transition-delay: 0.6s     /* 过渡效果开始前有0.6秒的延迟 */  
+}  
+  
+/*   
+ * 卡片文本内的标题和段落样式，初始状态透明度为0，  
+ * 使用了transform进行位置调整，并设置了过渡效果。  
+ */  
+.card .text h2,  
+.card .text p {  
+    margin-bottom: 6px;          /* 底部外边距为6px */  
+    opacity: 0;                  /* 初始透明度为0 */  
+    transition: 0.35s;           /* 过渡效果持续0.35秒 */  
+}  
+  
+/*   
+ * 卡片文本内的标题样式，使用了transform进行位置调整，  
+ * 字体较轻，文本全部大写，并设置了过渡效果的延迟。  
+ */  
+.card .text h2 {  
+    font-weight: 300;            /* 字体粗细为300 */  
+    text-transform: uppercase;   /* 文本转换为大写 */  
+    transform: translate(30%, 0%);/* 初始位置向右偏移30% */  
+    transition-delay: 0.3s;      /* 过渡效果开始前有0.3秒的延迟 */  
+}  
+  
+/*   
+ * 标题内的重点文字样式，字体加粗。  
+ */  
+.card .text h2 span {  
+    font-weight: 800;            /* 字体粗细为800 */  
+}  
+  
+/*   
+ * 卡片文本内的段落样式，字体较轻，并使用了transform进行位置调整。  
+ */  
+.card .text p {  
+    font-weight: 200;            /* 字体粗细为200 */  
+    transform: translate(0%, 30%);/* 初始位置向下偏移30% */  
+}  
+  
+/*   
+ * 鼠标悬停在卡片上时，图片的透明度变为0.3。  
+ */  
+.card:hover img {  
+    opacity: 0.3;  
+}  
+  
+/*   
+ * 鼠标悬停在卡片上时，标题的透明度变为1，位置回归原位，  
+ * 并设置了过渡效果的延迟。  
+ */  
+.card:hover .text h2 {  
+    opacity: 1;                  /* 透明度为1 */  
+    transform: translate(0%, 0%); /* 位置回归原位 */  
+    transition-delay: 0.4s;      /* 过渡效果开始前有0.4秒的延迟 */  
+}  
+  
+/*   
+ * 鼠标悬停在卡片上时，段落的透明度变为0.9，位置回归原位，  
+ * 并设置了过渡效果的延迟。  
+ */  
+.card:hover .text p {  
+    opacity: 0.9;                /* 透明度为0.9 */  
+    transform: translate(0%, 0%); /* 位置回归原位 */  
+    transition-delay: 0.6s;      /* 过渡效果开始前有0.6秒的延迟 */  
+}  
+  
+/*   
+ * 鼠标悬停在卡片上时，文本前的伪元素背景色变为透明，  
+ * 位置从右侧移动到左侧，透明度变为1，并立即开始过渡效果。  
+ */  
+.card:hover .text::before {  
+    background-color: rgba(255, 255, 255, 0); /* 背景色为透明 */  
+    left: 0;                      /* 位置在左侧 */  
+    opacity: 1;                  /* 透明度为1 */  
+    transition-delay: 0s;         /* 过渡效果没有延迟 */  
+}
