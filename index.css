@@ -41,6 +41,10 @@ p{
     word-break: break-all;
 }
 
+body {  
+    background-color: #ffffff;   /* 背景色为深灰色 */  
+}  
+
 /*   
  * 设置全局样式，将所有元素的外边距和内边距都设置为0，  
  * 并设置盒模型为border-box，使得元素的宽度和高度  
@@ -67,8 +71,7 @@ p{
     color: #fff;                 /* 文字颜色为白色 */  
     cursor: pointer;             /* 光标为手形，表示可点击 */  
     position: relative;          /* 相对定位 */  
-    margin: 0;                   /* 清除所有元素的外边距 */  
-    padding: 0;                 /* 清除所有元素的内边距 */  
+    
 }  
   
 /*   
