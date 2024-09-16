@@ -59,8 +59,8 @@ p{
  * 使用相对定位以便内部元素可以绝对定位。  
  */  
 .card {  
-    width: 310px;                /* 卡片宽度 */  
-    height: 220px;               /* 卡片高度 */  
+    width: 480px;                /* 卡片宽度 */  
+    height: 360px;               /* 卡片高度 */  
     overflow: hidden;            /* 溢出内容隐藏 */  
     margin: 10px;                /* 外边距 */  
     background-color: #000;      /* 背景色为黑色 */  
