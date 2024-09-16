@@ -132,7 +132,6 @@ body {
  */  
 .card .text h2 {  
     font-weight: 300;            /* 字体粗细为300 */  
-    text-transform: uppercase;   /* 文本转换为大写 */  
     transform: translate(30%, 0%);/* 初始位置向右偏移30% */  
     transition-delay: 0.3s;      /* 过渡效果开始前有0.3秒的延迟 */  
 }  
