@@ -52,28 +52,7 @@ p{
     box-sizing: border-box;      /* 设置盒模型为border-box */  
 }  
   
-/*   
- * 设置body样式，使其占据整个视口的高度，  
- * 并使用Flexbox居中显示内容。  
- * 背景色设置为深灰色。  
- */  
-body {  
-    height: 100vh;               /* 视口高度 */  
-    display: flex;               /* 使用Flexbox布局 */  
-    justify-content: center;     /* 水平居中 */  
-    align-items: center;         /* 垂直居中 */  
-    background-color: #212121;   /* 背景色为深灰色 */  
-}  
-  
-/*   
- * 容器元素，使用Flexbox布局，允许内容换行。  
- * 内容在容器中居中显示。  
- */  
-.container {  
-    display: flex;               /* 使用Flexbox布局 */  
-    flex-wrap: wrap;             /* 允许内容换行 */  
-    justify-content: center;     /* 水平居中 */  
-}  
+
   
 /*   
  * 卡片元素的基本样式，包括尺寸、背景色、文字颜色等。  
