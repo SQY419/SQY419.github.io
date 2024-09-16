@@ -14,12 +14,22 @@
     src: url('/fzletter.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'fzi';
+    src: url('/fzletteri.ttf') format('truetype');
+}
+
 .math {
     font-family: 'math';
 }
 
 .fz {
     font-family: 'fz';
+}
+
+
+.fzi {
+    font-family: 'fzi';
 }
 
 .jb {
