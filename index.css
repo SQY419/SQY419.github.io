@@ -94,6 +94,7 @@ body {
     bottom: 30px;                /* 距离底部30px */  
     right: 30px;                 /* 距离右侧30px */  
     padding: 0 18px;             /* 左右内边距为18px */  
+        font-family: 'math';
 }  
   
 /*   
