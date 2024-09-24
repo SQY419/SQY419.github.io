@@ -192,9 +192,9 @@ body {
 .button {
   display: inline-block;
   border-radius: 4px;
-  background-color: #f4511e;
+  background-color: #ffff33;
   border: none;
-  color: #FFFF33;
+  color: #FFFFFF;
   text-align: center;
   font-size: 20px;
   padding: 20px;
