@@ -14,39 +14,43 @@
   margin-right: 25px;
     }
     <meta charset="UTF-8">
-            ul {
-            list-style-type: none;
+            
+    .navbar {
+            background-color: #ffe4b5;
+            overflow: hidden;
         }
- 
-        li {
-            float: left;
-        }
- 
-        li a {
-            display: flex;
-            color: black;
+        .navbar a {
+            float: right;
+            display: block;
+            color: #000000;
             text-align: center;
-            padding: 23px 25px;
+            padding: 16px 20px;
             text-decoration: none;
         }
- 
-        li a:hover {
-            background-color: #111;
+        .navbar p {
+            float: left;
+            display: block;
+            color: #000000;
+            text-align: center;
+            padding-left:15px
         }
-    </style>
+        .navbar a:hover {
+            background-color: #dcdcdc;
+            color: black;
+        }
   </style>
   <link rel="stylesheet" type="text/css" href="/index.css">
 
   
 </head>
 <body>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#services">Services</a></li>
-</ul>
-
+  <div class="navbar">
+        <p class="math">SGC</p>
+        <a href="#home">关于</a>
+        <a href="#news">在线版</a>
+        <a href="#contact">帮助</a>
+        <a href="#about">首页</a>
+  </div>
 <div style="
 background-image: url(/sgc/Screenshot_20240817_205557_com.huawei.browser_edit_472359964882770.jpg);
 width: 100%;
