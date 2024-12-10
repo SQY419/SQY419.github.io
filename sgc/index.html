@@ -39,6 +39,17 @@
             background-color: #dcdcdc;
             color: black;
         }
+    .pictext {
+        display: flex; /* 使用Flexbox布局 */
+        align-items: center; /* 垂直居中 */
+        gap: 20px; /* 设置元素之间的间隔 */
+    }
+ 
+    img {
+        width: 240px; /* 设置图片宽度 */
+        height: auto; /* 高度自动调整以保持图片比例 */
+    }
+
   </style>
   <link rel="stylesheet" type="text/css" href="/index.css">
 
@@ -72,7 +83,14 @@ align-items: center;
 
     <h3 style="font-size: 300%;" class="math">享受数学之美</h3>
 </center>
-  
+
+
+<div class="pictext">
+    <img src="/sgc/sgc_ys.jpg" alt="SGC">
+    <p>在scratch/浏览器上运行，简单好用。随意画出你想要的函数，所见即所得。</p>
+</div>
+
+    
   <p class="math">SGC(稽何计算器)是一款数学软件，主攻图形相关数学知识，在scratch以及能支持scratch3的平台上运行。SGC功能丰富，支持显函数，隐函数，参数方程，极坐标等多种类型。
     在TurboWarp环境下，运行速度与desmos，GeoGebra接近。您可以设置自己的参数，以获得比desmos更好的绘图效果。</p>
   <p class="math"> 由于其第一代第一版在稽木世界上发布，故命名为稽何计算器。稽何计算器目前是第四代软件，前三代分别是稽何计算器V1.0.5和稽何计算器 plus+ (V2)，V3。第四代是最新的，有非常多的优化，针对图形性能有较大提升，使用大量实验性算法，界面有一定优化。</p>
