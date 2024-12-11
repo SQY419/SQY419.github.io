@@ -41,10 +41,6 @@ p{
     word-break: break-all;
 }
 
-body {  
-    background-color: #ffffff;   /* 背景色为深灰色 */  
-}  
-
 /*   
  * 设置全局样式，将所有元素的外边距和内边距都设置为0，  
  * 并设置盒模型为border-box，使得元素的宽度和高度  
