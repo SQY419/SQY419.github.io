@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SGC</title>
+  <style>
+    .custom-font {
+      font-family: "Consolas", Consolas;
+    }
+    .chinese-font {
+      font-family: "宋体", Consolas;
+    }
+    .container {
+  margin-left: 25px;
+  margin-right: 25px;
+    }
+    <meta charset="UTF-8">
+            
+    .navbar {
+            background-color: #ffe4b5;
+            overflow: hidden;
+        }
+        .navbar a {
+            float: right;
+            display: flex;
+            color: #000000;
+            text-align: center;
+            padding: 25px 30px;
+            text-decoration: none;
+            
+        }
+        .navbar p {
+            float: left;
+            display: block;
+            color: #000000;
+            text-align: center;
+            padding-left:25px;
+        }
+        .navbar a:hover {
+            background-color: #dcdcdc;
+            color: black;
+        }
+  </style>
+  <link rel="stylesheet" type="text/css" href="/index.css">
+
+  
+</head>
+<body>
+  <div class="navbar">
+        <p class="math" style="font-size: 125%;">SQY Graphic Calculator</p>
+        <a href="#home">关于</a>
+        <a href="#news">在线版</a>
+        <a href="#contact">帮助</a>
+        <a href="#about">首页</a>
+  </div>
+<div style="
+background-image: url(/sgc/Screenshot_20240817_205557_com.huawei.browser_edit_472359964882770.jpg);
+width: 100%;
+height: 640px;
+background-size: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+">
+    <p style="font-size: 300%;" class="math">
+        欢迎来到 SGC 主页！
+    </p>
+</div>
+  <div class="container">
+<center>
+
+  <p class="math">Enjoy the beauty of mathematics.</p>
+    <p class="math">Powered by Scratch 3.</p>
+
+  <p></p>
+
+</center>
+    <p class="math">借助SGC强大的计算能力以及丰富的函数库，让我们在线领略数学之美吧！</p>
+<center>
+
+  <iframe
+  id="SGC"
+  title="SGC"
+  width="720"
+  height="540"
+  src="/SGChtml/index.html">
+  align="middle"
+  </iframe>
+</center>
+    <p class="math">此在线版由TurboWarp Packager 打包。</p>
+  <p class="math">您现在看到的版本为 SGC V4.3.0，支持使用函数定义求和，求积分等高级运算. 如果遇到问题，您可以查看下方的使用说明。</p>
+
+<center>
+
+    <h2 class="math">软件介绍</h2>
+</center>
+  
+  <p class="math">SGC(稽何计算器)是一款数学软件，主攻图形相关数学知识，在scratch以及能支持scratch3的平台上运行。SGC功能丰富，支持显函数，隐函数，参数方程，极坐标等多种类型。
+    在TurboWarp环境下，运行速度与desmos，GeoGebra接近。您可以设置自己的参数，以获得比desmos更好的绘图效果。</p>
+  <p class="math"> 由于其第一代第一版在稽木世界上发布，故命名为稽何计算器。稽何计算器目前是第四代软件，前三代分别是稽何计算器V1.0.5和稽何计算器 plus+ (V2)，V3。第四代是最新的，有非常多的优化，针对图形性能有较大提升，使用大量实验性算法，界面有一定优化。</p>
+  <p class="math">欢迎下载稽何计算器！欢迎捉虫子！如果找出bug，请联系SQY！</p>
+  <p class="math">您可以在本网页上快速体验在线版 SGC。实际体验与这里的在线版不同。如果您没有魔法或者访问太慢，可以尝试访问sqy419.axolotlpower.com</p>
+<center>
+  <p>
+  <img
+  src="/sgc/sgc_ys.jpg"
+  alt="114514"
+  width="300"
+  height="225"
+  title="" />
+ 
+  <img
+  src="/sgc/Screenshot_20240816_224623_com.huawei.browser_edit_461321887621929.jpg"
+  alt="114514"
+  width="300"
+  height="225"
+  title="" />
+  </p>
+</center>
+  <p class="math">SGC支持的函数(忽略大小写)：</p>
+  <p class="math">sin,cos,tan,csc,sec,cot,asin,acos,atan,acsc,asec,acot,sinh,cosh,tanh,csch,sech,coth,asinh,acosh,atanh,acsch,asech,acoth</p>
+  <p class="math">gamma,zeta,psi(digamma),lngamma,beta,Ei(ExpIntegral),Si,Ci,li,Shi,Chi,sinc,FresnelS,FresnelC,LambertW,EllipticK,EllipticE,Erf,Erfc</p>
+    <p class="math">floor,ceil,round,min,max,if,not,and,or</p>
+<center>
+       <h2 class="math">使用说明</h2>
+</center>
+    <p class="math">注意: SGC不能自动的将隐函数以及隐式关系转换为显示关系。因此，如果您输入的函数不是y=...或者直接输入仅包含x的表达式，您修改的精度应该是“隐函数精度”，其他的函数您应该根据输入而决定。另外，我们推荐的精度为：在线版/tw版 函数960 隐函数360，scratch版 函数480 隐函数64。函数精度的上限为240000，隐函数则为60000</p>
+<p class="math">函数精度以及隐函数精度越高，绘制出来的效果一般也会越好，但这也会减慢速度。</p>
+  <p class="math">如果您使用过desmos或者GeoGebra，你应该能快速上手SGC。左侧是输入区，如果左侧出现了“输入...”，点击即可进入此输入行。您可以点击左下方黄色键盘图标，打开虚拟键盘。输入完成后，点击键盘上的enter键（一个弯曲的箭头图标）才能输入函数。</p>
+</div>
+  
+</body>
+</html>
+
+
