@@ -1,44 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>导航栏示例</title>
+    <title>悬浮导航栏示例</title>
     <style>
-        /* 样式定义 */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
         .navbar {
-            background-color: #ffe4b5;
-            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 10px;
+            z-index: 1000; /* 确保导航栏在其他内容之上 */
         }
-        .navbar a {
-            float: right;
-            display: block;
-            color: #000000;
-            text-align: center;
-            padding: 16px 20px;
+        .navbar .title {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .navbar .links {
+            display: flex;
+            gap: 10px;
+        }
+        .navbar .links a {
+            color: white;
             text-decoration: none;
+            padding: 5px 10px;
         }
-        .navbar p {
-            float: left;
-            display: block;
-            color: #000000;
-            text-align: center;
-            padding-left:5px
+        .navbar .links a:hover {
+            background-color: #575757;
         }
-        .navbar a:hover {
-            background-color: #dcdcdc;
-            color: black;
+        /* 为页面内容添加上边距，以避免与固定导航栏重叠 */
+        .content {
+            margin-top: 60px; /* 根据导航栏的高度调整 */
         }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
     <div class="navbar">
-        <p>  SGC</p>
-        <a href="#home">关于</a>
-        <a href="#news">在线版</a>
-        <a href="#contact">帮助</a>
-        <a href="#about">首页</a>
+        <div class="title">aaa</div>
+        <div class="links">
+            [链接1](https://example.com/link1)
+            [链接2](https://example.com/link2)
+            [链接3](https://example.com/link3)
+        </div>
+    </div>
+    <div class="content">
+        <!-- 页面内容将在这里显示 -->
+        <p>这是页面内容的一部分。</p>
+        <p>你可以在这里添加更多的内容。</p>
     </div>
 </body>
 </html>
