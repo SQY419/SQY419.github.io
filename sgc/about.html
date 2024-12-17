@@ -1,71 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>SGC</title>
-  <style>
-    .custom-font {
-      font-family: "Consolas", Consolas;
-    }
-    .chinese-font {
-      font-family: "宋体", Consolas;
-    }
-    .container {
-  margin-left: 25px;
-  margin-right: 25px;
-    }
     <meta charset="UTF-8">
-            
-    .navbar {
-            background-color: #ffe4b5;
-            overflow: hidden;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGC</title>
+    <style>
+        body {
+            margin: 0;
+      
         }
-        .navbar a {
-            float: right;
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             display: flex;
-            color: #000000;
-            text-align: center;
-            padding: 25px 30px;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(20deg, #ffe985, #fa742b);
+            padding: 5px;
+            z-index: 1000; /* 确保导航栏在其他内容之上 */
+        }
+        .navbar .title {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+		padding: 0px 10px;
+        }
+        .navbar .links {
+            display: flex;
+            gap: 10px;
+        }
+        .navbar .links a {
+            color: white;
             text-decoration: none;
-            
+            padding: 30px 30px;
         }
-        .navbar p {
-            float: left;
-            display: flex;
-            color: #000000;
-            text-align: center;
-            padding-left:25px;
+        .navbar .links a:hover {
+            background-color: rgba(220,220,220,0.6);
         }
-        .navbar a:hover {
-            background-color: #dcdcdc;
-            color: black;
+        /* 为页面内容添加上边距，以避免与固定导航栏重叠 */
+        .content {
+            margin-top: 80px; /* 根据导航栏的高度调整 */
+		padding: 20px;
         }
-  </style>
-  <link rel="stylesheet" type="text/css" href="/index.css">
+	.pictext {
+        display: flex; /* 使用Flexbox布局 */
+        align-items: center; /* 垂直居中 */
+        gap: 60px; /* 设置元素之间的间隔 */
+        padding: 30px;
+        }
+ 
+    img {
+        width: 360px; /* 设置图片宽度 */
+        height: auto; /* 高度自动调整以保持图片比例 */
+    }
+	    
+	.image-container {
+            position: relative;
+            display: inline-block;
+        }
 
-  
+        .image-container img {
+            display: block;
+        }
+
+        .image-container .text-overlay {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            
+            
+	}
+	    footer {
+            background-color: #333333; /* 深灰色背景 */
+            color: white; /* 文本颜色为白色 */
+            padding: 20px; /* 内边距 */
+            text-align: center; /* 文本居中对齐 */
+	    }
+    </style>
+ <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
 <body>
-  <div class="navbar">
-        <p class="math" style="font-size: 125%;">SQY Graphic Calculator</p>
-        <a href="/sgc/about.html">关于</a>
-        <a href="/sgc/o.html">在线版</a>
-        <a href="/sgc/help.html">帮助</a>
-        <a href="/sgc">首页</a>
-  </div>
-<div style="
-width: 100%;
-height: 120px;
-background-size: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-">
-    <p style="font-size: 300%;" class="math">
-        关于SGC
-    </p>
-</div>
-  <div class="container">
-    <center>
+    <div class="navbar">
+        <div class="title">
+		<p class="math">SQY Graphic Calculator</p>
+	</div>
+        <div class="links">
+            <a href="https://sqy419.axolotlpower.com/sgc">首页</a>
+            <a href="/sgc/help.html">帮助</a>
+            <a href="/sgc/o.html">在线版</a>
+	    <a href="/sgc/about.html">关于</a>
+        </div>
+    </div>
+    <div class="content">
+   <center>
 <h2 class="math">致谢</h2>
     </center>
   <p class="math" style="color: blue">obdopqo:画笔字库；Gtd232；Au:Arch提供灵感，KenGi, -Rex-:SFE pen font injector.</p>
@@ -98,14 +128,14 @@ align-items: center;
   title="V3" />
   <p class="math">SGC V1; 隐函数测试. 始于2022.12.04</p>
   </center>
-    
-  <p class="math" style="color: red">Copyright SQY 2024. All rights reserved. SQY版权所有，未经允许，严禁转载。</p>
-  <p class="math">网站由Gtd232提供, axolotlpower.com</p>
-  <p class="math">SQY 2024.8.16</p>
-</center>
-</div>
-  
+       </div>
+    </div>
+	<footer>
+		<p class="math">&copy; SQY 2024. SQY all rights reserved. 2024.12.17</p>
+		<p class="math">Axolotlpower by Gtd232</p>
+	</footer>
 </body>
 </html>
+
 
 
