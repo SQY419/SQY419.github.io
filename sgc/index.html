@@ -1,89 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>SGC</title>
-  <style>
-    .custom-font {
-      font-family: "Consolas", Consolas;
-    }
-    .chinese-font {
-      font-family: "宋体", Consolas;
-    }
-    .container {
-  margin-left: 0;
-  margin-right: 0;
-      padding: 0;
-    }
     <meta charset="UTF-8">
-            
-    .navbar {
-            background-color: #ffe4b5;
-            overflow: hidden;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>悬浮导航栏示例</title>
+    <style>
+        body {
+            margin: 0;
+      
         }
-        .navbar a {
-            float: right;
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             display: flex;
-            color: #000000;
-            text-align: center;
-            padding: 25px 30px;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(20deg, #ffe985, #fa742b);
+            padding: 5px;
+            z-index: 1000; /* 确保导航栏在其他内容之上 */
+        }
+        .navbar .title {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+		padding: 0px 10px;
+        }
+        .navbar .links {
+            display: flex;
+            gap: 10px;
+        }
+        .navbar .links a {
+            color: white;
             text-decoration: none;
-            
+            padding: 30px 30px;
         }
-        .navbar p {
-            float: left;
-            display: block;
-            color: #000000;
-            text-align: center;
-            padding-left:25px;
-        }
-        .navbar a:hover {
+        .navbar .links a:hover {
             background-color: #dcdcdc;
-            color: black;
         }
-    .pictext {
+        /* 为页面内容添加上边距，以避免与固定导航栏重叠 */
+        .content {
+            margin-top: 80px; /* 根据导航栏的高度调整 */
+		padding: 20px;
+        }
+	.pictext {
         display: flex; /* 使用Flexbox布局 */
         align-items: center; /* 垂直居中 */
         gap: 60px; /* 设置元素之间的间隔 */
         padding: 30px;
-    }
+        }
  
     img {
         width: 480px; /* 设置图片宽度 */
         height: auto; /* 高度自动调整以保持图片比例 */
     }
-.footbar{
-  display: block; /* 使用Flexbox布局 */
-    
-        gap: 10px; /* 设置元素之间的间隔 */
-        padding: 0;
-  background-color: #dcdcdc;
-  margin-left: 0;
-  margin-right: 0;
-
-}
-  </style>
-  <link rel="stylesheet" type="text/css" href="/index.css">
-
-  
+	    
+	    
+	    footer {
+            background-color: #333333; /* 深灰色背景 */
+            color: white; /* 文本颜色为白色 */
+            padding: 20px; /* 内边距 */
+            text-align: center; /* 文本居中对齐 */
+	    }
+    </style>
+ <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
 <body>
-  <div class="navbar">
-        <p class="math" style="font-size: 125%;">SQY Graphic Calculator</p>
-        <a href="/sgc/about.html">关于</a>
-        <a href="/sgc/o.html">在线版</a>
-        <a href="/sgc/help.html">帮助</a>
-        <a href="/sgc">首页</a>
-  </div>
-
-  <div class="container">
-<center>
-
-  <p style="font-size: 150%;" class="math">SGC Version 4.3</p>
-
-    <p style="font-size: 300%;" class="math">享受数学之美</p>
+    <div class="navbar">
+        <div class="title">
+		<p class="math">SQY Graphic Calculator</p>
+	</div>
+        <div class="links">
+            <a href="https://sqy419.axolotlpower.com/sgc">首页</a>
+            <a href="/sgc/help.html">帮助</a>
+            <a href="/sgc/o.html">在线版</a>
+	    <a href="/sgc/about.html">关于</a>
+        </div>
+    </div>
+    <div class="content">
+       <div class="container">
+          <center>
+<div style="
+background-image: url(/sgc/Screenshot_20240817_205557_com.huawei.browser_edit_472359964882770.jpg);
+width: 100%;
+height: 540px;
+background-size: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+  margin-left: 0;
+  margin-right: 0;
+      padding: 0;
+">
+    <p style="font-size: 300%;" class="math">
+        欢迎来到 SGC 主页！
+    </p>
+</div>	
+		  
 </center>
 
 <center>
+
+<p style="font-size: 150%;" class="math">SGC Version 4.3</p>
+<p style="font-size: 200%; " class="math">享受数学之美</p>  
+
 <div class="pictext">
     <img src="/sgc/sgc_ys.jpg" alt="SGC">
     <p class="math">在scratch/浏览器上运行，简单好用。随意画出你想要的函数，所见即所得。</p>
@@ -95,21 +116,17 @@
   </div>
   <div class="pictext">
     <img src="/sgc/des_sgc.jpg" alt="SGC">
-    <p class="math">太抽象了，desmos画不清楚了。试试SGC吧！</p>
+    <p class="math">太抽象了，desmos画不清楚了。试试SGC吧！全新数据结构，计算速度翻一番。</p>
   </div>
   <div class="pictext">
         <p class="math">不善言辞，如何表达情感？面对crush，总不能只用乏味的词语。SGC帮助你使用数学之美，win his/her heart. 我们已经修好了烦人的bug，这种图表计算速度有了极大提升。</p>
     <img src="/sgc/crush.jpg" alt="SGC">
-  </center>
-
-   
-</div>
-  <div class="footbar">
-    
-  <p class="math">Copyright SQY 2024. All rights reserved. </p>
-  <p class="math">SQY 2024.12.11</p>
-  </div>
+</center>
+       </div>
+    </div>
+	<footer>
+		<p class="math">&copy; SQY 2024. SQY all rights reserved. 2024.12.17</p>
+		<p class="math">Axolotlpower by Gtd232</p>
+	</footer>
 </body>
 </html>
-
-
