@@ -56,7 +56,24 @@
         height: auto; /* 高度自动调整以保持图片比例 */
     }
 	    
-	    
+	.image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .image-container img {
+            display: block;
+        }
+
+        .image-container .text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+	}
 	    footer {
             background-color: #333333; /* 深灰色背景 */
             color: white; /* 文本颜色为白色 */
@@ -81,6 +98,10 @@
     <div class="content">
        <div class="container">
           <center>
+		  <div class="image-container">
+        <img src="/sgc/Screenshot_20240817_205557_com.huawei.browser_edit_472359964882770.jpg" alt="SGC">
+        <div class="text-overlay">This is some text</div>
+		  </div>
 <div style="
 background-image: url(/sgc/Screenshot_20240817_205557_com.huawei.browser_edit_472359964882770.jpg);
 width: 100%;
