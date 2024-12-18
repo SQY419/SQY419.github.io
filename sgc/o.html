@@ -43,6 +43,15 @@
             margin-top: 80px; /* 根据导航栏的高度调整 */
 		        padding: 20px;
         }
+	iframe {
+    width: 100%;
+    height: 100%;
+    border: none; /* 可选：移除边框以获得更干净的全屏效果 */
+	  }
+	  .sgc {
+		  width: 100%;
+		  aspect-ratio: 4/3;
+	  }
   </style>
   <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
@@ -68,14 +77,14 @@
 
   <div class="container">
 <center>
+	<div class="sgc">
   <iframe
   id="SGC"
   title="SGC"
-  width: 100%;
-  height= auto;
   src="/SGChtml/index.html">
   align="middle"
   </iframe>
+	</div>
 </center>
     <p class="math">此在线版由TurboWarp Packager 打包。</p>
   <p class="math">您现在看到的版本为 SGC V4.3.0，支持使用函数定义求和，求积分等高级运算. /p>
