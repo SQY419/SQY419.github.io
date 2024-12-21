@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>SGC</title>
-  <style>
     <meta charset="UTF-8">
-            body {
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGC</title>
+    <style>
+        body {
             margin: 0;
-		    padding: 0;
-	    }
-    .navbar {
+      
+        }
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
@@ -41,28 +42,45 @@
         /* 为页面内容添加上边距，以避免与固定导航栏重叠 */
         .content {
             margin-top: 80px; /* 根据导航栏的高度调整 */
-		        padding: 20px;
+		padding: 20px;
         }
-	  footer {
+	.pictext {
+        display: flex; /* 使用Flexbox布局 */
+        align-items: center; /* 垂直居中 */
+        gap: 60px; /* 设置元素之间的间隔 */
+        padding: 30px;
+        }
+ 
+    img {
+        width: 360px; /* 设置图片宽度 */
+        height: auto; /* 高度自动调整以保持图片比例 */
+    }
+	    
+	.image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .image-container img {
+            display: block;
+        }
+
+        .image-container .text-overlay {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            
+            
+	}
+	    footer {
             background-color: #333333; /* 深灰色背景 */
             color: white; /* 文本颜色为白色 */
             padding: 20px; /* 内边距 */
             text-align: center; /* 文本居中对齐 */
-            margin: 0;
-	  }
-	iframe {
-    width: 100%;
-    height: 100%;
-	  }
-	  .sgc {
-		  width: 85%;
-		  aspect-ratio: 4/3;
-		  margin: 0;
-		  padding: 0;
-	  }
-
-  </style>
-  <link rel="stylesheet" type="text/css" href="/index.css">
+	    }
+    </style>
+ <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
 <body>
     <div class="navbar">
@@ -76,12 +94,17 @@
 	    <a href="/sgc/about.html">关于</a>
         </div>
     </div>
-
+    <div class="content">
+   .
+  
+       </div>
+    </div>
 	<footer>
 		<p class="math">&copy; SQY 2024. SQY all rights reserved. 2024.12.17</p>
-		<p class="math">Powered by Turbowarp packager.</p>
+		<p class="math">Axolotlpower by Gtd232</p>
 	</footer>
 </body>
 </html>
+
 
 
