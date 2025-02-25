@@ -1,34 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image with Text</title>
     <style>
-        .image-container {
-            position: relative;
-            display: inline-block;
+        /* 导航栏样式 */
+        nav {
+            background-color: #333;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
-        .image-container img {
-            display: block;
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
         }
 
-        .image-container .text-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        li a {
             color: white;
-            font-size: 24px;
-            font-weight: bold;
+            text-decoration: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        li a:hover {
+            background-color: #4CAF50;
+            border-radius: 4px;
+        }
+
+        /* 内容容器样式 */
+        #content-container {
+            margin-top: 80px;
+            padding: 20px;
+        }
+
+        /* 默认隐藏所有内容块 */
+        .content {
+            display: none;
+        }
+
+        /* 显示当前选中内容 */
+        .content.active {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="image-container">
-        <img src="/sgc/sgc_ys.jpg" alt="SGC">
-        <div class="text-overlay">This is some text</div>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a onclick="showContent('content1')">aaa</a></li>
+            <li><a onclick="showContent('content2')">bbb</a></li>
+        </ul>
+    </nav>
+
+    <!-- 内容容器 -->
+    <div id="content-container">
+        <!-- 内容1：自定义HTML -->
+        <div id="content1" class="content active">
+            <h2>这是AAA的内容</h2>
+            <p>欢迎来到AAA页面</p>
+            <ul>
+                <li>自定义列表项1</li>
+                <li>自定义列表项2</li>
+                <li>自定义列表项3</li>
+            </ul>
+            <img src="https://via.placeholder.com/150" alt="示例图片">
+        </div>
+
+        <!-- 内容2：自定义HTML -->
+        <div id="content2" class="content">
+            <div class="card">
+                <h3>BBB的内容卡片</h3>
+                <p>这是BBB的专属内容区域</p>
+                <button onclick="alert('点击了BBB的按钮')">测试按钮</button>
+                <div style="background-color: #f0f0f0; padding: 10px; margin-top: 10px;">
+                    <span style="color: blue;">带样式的文字内容</span>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function showContent(contentId) {
+            // 隐藏所有内容块
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // 显示选中的内容块
+            const selectedContent = document.getElementById(contentId);
+            if (selectedContent) {
+                selectedContent.classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
