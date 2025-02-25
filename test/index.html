@@ -3,6 +3,13 @@
 <head>
     <style>
         /* 导航栏样式 */
+        .content {
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+.content.active {
+    opacity: 1;
+}
         nav {
             background-color: #333;
             padding: 15px;
