@@ -72,32 +72,40 @@
             transform: translate(-50%, -50%);
             
         }
-	    footer {
+        footer {
             background-color: #333333; /* 深灰色背景 */
             color: white; /* 文本颜色为白色 */
             padding: 20px; /* 内边距 */
             text-align: center; /* 文本居中对齐 */
 	    }
-	    iframe {
+	iframe {
             width: 100%;
             height: 100%;
         }
-	    .sgc {
-		    width: 70%;
-		    aspect-ratio: 4/3;
-		    margin: 0;
-		    padding: 0;
-	    }
-        .cof1 {
-            width: 800px;
-	        margin: 15px
-            padding: 15px;
+        .sgc {
+	    width: 70%;
+	    aspect-ratio: 4/3;
+	    margin: 0;
+	    padding: 0;
+	}   
+      .cof1 {
+            width: 300px;
+            margin: 15px; /* 新增外边距 */
+            padding: 20px;
             background-color: #f0f0f0;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }     
-        .contentcof {
+        }
+
+        /* 其他样式保持不变... */
+        .cofh1 {
+            color: #333;
             margin-bottom: 15px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .contentcof {
+            margin-bottom: 20px;
             font-size: 24px;
             color: #666;
         }
@@ -112,10 +120,10 @@
             font-size: 16px;
             transition: background-color 0.3s;
         }
+        
         button:hover {
             background-color: #45a049;
-        }
-    
+	}
     
     
     </style>
@@ -158,7 +166,7 @@
   <p class="math">如果您使用过desmos或者GeoGebra，你应该能快速上手SGC。左侧是输入区，如果左侧出现了“输入...”，点击即可进入此输入行。您可以点击左下方黄色键盘图标，打开虚拟键盘。输入完成后，点击键盘上的enter键（一个弯曲的箭头图标）才能输入函数。</p>
     <center>
 	    <div class="cof1">
-        <h1>示例文档</h1>
+        <h1 class="cofh1">示例文档</h1>
         <div class="contentcof">想不出来画什么？来这里看看，随便选择一个存档，体验数学之美！</div>
         <button onclick="window.location.href = 'https://sqy419.axolotlpower.com/sgc/ys'">点击跳转</button>
      </div>
