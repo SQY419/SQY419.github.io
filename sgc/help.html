@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGC</title>
+    <style>
+        body {
+            margin: 0;
+      min-width: 800px;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(20deg, #ffe985, #fa742b);
+            padding: 5px;
+            z-index: 1000; /* 确保导航栏在其他内容之上 */
+        }
+        .navbar .title {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+		padding: 0px 10px;
+        }
+        .navbar .links {
+            display: flex;
+            gap: 10px;
+        }
+        .navbar .links a {
+            color: white;
+            text-decoration: none;
+            padding: 30px 30px;
+        }
+        .navbar .links a:hover {
+            background-color: rgba(220,220,220,0.6);
+        }
+        /* 为页面内容添加上边距，以避免与固定导航栏重叠 */
+        .content {
+            margin-top: 80px; /* 根据导航栏的高度调整 */
+		padding: 20px;
+        }
+	    .pictext {
+            display: flex; /* 使用Flexbox布局 */
+            align-items: center; /* 垂直居中 */
+            gap: 60px; /* 设置元素之间的间隔 */
+            padding: 30px;
+        }
+ 
+        img {
+            width: 360px; /* 设置图片宽度 */
+            height: auto; /* 高度自动调整以保持图片比*/
+        }
+	    
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .image-container img {
+            display: block;
+        }
+
+        .image-container .text-overlay {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            
+        }
+        footer {
+            background-color: #333333; /* 深灰色背景 */
+            color: white; /* 文本颜色为白色 */
+            padding: 20px; /* 内边距 */
+            text-align: center; /* 文本居中对齐 */
+	    }
+	iframe {
+            width: 100%;
+            height: 100%;
+        }
+        .sgc {
+	    width: 70%;
+	    aspect-ratio: 4/3;
+	    margin: 0;
+	    padding: 0;
+	}   
+      .cof1 {
+            width: 80%;
+            margin: 15px; /* 新增外边距 */
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* 其他样式保持不变... */
+        .cofh1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .contentcof {
+            margin-bottom: 20px;
+            
+            color: #666;
+        }
+        
+        button {
+            padding: 10px 25px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+	}
+    
+       .col-banner {
+	    
+            margin: 15px; /* 新增外边距 */
+            padding: 20px;
+            
+            border-radius: 10px;
+            width: 80%;          /* 占据页面全部宽度 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            background-color: fbeeac; /* 红色背景 */
+            
+
+       }
+    </style>
+ <link rel="stylesheet" type="text/css" href="/index.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="title">
+		<p class="math">SQY Graphic Calculator</p>
+	</div>
+        <div class="links">
+            <a href="https://sqy419.axolotlpower.com/sgc">首页</a>
+            <a href="/sgc/help.html">帮助</a>
+            <a href="/sgc/o.html">在线版</a>
+	    <a href="/sgc/about.html">关于</a>
+        </div>
+    </div>
+    <div class="content">
+
+    <center>
+        <h2 class="math">SGC 帮助</h2>
+    </center>
+
+	    <center>
+	    <div class="col-banner">
+            <center><h2 class="math">多版本与兼容性 </h2></center>
+<div class="col-banner">
+            <center><h4 class="math">SGC V4 于2025.3</h4></center>
+<button onclick="window.location.href = 'https://sqy419.axolotlpower.com/sgc/o.html'">点击前往</button>
+	    </div>  
+
+	    </div>  
+	    </center>
+      
+	     <center>
+	    <div class="cof1">
+        <h2 class="cofh1">示例文档</h2>
+        <div class="contentcof">想不出来画什么？来这里看看，随便选择一个存档，体验数学之美！</div>
+        <button onclick="window.location.href = 'https://sqy419.axolotlpower.com/sgc/ys'">点击跳转</button>
+     </div>
+	      
+	    <div class="cof1">
+        <h2 class="cofh1">下载</h2>
+        <div class="contentcof">想要将SGC放在本地使用？点击下方按钮，下载不同版本SGC！您也可以下载一些SGC的资源文件！</div>
+        <button onclick="window.location.href = 'https://sqy419.axolotlpower.com/download'">点击下载</button>
+	    </div>
+    </center>
+
+       </div>
+    
+	<footer>
+		<p class="math">&copy; SQY 2025. SQY all rights reserved. 2025.3.27</p>
+		<p class="math">Axolotlpower by Gtd232</p>
+	</footer>
+</body>
+</html>
