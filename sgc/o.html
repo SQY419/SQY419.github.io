@@ -151,7 +151,7 @@
   margin-right: 20px;     /* 与长方形的间距 */
 }
 
-.animated-box {
+.animated-box1 {
   height: 30px;
   width: 0;
   background-color: #4CAF50;
@@ -161,7 +161,20 @@
 
 @keyframes expand {
   from { width: 0; }
-  to { width: 30%; }
+  to { width: 32%; }
+}
+
+	    .animated-box1 {
+  height: 30px;
+  width: 0;
+  background-color: #4CAF50;
+  animation: expand1 2s ease-in-out forwards;
+  position: relative;     /* 保持动画元素定位 */
+}
+
+@keyframes expand1 {
+  from { width: 0; }
+  to { width: 5%; }
 }
 
     </style>
@@ -210,6 +223,9 @@
 		<div class="container">
             <div class="text">SGC v1.0.5</div>  <!-- 新增文本元素 -->
             <div class="animated-box"></div>
+			<div class="container">
+            <div class="text">SGC v2</div>  <!-- 新增文本元素 -->
+            <div class="animated-box1"></div>
 		</div>
             </div>
 
