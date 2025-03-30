@@ -170,6 +170,9 @@
 .animated-box-500 {
   animation-name: expand500;
 }
+	    .animated-box-900 {
+  animation-name: expand900;
+	    }
 
 /* 关键帧动画 */
 @keyframes expand600 {
@@ -181,6 +184,10 @@
   from { width: 0; }
   to { width: 5%; }
 }
+	    @keyframes expand900 {
+  from { width: 0; }
+  to { width: 100%; }
+	    }
     </style>
  <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
@@ -226,15 +233,20 @@
 		
 		<!-- 第一个组合 -->
 <div class="perf">
-  <div class="text1"><p class="math">1.0.5 96200次/s</p></div>
+  <div class="text1"><p class="math">v1.0.5  96200次/s</p></div>
   <div class="animated-box animated-box-600"></div>
 </div>
 
 <!-- 第二个组合 -->
 <div class="perf">
-  <div class="text1"><p class="math">plus+ 12100次/s</p></div>
+  <div class="text1"><p class="math">v2 12100次/s</p></div>
   <div class="animated-box animated-box-500"></div>
 </div>
+
+	<div class="perf">
+  <div class="text1"><p class="math">v3/4 300000次/s</p></div>
+  <div class="animated-box animated-box-900"></div>
+	</div>
 		
             </div>
 
