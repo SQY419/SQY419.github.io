@@ -134,9 +134,36 @@
             width: 80%;          /* 占据页面全部宽度 */
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             background-color: fbeeac; /* 红色背景 */
-            
-
        }
+       .perf {
+  height: 80px;
+  margin: 35px;
+  display: flex;          /* 启用弹性布局 */
+  align-items: center;    /* 垂直居中 */
+  position: relative;     /* 定位基准 */
+}
+
+.text {
+  font-size: 24px;        /* 文本大小 */
+  color: #333;            /* 文本颜色 */
+  min-width: 100px;       /* 保持文本区域最小宽度 */
+  z-index: 1;             /* 确保文本在上层 */
+  margin-right: 20px;     /* 与长方形的间距 */
+}
+
+.animated-box {
+  height: 30px;
+  width: 0;
+  background-color: #4CAF50;
+  animation: expand 2s ease-in-out forwards;
+  position: relative;     /* 保持动画元素定位 */
+}
+
+@keyframes expand {
+  from { width: 0; }
+  to { width: 80%; }
+}
+
     </style>
  <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
@@ -175,6 +202,16 @@
 	    <p class="math">· 功能更强的几何画板，支持数值校验和旋转变换</p>
 			</div>
 		</left>
+	    </div>  
+		    <div class="col-banner">
+            <center><h2 class="math">SGC 性能对比 </h2></center>
+
+		
+		<div class="container">
+            <div class="text">SGC v1.0.5</div>  <!-- 新增文本元素 -->
+            <div class="animated-box"></div>
+            </div>
+
 	    </div>  
 	    </center>
       
