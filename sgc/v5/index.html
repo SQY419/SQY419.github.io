@@ -1,0 +1,3685 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0," />
+    <title>SGC v5</title>
+    <style>
+        body{
+            margin:0px 0px;
+            font-family: CMU Sans Serif, sans-serif;
+            overflow-x: hidden;
+        }
+        .svg-button-home {
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            bottom: 150px;
+            right: 20px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        .svg-button-add {
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            bottom: 90px;
+            right: 20px;
+            transition: all 0.3s ease;
+            z-index: 10;
+            user-select:none;
+        }
+        .svg-button-min {
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            bottom: 30px;
+            right: 20px;
+            transition: all 0.3s ease;
+            z-index: 10;
+            user-select:none;
+        }
+        .svg-button:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+        }
+        
+        .svg-button:active {
+            transform: scale(0.95);
+        }
+
+        .editor-container {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 450px;
+            height: calc(100vh - 30px); /* 修改：精确计算高度 */
+            max-height: calc(100vh - 30px); /* 新增：最大高度限制 */
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.3s ease;
+            min-width: 350px;
+            max-width: 90vw;
+        }
+        
+        .editor-container.resizing {
+            box-shadow: 0 0 0 2px #0d6efd;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            z-index: 10;
+        }
+        
+        .title {
+            color: #495057;
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .add-btn {
+            background: #0d6efd;
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 24px;
+            font-weight: 300;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .add-btn svg {
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .add-btn path {
+            stroke: white;
+            stroke-width: 0.75;
+        }
+        
+        .add-btn:hover {
+            background: #0b5ed7;
+            transform: scale(1.1);
+        }
+        
+        .expressions-container {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+            padding-left: 15px;
+            padding-right: 15px;
+            /* 恢复正常文本方向 */
+            direction: ltr;
+            /* 添加右侧内边距给滑块留空间 */
+            padding-right: 20px;
+        }
+        
+
+        /* 新增固定标题区域 */
+        .fixed-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 20;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .expression-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+            border-left: 1px solid #e9ecef;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideIn 0.5s forwards;
+        }
+        
+        /* 新表达式类型标签 */
+        .type-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #0d6efd;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+        }
+        
+        .error-message {
+            padding: 10px 15px;
+            margin-top: 10px;
+            background: #ffebee;
+            border-radius: 6px;
+            color: #d32f2f;
+            font-size: 14px;
+            display: none;
+            line-height: 1.4;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .expression-item.deleting {
+            transform: translateX(-100%);
+            opacity: 0;
+            height: 0;
+            padding: 0;
+            margin: 0;
+            transition: all 0.4s ease;
+        }
+        
+        .color-indicator {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            margin-right: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+            border: 2px solid;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .color-indicator svg {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .color-indicator::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 21px;
+            height: 21px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+            opacity: 1;
+        }
+        
+        .color-indicator.active::after {
+            opacity: 0;
+        }
+        
+        /* 新增样式：当inputType为none时隐藏圆片 */
+        .color-indicator.hidden {
+            background-color: transparent !important;
+            border-color: transparent !important;
+            box-shadow: none !important;
+            cursor: default;
+        }
+        
+        .color-indicator.hidden::after {
+            display: none;
+        }
+
+        .expression-content {
+            flex: 1;
+            min-width: 0; /* 确保内容不会撑开容器 */
+        }
+        
+        .expression-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #212529;
+            font-size: 20px;
+            padding: 8px 0;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: CMU Sans Serif, sans-serif;
+        }
+        
+        .expression-input:focus {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 4px;
+        }
+        
+        .input-value {
+            padding: 10px 15px;
+            margin-top: 10px;
+            background: #e9ecef;
+            border-radius: 6px;
+            color: #495057;
+            font-size: 15px;
+            display: none;
+            line-height: 1.4;
+            overflow-x: auto; /* 水平滚动条 */
+            overflow-y: hidden; /* 隐藏垂直滚动条 */
+            white-space: nowrap; /* 不换行 */
+            max-height: 40px; /* 固定高度 */
+            scrollbar-width: thin; /* 细滚动条 */
+            scrollbar-color: #adb5bd #e9ecef; /* 滚动条颜色 */
+        }
+        
+        /* 自定义水平滚动条样式 */
+        .input-value::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .input-value::-webkit-scrollbar-track {
+            background: #e9ecef;
+            border-radius: 3px;
+        }
+        
+        .input-value::-webkit-scrollbar-thumb {
+            background: #adb5bd;
+            border-radius: 3px;
+        }
+        
+        .input-value::-webkit-scrollbar-thumb:hover {
+            background: #6c757d;
+        }
+        
+        .input-value.show {
+            display: block;
+        }
+        
+        .delete-btn {
+            background: none;
+            border: none;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+            flex-shrink: 0;
+            position: relative;
+        }
+        
+        .delete-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .expression-item:hover .delete-btn {
+            opacity: 0.7;
+        }
+        
+        .expression-item:hover .delete-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        .placeholder {
+            color: #6c757d;
+            text-align: center;
+            padding: 40px 20px;
+            font-style: italic;
+            transition: opacity 0.3s ease;
+        }
+        
+        .preview-indicator {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            color: #6c757d;
+            font-size: 12px;
+            font-style: italic;
+        }
+        
+        /* === 修改滚动条样式 === */
+        .expressions-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .expressions-container::-webkit-scrollbar-track {
+            background: rgba(233, 236, 239, 0.5);
+            border-radius: 4px;
+            margin: 5px 0;
+        }
+
+        .expressions-container::-webkit-scrollbar-thumb {
+            background: #ced4da;
+            border-radius: 4px;
+        }
+
+        .expressions-container::-webkit-scrollbar-thumb:hover {
+            background: #adb5bd;
+        }
+
+        /* 拖动条样式 */
+        .resize-handle {
+            position: absolute;
+            /* 修改：定位在左侧滚动条右侧 */
+            right: 0px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            cursor: col-resize;
+            z-index: 1000;
+        }
+        
+        
+        .resize-handle:hover, .resize-handle.active {
+            background: rgba(13, 110, 253, 0.2);
+        }
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .editor-container {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 90%;
+                height: 70vh;
+                margin-top: 20px;
+            }
+            
+            .console-container {
+                width: 90%;
+                left: 5%;
+                right: auto;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .add-animation {
+            animation: pulse 0.3s ease-out;
+        }
+
+        /* 汉堡菜单按钮样式 */
+        .menu-btn {
+            background: none;
+            border: none;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 4px;
+        }
+
+        .menu-line {
+            height: 3px;
+            background: #495057;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover .menu-line {
+            background: #0d6efd;
+        }
+
+        .title-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* 工具栏样式 */
+        .toolbar {
+            display: flex;
+            padding: 10px 20px;
+            margin-bottom: 15px;
+            background: #f0f2f5;
+            border-bottom: 1px solid #e9ecef;
+            gap: 15px;
+        }
+
+        .tool-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: #e9ecef;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .tool-btn:hover {
+            background: #dae0e5;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .tool-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* 菜单面板样式 */
+        .menu-panel {
+            position: absolute;
+            top: 70px;
+            left: 20px;
+            width: 220px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            overflow: hidden;
+            
+            /* 动画效果设置 */
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            pointer-events: none; /* 防止在隐藏时拦截点击 */
+        }
+
+        .menu-panel.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto; /* 激活时允许交互 */
+        }
+
+        .menu-section {
+            padding: 10px 0;
+        }
+
+        .menu-section-title {
+            padding: 10px 20px;
+            font-size: 13px;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-item:hover {
+            background: #f1f3f5;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: #e9ecef;
+            margin: 5px 0;
+        }
+
+        /* 视图切换样式 */
+        .expressions-view, .file-view, .settings-view {
+            width: 100%;
+            height: 100%;
+        }
+
+        .file-view {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .file-action-btn {
+            padding: 12px 24px;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 200px;
+            text-align: center;
+        }
+
+        .file-action-btn:hover {
+            background: #0b5ed7;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
+        }
+
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 6px;
+            border-bottom: 1px solid #e9ecef;
+            position: relative;
+            min-height: 50px;
+            flex-wrap: wrap; /* 允许换行 */
+        }
+        
+        .setting-content {
+            flex: 1;
+            padding-right: 150px; /* 增加右侧空间 */
+        }
+        
+        /* 设置项容器 - 添加z-index层级 */
+        .setting-control {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100; /* 确保按钮在正常层级 */
+        }
+        
+        .setting-label {
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .setting-description {
+            font-size: 12px;
+            color: #6c757d;
+            line-height: 1.4;
+        }
+        .settings-view {
+            padding-right: 15px;
+        }
+
+        
+
+        .setting-input {
+            width: 80px;
+            padding: 8px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 15px;
+            text-align: right;
+        }
+
+        .toggle-btn {
+            padding: 8px 20px;
+            background: #20c997;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.off {
+            background: #dc3545;
+        }
+
+        /* 新增菜单动画效果 */
+        .menu-panel {
+            position: absolute;
+            top: 70px;
+            left: 20px;
+            width: 220px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            overflow: hidden;
+            display: none;
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            visibility: hidden; /* 新增 */
+        }
+        
+        .menu-panel.active {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible; /* 新增 */
+        }
+        
+        /* 工具栏在非主视图时隐藏 */
+        .toolbar.hidden {
+            display: none;
+        }
+        .about-dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .about-dialog.active {
+            display: flex;
+        }
+        
+        .dialog-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 80%;
+        }
+        
+        .about-logo {
+            width: 260px;
+            margin-bottom: 25px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .about-text {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+        
+        .about-text p {
+            font-size: 18px;
+            color: #495057;
+            line-height: 1.6;
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+        
+        .close-btn {
+            padding: 12px 24px;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: #0b5ed7;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
+        }
+
+        /* 设置分类导航栏 */
+        .settings-categories {
+            display: flex;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+        
+        .settings-category {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #6c757d;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .settings-category.active {
+            color: #0d6efd;
+            font-weight: 600;
+        }
+        
+        .settings-category.active::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #0d6efd;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .settings-category:hover {
+            color: #0b5ed7;
+        }
+        
+        /* 设置分类内容 */
+        .settings-category-content {
+            display: none;
+            padding: 0 20px;
+            overflow: visible !important;
+        }
+        
+        .settings-category-content.active {
+            display: block;
+        }
+
+        /* 网格样式选择器 */
+        .grid-style-selector {
+            position: relative;
+            width: 180px;
+            z-index: 1000; /* 提高z-index */
+        }
+        
+        .selector-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .selector-toggle:hover {
+            background: #e9ecef;
+        }
+        
+        .selector-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            margin-top: 5px;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1200; 
+        }
+        
+        .grid-style-selector.active .selector-options {
+            max-height: 200px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .selector-option {
+            padding: 12px 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .selector-option:hover {
+            background: #f1f3f5;
+        }
+        
+        .selector-option.selected {
+            background: #e7f1ff;
+            color: #0d6efd;
+            font-weight: 500;
+        }
+        /* 复选框开关 */
+        .checkbox-toggle {
+            display: inline-block;
+            position: relative;
+            width: 50px;
+            height: 26px;
+            cursor: pointer;
+            z-index: 100;
+        }
+        
+        .checkbox-toggle input {
+            display: none;
+            z-index: 100;
+        }
+        
+        .checkbox-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ced4da;
+            border-radius: 34px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .checkbox-slider:before {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .checkbox-toggle input:checked + .checkbox-slider {
+            background-color: #0d6efd;
+        }
+        
+        .checkbox-toggle input:checked + .checkbox-slider:before {
+            transform: translateX(24px);
+        }
+        
+        .checkbox-toggle input:disabled + .checkbox-slider {
+            background-color: #e9ecef;
+        }
+        
+        .checkbox-toggle input:disabled + .checkbox-slider:before {
+            background-color: #f8f9fa;
+        }
+
+
+    </style>
+
+</head>
+<body>
+    <div class="svg-button-home" id="svg-button-home">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 25.95662 25.95662">
+            <defs>
+                <radialGradient cx="240.00001" cy="181.35758" r="12.97831" gradientUnits="userSpaceOnUse" id="color-1">
+                    <stop offset="0" stop-color="#383838"/>
+                    <stop offset="1" stop-color="#d6d6d6" stop-opacity="0.00392"/>
+                </radialGradient>
+            </defs>
+            <g transform="translate(-227.0217,-168.37927)">
+                <g stroke="none" stroke-width="0" stroke-miterlimit="10">
+                    <path d="M227.0217,181.35758c0,-7.16773 5.81058,-12.97831 12.97831,-12.97831c7.16773,0 12.97831,5.81058 12.97831,12.97831c0,7.16773 -5.81058,12.97831 -12.97831,12.97831c-7.16773,0 -12.97831,-5.81058 -12.97831,-12.97831z" fill="url(#color-1)"/>
+                    <path d="M229.44596,180.00001c0,-5.82885 4.7252,-10.55406 10.55405,-10.55406c5.82885,0 10.55406,4.72521 10.55406,10.55406c0,5.82885 -4.72521,10.55405 -10.55406,10.55405c-5.82885,0 -10.55405,-4.7252 -10.55405,-10.55405z" fill="#ffffff"/>
+                    <path d="M236.89754,184.38726v-3.86549h-1.78565l4.90443,-4.90902l4.87182,4.90902h-1.75304v3.86549h-1.81419l-0.03534,-2.24025l-2.53306,-0.01936l-0.02446,2.25961z" fill="#989898"/>
+                </g>
+            </g>
+        </svg>
+    </div>
+    <div class="svg-button-add" id="svg-button-add">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0,0,25.95662,25.95662">
+            <defs>
+                <radialGradient cx="240.00001" cy="181.35758" r="12.97831" gradientUnits="userSpaceOnUse" id="color-1">
+                    <stop offset="0" stop-color="#383838"/>
+                    <stop offset="1" stop-color="#d6d6d6" stop-opacity="0.00392"/>
+                </radialGradient>
+            </defs>
+            <g transform="translate(-227.0217,-168.37927)">
+                <g stroke-miterlimit="10">
+                    <path d="M227.0217,181.35758c0,-7.16772 5.81059,-12.97831 12.97831,-12.97831c7.16772,0 12.97831,5.81059 12.97831,12.97831c0,7.16772 -5.81059,12.97831 -12.97831,12.97831c-7.16772,0 -12.97831,-5.81059 -12.97831,-12.97831z" fill="url(#color-1)" stroke="none" stroke-width="0" stroke-linecap="butt"/>
+                    <path d="M229.44597,180.00005c0,-5.82885 4.7252,-10.55406 10.55405,-10.55406c5.82885,0 10.55406,4.72521 10.55406,10.55406c0,5.82885 -4.72521,10.55405 -10.55406,10.55405c-5.82885,0 -10.55405,-4.7252 -10.55405,-10.55405z" fill="#ffffff" stroke="none" stroke-width="0" stroke-linecap="butt"/>
+                    <g fill="none" stroke="#a9a9a9" stroke-width="0.5" stroke-linecap="round">
+                        <path d="M238.81239,179.87658v-4.48663"/>
+                        <path d="M241.05572,177.67429h-4.48663"/>
+                    </g>
+                    <g fill="none" stroke="#a9a9a9" stroke-width="0.75">
+                        <path d="M235.15909,177.61366c0,-1.9832 1.6077,-3.59091 3.59091,-3.59091c1.9832,0 3.59091,1.6077 3.59091,3.59091c0,1.9832 -1.6077,3.59091 -3.59091,3.59091c-1.9832,0 -3.59091,-1.6077 -3.59091,-3.59091z" stroke-linecap="butt"/>
+                        <path d="M244.02276,184.70456l-3.13637,-4.04545" stroke-linecap="round"/>
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+    <div class="svg-button-min" id="svg-button-min">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0,0,25.95662,25.95662"><defs><radialGradient cx="240.00001" cy="181.35758" r="12.97831" gradientUnits="userSpaceOnUse" id="color-1"><stop offset="0" stop-color="#383838"/><stop offset="1" stop-color="#d6d6d6" stop-opacity="0.00392"/></radialGradient></defs><g transform="translate(-227.0217,-168.37927)"><g stroke-miterlimit="10"><path d="M227.0217,181.35758c0,-7.16772 5.81059,-12.97831 12.97831,-12.97831c7.16772,0 12.97831,5.81059 12.97831,12.97831c0,7.16772 -5.81059,12.97831 -12.97831,12.97831c-7.16772,0 -12.97831,-5.81059 -12.97831,-12.97831z" fill="url(#color-1)" stroke="none" stroke-width="0" stroke-linecap="butt"/><path d="M229.44597,180.00005c0,-5.82885 4.7252,-10.55406 10.55405,-10.55406c5.82885,0 10.55406,4.72521 10.55406,10.55406c0,5.82885 -4.72521,10.55405 -10.55406,10.55405c-5.82885,0 -10.55405,-4.7252 -10.55405,-10.55405z" fill="#ffffff" stroke="none" stroke-width="0" stroke-linecap="butt"/><g fill="none" stroke="#a9a9a9" stroke-width="0.5" stroke-linecap="round"><path d="M241.05572,177.67429h-4.48663"/></g><g fill="none" stroke="#a9a9a9" stroke-width="0.75"><path d="M235.15909,177.61366c0,-1.9832 1.6077,-3.59091 3.59091,-3.59091c1.9832,0 3.59091,1.6077 3.59091,3.59091c0,1.9832 -1.6077,3.59091 -3.59091,3.59091c-1.9832,0 -3.59091,-1.6077 -3.59091,-3.59091z" stroke-linecap="butt"/><path d="M240.88639,180.65911l3.13637,4.04545" stroke-linecap="round"/></g></g></g></svg><!--rotationCenter:12.97829999999999:11.620729999999952-->
+    </div>
+    
+
+
+
+    <div class="editor-container">
+        
+        <div class="resize-handle"></div>
+        <!-- 汉堡菜单面板 -->
+        <div class="menu-panel" id="menuPanel">
+            <div class="menu-section">
+                <div class="menu-section-title">主要功能</div>
+                <!-- 新增绘图菜单项 -->
+                <div class="menu-item" id="drawingMenuItem">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 3V21H21" stroke="#495057" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19 9L14 14L10 10L7 13" stroke="#495057" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    绘图
+                </div>
+                <div class="menu-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#495057" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M14 2V8H20" stroke="#495057" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 13H8" stroke="#495057" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 17H8" stroke="#495057" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10 9H9H8" stroke="#495057" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    文件
+                </div>
+                <div class="menu-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.325 4.317C10.751 2.561 13.249 2.561 13.675 4.317C13.861 5.096 14.748 5.5 15.44 5.101C17.092 4.198 18.802 5.908 17.899 7.56C17.5 8.252 17.904 9.139 18.683 9.325C20.439 9.751 20.439 12.249 18.683 12.675C17.904 12.861 17.5 13.748 17.899 14.44C18.802 16.092 17.092 17.802 15.44 16.899C14.748 16.5 13.861 16.904 13.675 17.683C13.249 19.439 10.751 19.439 10.325 17.683C10.139 16.904 9.252 16.5 8.56 16.899C6.908 17.802 5.198 16.092 6.101 14.44C6.5 13.748 6.096 12.861 5.317 12.675C3.561 12.249 3.561 9.751 5.317 9.325C6.096 9.139 6.5 8.252 6.101 7.56C5.198 5.908 6.908 4.198 8.56 5.101C9.252 5.5 10.139 5.096 10.325 4.317Z" stroke="#495057" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15 12C15 12.7956 14.6839 13.5587 14.1213 14.1213C13.5587 14.6839 12.7956 15 12 15C11.2044 15 10.4413 14.6839 9.87868 14.1213C9.31607 13.5587 9 12.7956 9 12C9 11.2044 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2044 9 12 9C12.7956 9 13.5587 9.31607 14.1213 9.87868C14.6839 10.4413 15 11.2044 15 12Z" stroke="#495057" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    设置
+                </div>
+            </div>
+            <div class="menu-divider"></div>
+            <div class="menu-section">
+                <div class="menu-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#495057" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9.09 9.00001C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03872C13.1255 7.15851 13.7588 7.52153 14.2151 8.06353C14.6713 8.60554 14.9211 9.29153 14.92 10C14.92 12 11.92 13 11.92 13" stroke="#495057" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 17H12.01" stroke="#495057" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    关于
+                </div>
+            </div>
+        </div>
+
+            <div class="header">
+                <div class="title-area">
+                    <button class="menu-btn" id="menuBtn">
+                        <span class="menu-line"></span>
+                        <span class="menu-line"></span>
+                        <span class="menu-line"></span>
+                    </button>
+                    <div class="title">绘图</div>
+                </div>
+                <button class="add-btn">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 10.57065 10.57065">
+                        <g fill="none" fill-rule="nonzero" stroke-linecap="round" stroke-linejoin="miter" stroke-miterlimit="10">
+                            <path d="M5.28533,10.57065v-9.82065"/>
+                            <path d="M0.375,5.66033h9.82065"/>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="toolbar" id="mainToolbar">
+                <button class="tool-btn" id="functionBtn">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0,0,25.95556,32.22861">
+                        <g transform="translate(-227.02222,-163.95556)">
+                            <g stroke="none" stroke-miterlimit="10">
+                                <path d="M227.02222,196.04444v-32.08888h25.95556v32.08888z" fill-opacity="0.00392" fill="#ffffff" stroke-width="0"/>
+                                <g fill="#000000" stroke-width="1">
+                                    <path d="M239.68066,177.32981c-0.08537,0.5122 -0.92195,5.05361 -1.22926,6.36823c-0.18781,0.85365 -0.90488,3.97801 -2.64632,3.97801c-0.66584,0 -1.41706,-0.3756 -1.41706,-1.10974c0,-0.64877 0.51219,-0.93902 0.85365,-0.93902c0.32438,0 0.58048,0.20487 0.58048,0.54634c0,0.01706 0,0.76829 -0.87073,0.83658c0.30731,0.32439 0.80242,0.32439 0.85365,0.32439c0.85365,0 1.10974,-1.24633 1.39999,-2.73167c0.39268,-1.82681 1.09267,-5.68531 1.39999,-7.27311h-1.09267c-0.34145,0 -0.4439,0 -0.4439,-0.18781c0,-0.30731 0.17073,-0.30731 0.49512,-0.30731h1.14389c0.39269,-2.23656 0.56341,-2.8512 0.87073,-3.44874c0.34145,-0.66584 1.05852,-1.21216 1.79267,-1.21216c0.75121,0 1.46828,0.39266 1.46828,1.10971c0,0.64878 -0.51219,0.93902 -0.85365,0.93902c-0.32438,0 -0.58048,-0.20487 -0.58048,-0.54634c0,-0.29024 0.20488,-0.78535 0.87073,-0.85365c-0.17073,-0.15364 -0.52926,-0.30731 -0.88779,-0.30731c-0.4439,0 -0.80242,0.39268 -0.90487,0.80242c-0.13658,0.54634 -0.3756,1.75852 -0.70001,3.51705h1.38293c0.30731,0 0.4439,0 0.4439,0.17073c0,0.32439 -0.13658,0.32439 -0.47805,0.32439z"/>
+                                    <path d="M244.5736,182.9082c-0.5249,0 -0.91286,0.50207 -1.08402,1.18672l-0.39938,1.55187c-0.18258,0.75311 -0.22821,0.93569 -0.22821,1.18672c0,0.46784 0.2168,0.76453 0.61618,0.76453c0.51348,0 1.1753,-0.46784 1.4834,-1.472c0.03422,-0.09128 0.04564,-0.14833 0.14834,-0.14833c0.06847,0 0.11411,0.04563 0.11411,0.10269c0,0.25103 -0.61618,1.74586 -1.78008,1.74586c-0.4222,0 -0.99274,-0.22822 -1.1753,-0.90146c-0.23962,0.46784 -0.62759,0.90146 -1.1753,0.90146c-0.49067,0 -1.02696,-0.21682 -1.02696,-0.69605c0,-0.36515 0.29667,-0.60476 0.57054,-0.60476c0.21682,0 0.38796,0.13693 0.38796,0.36515c0,0.13693 -0.09128,0.47925 -0.50207,0.55913c0.23962,0.14833 0.5249,0.14834 0.58195,0.14834c0.60476,0 0.93569,-0.62759 1.10684,-1.31224l0.38796,-1.56328c0.13692,-0.54772 0.20539,-0.81016 0.20539,-1.06121c0,-0.27387 -0.1027,-0.75311 -0.61617,-0.75311c-0.33092,0 -1.09544,0.23962 -1.4834,1.50621c-0.02282,0.04564 -0.04564,0.11412 -0.13693,0.11412c-0.07988,0 -0.12553,-0.05706 -0.12553,-0.1027c0,-0.25103 0.61618,-1.74584 1.78008,-1.74584c0.20539,0 0.91287,0.04564 1.17532,0.90146c0.1027,-0.21682 0.49067,-0.90146 1.18674,-0.90146c0.47926,0 1.02695,0.2168 1.02695,0.69607c0,0.30808 -0.23962,0.60475 -0.58195,0.60475c-0.15975,0 -0.37655,-0.09128 -0.37655,-0.36513c0,-0.21682 0.13693,-0.49067 0.50208,-0.55913c-0.23962,-0.14833 -0.55913,-0.14834 -0.58195,-0.14834z"/>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                    函数
+                </button>
+                <button class="tool-btn" id="geometryBtn">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0,0,25.95556,32.22871">
+                        <g transform="translate(-227.02222,-163.95556)">
+                            <g stroke-miterlimit="10">
+                                <path d="M227.02222,196.04444v-32.08888h25.95556v32.08888z" fill-opacity="0.00392" fill="#ffffff" stroke="none" stroke-width="0" stroke-linecap="butt"/>
+                                <path d="M249.04444,183.4124l-16.4,0.24478l8.81194,-15.66567z" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round"/>
+                                <path d="M231.2,178.88039c0,-4.52873 3.67127,-8.2 8.2,-8.2c4.52873,0 8.2,3.67127 8.2,8.2c0,4.52873 -3.67127,8.2 -8.2,8.2c-4.52873,0 -8.2,-3.67127 -8.2,-8.2z" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="butt"/>
+                            </g>
+                        </g>
+                    </svg>
+                    几何
+                </button>
+            </div>
+
+        
+        
+
+        <div class="expressions-container">
+            <div class="placeholder">点击右上角按钮添加表达式</div>
+        </div>
+
+        <div class="about-dialog" id="aboutDialog">
+            <div class="dialog-content">
+                <img src="logo.svg" alt="SGC Logo" class="about-logo">
+                <div class="about-text">
+                    <p>SGC version 5 for JavaScript</p>
+                    <p>© SQY 2025</p>
+                    <p>基于v3计算引擎</p>
+                </div>
+                <button class="close-btn">关闭</button>
+            </div>
+        </div>
+
+        <!-- 在 expressions-container 内部添加视图容器 -->
+
+        
+        <div class="file-view" id="fileView" style="display: none;">
+            <button class="file-action-btn" id="newFileBtn">新文件</button>
+            <button class="file-action-btn" id="saveFileBtn">保存</button>
+            <button class="file-action-btn" id="openFileBtn">打开</button>
+        </div>
+        
+
+            
+        <div class="settings-view" id="settingsView" style="display: none;">
+            <!-- 添加分类导航栏 -->
+            <div class="settings-categories">
+                <button class="settings-category active" data-category="global">全局</button>
+                <button class="settings-category" data-category="plot">绘图</button>
+                <button class="settings-category" data-category="grid">网格</button>
+                <button class="settings-category" data-category="other">其他</button>
+            </div>
+            
+            <!-- 绘图设置 -->
+            <div class="settings-category-content" id="plot-settings">
+                <div class="setting-item">
+                    <label>显函数精度</label>
+                    <input type="number" id="prec2dInput" class="setting-input" value="0.01" min="500" step="50">
+                </div>
+                
+                <div class="setting-item">
+                    <label>隐函数精度</label>
+                    <input type="number" id="precImplicitInput" class="setting-input" value="0.005" min="10" step="2">
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-content">
+                        <label class="setting-label">自适应绘图</label>
+                        <div class="setting-description">如果有明显卡顿，请关闭此选项</div>
+                    </div>
+                    <div class="setting-control">
+                        <button class="toggle-btn" id="zsyToggle">开启</button>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-content">
+                        <label class="setting-label">丝滑移动</label>
+                        <div class="setting-description">如果造成错误的移动，请关闭此选项</div>
+                    </div>
+                    <div class="setting-control">
+                        <button class="toggle-btn" id="smoothToggle">开启</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 全局设置 -->
+            <div class="settings-category-content active" id="global-settings">
+                <div class="setting-item">
+                    <label>字体大小</label>
+                    <input type="number" id="fontsize" class="setting-input" value="1" min="24" step="12">
+                </div>
+            </div>
+            
+            <!-- 网格设置 -->
+            <div class="settings-category-content" id="grid-settings">
+                <div class="setting-item">
+                    <div class="setting-content">
+                        <label class="setting-label">显示网格</label>
+                        <div class="setting-description">控制是否显示背景网格</div>
+                    </div>
+                    <div class="setting-control">
+                        <label class="checkbox-toggle">
+                            <input type="checkbox" id="gridToggle" checked>
+                            <span class="checkbox-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-content">
+                        <label class="setting-label">网格样式</label>
+                        <div class="setting-description">选择要显示的网格类型</div>
+                    </div>
+                    <div class="setting-control">
+                        <div class="grid-style-selector">
+                            <div class="selector-toggle" id="gridStyleToggle">
+                                <span class="selected-text">主要网格</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 9L12 15L18 9" stroke="#495057" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="selector-options">
+                                <div class="selector-option" data-value="0">主要网格</div>
+                                <div class="selector-option" data-value="1">主要和次要网格</div>
+                                <div class="selector-option" data-value="2">极坐标网格</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-content">
+                        <label class="setting-label">显示坐标轴</label>
+                        <div class="setting-description">控制是否显示坐标轴</div>
+                    </div>
+                    <div class="setting-control">
+                        <label class="checkbox-toggle">
+                            <input type="checkbox" id="axisToggle" checked>
+                            <span class="checkbox-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 其他设置 -->
+            <div class="settings-category-content" id="other-settings">
+                <div class="setting-item">
+                    <label>坐标轴标签大小</label>
+                    <input type="number" id="labelSizeInput" class="setting-input" value="20" min="10" max="30">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="preview-indicator">SGC v4.9.9 | preview</div>
+    </div>
+    
+    <canvas id="canvas" width=600 height=600></canvas>
+    <script>
+        //sqy419.axolotlpower.com/sgc
+        var x;
+        var y;
+
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const offScreenCanvas = document.createElement('canvas');
+        const o_ctx = offScreenCanvas.getContext('2d');
+        
+        canvas.width = width-6;
+        canvas.height = height-6;
+        offScreenCanvas.width = width-6;
+        offScreenCanvas.height = height-6;
+
+        let isDragging = false;
+        let lastPos = { x: 0, y: 0 };
+        let initialPinchDistance = null;
+        let interactionTimeout;
+
+        canvas.addEventListener('mousedown', startInteraction);
+        canvas.addEventListener('mousemove', handleInteraction);
+        canvas.addEventListener('mouseup', endInteraction);
+        canvas.addEventListener('mouseleave', endInteraction);
+        
+        canvas.addEventListener('touchstart', startInteraction);
+        canvas.addEventListener('touchmove', handleInteraction);
+        canvas.addEventListener('touchend', endInteraction);
+        canvas.addEventListener('touchcancel', endInteraction);
+
+        const e=2.718281828459045;
+        const gamma_array=[0.99999999999980993,676.5203681218851,
+            -1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7
+        ]
+        const cof=[-1.3026537197817094,6.4196979235649026e-1,1.9476473204185836e-2,-9.561514786808631e-3,-9.46595344482036e-4,3.66839497852761e-4,4.2523324806907e-5,-2.0278578112534e-5,-1.624290004647e-6,1.303655835580e-6,1.5626441722e-8,-8.5238095915e-8,6.529054439e-9,5.059343495e-9,-9.91364156e-10,-2.27365122e-10,9.6467911e-11,2.394038e-12,-6.886027e-12,8.94487e-13,3.13092e-13,-1.12708e-13,3.81e-16,7.106e-15,-1.523e-15,-9.4e-17,1.21e-16,-2.8e-17]
+        const GaussNode = [0.9862838086968123, 0.9284348836635736, 0.827201315069765, 0.6872929048116855, 0.5152486363581541, 0.31911236892788974, 0.10805494870734365, -0.10805494870734365, -0.31911236892788974, -0.5152486363581541, -0.6872929048116855, -0.827201315069765, -0.9284348836635736, -0.9862838086968123];
+        const GaussWeight = [0.035119460331752, 0.08015808715976036, 0.12151857068790316, 0.15720316715819357, 0.18553839747793788, 0.20519846372129574, 0.21526385346315768, 0.21526385346315768, 0.20519846372129574, 0.18553839747793788, 0.15720316715819357, 0.12151857068790316, 0.08015808715976036, 0.035119460331752];
+        const GaussNode1 = [0, -0.11833633389852105, 0.11833633389852105, -0.23501148310291813, 0.23501148310291813, -0.34838758198902867, 0.34838758198902867, -0.4568730756140824, 0.4568730756140824, -0.5589450609425611, 0.5589450609425611, -0.6531706636968095, 0.6531706636968095, -0.7382271498464599, 0.7382271498464599, -0.8129204868958123, 0.8129204868958123, -0.8762020862145225, 0.8762020862145225, -0.9271834587251158, 0.9271834587251158, -0.9651484024508189, 0.9651484024508189, -0.9895609637285506, 0.9895609637285506, -1.0, 1.0];
+        const GaussWeight1 = [0.11861397766276303, 0.11778143658595616, 0.11778143658595616, 0.11529550025465198, 0.11529550025465198, 0.11119106525743703, 0.11119106525743703, 0.10552574782125301, 0.10552574782125301, 0.09837907458595276, 0.09837907458595276, 0.08985136525929056, 0.08985136525929056, 0.08006232197053846, 0.08006232197053846, 0.06914934236004328, 0.06914934236004328, 0.05726556968016273, 0.05726556968016273, 0.0445776579330617, 0.0445776579330617, 0.031262951735202384, 0.031262951735202384, 0.01750197487606558, 0.01750197487606558, 0.002849002849002849, 0.002849002849002849];
+
+        //高斯积分法权重和节点
+
+
+        function split(expr)
+        {
+            let sym=["+","-","*","/","^","!","(",")",",","&","|"];
+            let expr_l=[];
+            let temp="";
+            let split_i=0;
+            for(split_i=0; split_i<=expr.length-1; split_i++)
+            {
+                if(sym.includes(expr.charAt(split_i))==true)
+                {
+                    expr_l.push(temp);
+                    temp="";
+                    expr_l.push(expr.charAt(split_i));
+                }else{
+                    temp=temp+expr.charAt(split_i);
+                }
+            }
+            if(temp != "")
+            expr_l.push(temp);
+        }
+        //四点法断点判断
+        function isBreakPoint(v1,v2,v3,v4)
+        {
+            return (((v1-v2)*(v3-v4)<0.00000001)
+                ||((v1-v2)*(v2-v3)<0.00000001)
+                ||(Math.abs((v1-v2)*(v3-v4))<0.15/scale*Math.abs(v2-v3)))
+            &&(Math.abs(v2-v3)>0.005/scale+Math.abs(v3-v4)+Math.abs(v1-v2)) || [v1,v2,v3,v4].includes(NaN)
+        }
+        //SGC Scratch版支持的函数
+        function gamma__(x)
+        {
+            return 2.5066282746310002*(x+6.5)**(x-0.5)*e**(-(x+6.5))*(gamma_array[0]+gamma_array[1]/x+gamma_array[2]/(x+1)+gamma_array[3]/(x+2)+gamma_array[4]/(x+3)+gamma_array[5]/(x+4)+gamma_array[6]/(x+5)+gamma_array[7]/(x+6)+gamma_array[8]/(x+7))
+        }
+        function gamma(x)
+        {  
+            if(x>=0.5)
+            {
+                if(Math.floor(x)==x){return Math.round(gamma__(x))}else{
+                    return gamma__(x)
+                }
+            }else{
+                return 3.141592653589793/(Math.sin(3.141592653589793*x)*gamma__(1-x))
+            }
+        }
+        function zeta(x)
+        {
+            if(x>=0 && x<=1)
+            {
+                if(x==1){return Infinity;}
+                return 1/(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*((0.00001658923557755780980*x-0.0001658831128346345465)*x+0.0008127432750553168548)-0.002669899070314999336)+0.006852753223273880074)-0.01524119573447297029)+0.03157227729601929185)-0.06353933315448014802)+0.1264336169222304798)-0.2494813039543478558)+0.4858042506546479747)-0.9226054533330586081)+1.669328015416557301)-2.742871310480565042)+3.675754132816711168)-1.999999999999996137)
+            }else if(1<x && x<=2){
+                return 1/(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*((7.0136086863268139265e-8*x-1.8231756502173178723e-6)*x+0.000022502818771898480305)-0.00017595227554219094363)+0.00098256635381909915893)-0.0041977636835665411190)+0.014398361553666610701)-0.041258377951996342025)+0.10246770761962742080)-0.22842498268263614989)+0.47100354470001713180)-0.91450968984807936592)+1.6660156845851656908)-2.7419191882999133648)+3.6755828411518790971)-1.9999855010016496292)
+            }else if(2<x && x<=4){
+                return 1/(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*((2.4920380103289109846e-10*x-1.2452374707967921599e-8)*x+2.9264234908335195802e-7)-4.3013859586232520014e-6)+0.000044369777198312986156)-0.00034177840002708575978)+0.0020437769459176558915)-0.0097469303529665944806)+0.037852188499441070637)-0.12188426245833665784)+0.33108663106327793354)-0.77115737568441647967)+1.5554795726716316027)-2.6815912131559802698)+3.6548221673156810923)-1.9966013186605142110)
+            }else if(4<x && x<=7){
+                return 1/(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*(x*((3.5585304411449785840e-13*x-3.1970999734798344681e-11)*x+1.3473679676205051059e-9)-3.5381775955177661356e-8)+6.4861438834576092470e-7)-8.8130151560951077360e-6)+0.000091975579121051609569)-0.00075395202489231597585)+0.0049233380297057180318)-0.025825787928200971812)+0.10924599777492541060)-0.37243645516791469317)+1.0155954157286250518)-2.1621917069878626682)+3.3379407239591508379)-1.9044045444481592939)
+            }else if(x<0){
+                return Math.pow(2, x) * Math.pow(Math.PI, x-1) * Math.sin(Math.PI * x / 2) * gamma(1-x) * zeta(1-x);
+            }else{
+                u=1;
+                sum_=0;
+                while(Math.abs(1/u**x)>1e-13)
+                {
+                    sum_ +=1/u**x;
+                    u++;
+                }
+                return sum_;
+            }
+        }
+
+        function ErfcCheb_(z){
+            ty=4*2/(2+z)-2;
+            d=0;
+            dd=0;
+            j=28;
+            while(j>1)
+            {
+                tmp=d
+                d=ty*d-dd+cof[j-1];
+                dd=tmp;
+                j--;
+            }
+            return 2/(2+z)*Math.exp(-z*z+0.5*(cof[0]+ty*d)-dd)
+        }
+        function erf(x)
+        {
+            if(x<0){
+                return ErfcCheb_(-x)-1
+            }else{
+                return 1-ErfcCheb_(x)
+            }
+        }
+        function LambertW(x)
+        {
+            if(x>1){
+                if(x<15){
+                    a=x*(x*(x*(x*(x*(x*(x*(x*((1.8077822042612660827e-8-2.0276794302021828913e-10*x)*x-7.0743503069040131155e-7)+0.000015991950608999190752)-0.00023143789012913141901)+0.0022490400055240148597)-0.015020539579256324464)+0.069967579972522074872)-0.23464685265284333143)+0.66786249216883629205)+0.0771464999892587074
+                }else{
+                    a=x**(1/3)/2+0.95
+                }
+                f_=0
+                while(f_<5)
+                {
+                    a=a-(a*Math.log(a)-x)/(Math.log(a)+1)
+                    f_++;
+                }
+                return Math.log(a)
+            }else{
+                if(x>= -1/Math.E){
+                    a=x*(x*(x*(x*(x*(x*(x*(x*((222.865751875211706-57.4405478550015796*x)*x-331.684877629562551)+223.302703179018164)-48.966189123795797)-15.079390900649942)+6.405047430226923)+1.493713339588630)-1.3480319694781413)+1.0165440777734345)+0.00180801441324718
+                    f_=0
+                    while(f_<5)
+                    {
+                        a=a-(a*Math.exp(a)-x)/(a*Math.exp(a)+Math.exp(a))
+                        f_++;
+                    }
+                    return a
+                }else{
+                    return NaN;
+                }
+            }
+        }
+        function Si(x) {
+            if(x<0){
+                _func_temp=-Si(-x);
+            }else{
+                if(x>21.991148575128552){
+                    _func_temp = Math.PI / 2 +
+                        Math.sin(x) * (
+                            -1 / x**2
+                            +6 / x**4
+                            -120 / x**6
+                            +5040 / x**8
+                        )+
+                        Math.cos(x) * (
+                            -1 / x
+                            +2 / x**3
+                            -24 / x**5
+                            +720 / x**7
+                        );
+                } else {
+                    let _func_temp_1 = 0;
+                    _func_temp = 0;
+                    for (let i = 0; i < GaussNode.length; i++) {
+                        _func_temp_1 = 0.5 * (x + x * GaussNode[i]);
+                        if (_func_temp_1 === 0) {
+                            _func_temp += GaussWeight[i] * x / 2;
+                        } else {
+                            _func_temp += GaussWeight[i] * 0.5 * x * Math.sin(_func_temp_1) / _func_temp_1;
+                        }
+                    }
+                }
+            }
+            return _func_temp;
+        }
+        function Ci(x){
+            if(x<0){
+                return NaN;
+            }else{
+                if(x > 21.991148575128552){
+                    _func_temp= 
+                        Math.cos(x)*(
+                            -1 / x**2
+                            +6 / x**4
+                            -120 / x**6
+                            +5040 / x**8
+                        )-
+                        Math.sin(x)*(
+                            -1 / x
+                            +2 / x**3
+                            -24 / x**5
+                            +720 / x**7
+                        );
+                }else{
+                    let _func_temp_1=0;
+                    _func_temp=0;
+                    for (let i=0; i<GaussNode.length; i++) {
+                        _func_temp_1=0.5*(x+x*GaussNode[i]);
+                        if(_func_temp_1 === 0){
+                            _func_temp += GaussWeight[i] * x / 2;
+                        }else{
+                            _func_temp += GaussWeight[i] * 0.5 * x * (Math.cos(_func_temp_1)-1) / _func_temp_1;
+                        }
+                    }
+                    _func_temp+=Math.log(x);
+                    _func_temp+=0.577215664901532;
+                }
+            }
+            return _func_temp;
+        }
+        function Ei(x) {
+            if (x === 0) {
+                return -Infinity;
+            }
+
+            if (x < 0) {
+                _func_temp = 0;
+                _Gauss_temp = Math.atan(-x);
+                for (let i = 0; i < GaussNode.length; i++) {
+                    _func_temp_1 = 0.5 * (1.5707963266948965 + _Gauss_temp + (1.5707963266948965 - _Gauss_temp) * GaussNode[i]);
+                    _func_temp += GaussWeight[i] * Math.exp(-Math.tan(_func_temp_1)) / Math.tan(_func_temp_1) * (1.5707963266948965 - _Gauss_temp) / 2 * (1 + Math.tan(_func_temp_1) * Math.tan(_func_temp_1));
+                }
+                _func_temp = -_func_temp;
+            } else {
+                _func_temp = 0;
+                _Gauss_temp = Math.atan(-x);
+                for (let i = 0; i < GaussNode.length; i++) {
+                    _func_temp_1 = 0.5 * (-0.09966865249116204 + _Gauss_temp + (-0.09966865249116204 - _Gauss_temp) * GaussNode[i]);
+                    _func_temp += GaussWeight[i] * Math.exp(-Math.tan(_func_temp_1)) / Math.tan(_func_temp_1) * (-0.09966865249116204 - _Gauss_temp) / 2 * (1 + Math.tan(_func_temp_1) * Math.tan(_func_temp_1));
+                }
+                _func_temp = -1.62281281396928 - _func_temp;
+            }
+            return _func_temp;
+        }
+        function FresnelS(x) {
+            if(x<0){
+                return -FresnelS(-x)
+            }else{
+                if(x>1e+20){
+                    return 0.5
+                }
+                else if (x > 4.59) {
+                    return (((x**4 * (-0.318309886183791) + 0.0967546032995985) * x**4 - 0.343115182520605) * x**4 + 3.44171880544581) / Math.exp(13 * Math.log(x)) * Math.cos(1.5707963267948966 * x * x) + 0.5 + (((x**4 * (-0.101321183642338) + 0.153989733820265) * x**4 - 0.982952592264580) * x**4 + 14.2419305760949) / Math.exp(15 * Math.log(x)) * Math.sin(1.5707963267948966 * x * x);
+                }else{
+                    _func_temp = 0;
+                    _func_temp_1 = 0;
+                    for (let i = 0; i < GaussNode1.length; i++) {
+                        _func_temp_1 = 0.5 * ((GaussNode1[i] + 1) * x);
+                        _func_temp += GaussWeight1[i] * 0.5 * x * Math.sin(_func_temp_1 * _func_temp_1 * 1.5707963267948966);
+                    }
+                    return _func_temp;
+                }
+            }
+        }
+        function FresnelC(x) {
+            if(x<0){
+                return -FresnelC(-x)
+            }else{
+                if(x>1e+20){
+                    return 0.5
+                }else if(x>4.59) {
+                    return (((x**4 * (-0.101321183642338) +0.153989733820265) * x**4 -0.98295259226458) * x**4 + 14.2419305760949) / Math.exp(15 * Math.log(x)) * Math.cos(1.5707963267948966 * x * x) + 0.5 + (((x**4 * 0.318309886183791 -0.096754603299598) * x**4 +0.343115182520605) * x**4 -3.44171880544581) / Math.exp(13 * Math.log(x)) * Math.sin(1.5707963267948966 * x * x);
+                }else{
+                    _func_temp = 0;
+                    _func_temp_1 = 0;
+                    for (let i = 0; i < GaussNode1.length; i++) {
+                        _func_temp_1 = 0.5 * ((GaussNode1[i] + 1) * x);
+                        _func_temp += GaussWeight1[i] * 0.5 * x * Math.cos(_func_temp_1 * _func_temp_1 * 1.5707963267948966);
+                    }
+                    return _func_temp;
+                }
+            }
+        }
+
+
+
+
+        //SGC Calculate Engine from Scratch
+
+        //SGC V4.7.3 for Scratch 的计算引擎
+        //初始化
+        const funs=['sin','cos','tan','asin','acos','atan',
+        'csc','sec','cot','acsc','asec','acot',
+        'sinh','cosh','tanh','asinh','acosh','atanh',
+        'csch','sech','coth','acsch','asech','acoth',
+        'abs','floor','ceil','gamma','ln','log','logbase',
+        'arg','conjugate','Re','Im','erf','erfc','sgn','round',
+        'Li','sqrt','cbrt','zeta','psi','beta',
+        'min','max','Ei','Si','Ci','if','and','or','not','mod',
+        'shi','chi','sinc','LambertW','lngamma',
+        'FresnelS','FresnelC',
+        'arcsin','arccos','arctan','arccsc','arcsec','arccot',
+        'arsinh','arcosh','artanh','arcsch','arsech','arcoth',
+        'digamma','logb','sinIntegral','cosIntegral','expIntegral',
+        'EllipticK','EllipticE','Derivative','exp','alog',
+        'diff','case','ifelse','gcd','lcm',
+        'sinhIntegral','coshIntegral','sum','prod','int']
+        const ops=['+','-','*','/','^','!','(',')','=','<','>','<=','>=',',','&&','||']
+        const standardOps=['+','-','*','/','^','!','=','<','>','<=','>=',',','&&','||']
+        const MarchingSquarePos=['34','24','23','13','14','12341324','12'];
+        var definedFunc=[];
+        var diffvar=0;
+        var mainSym=[];//符号总表
+        var mainNum=[0,0,0,0,0];//操作数总表，x,y,z,t,?
+        var result_=[];
+        var resultStack_=[];
+        var symbolStack_=[];
+        var mainDefinedFunction=[];//自定义函数总表
+        var VarName=[];//全局变量名
+        var VarValue=[];//全局变量值
+        var VarInArray=[];//自由变量在变量中的位置
+        var FreeVar=[];//自由变量
+
+        function reset_(){
+            definedFunc=[];
+            diffvar=0;
+            mainSym=[];
+            mainNum=[0,0,0,0,0];
+            result_=[];
+            resultStack_=[];
+            symbolStack_=[];
+            VarName=[];
+            VarValue=[];
+            VarInArray=[];
+            FreeVar=[];
+            mainDefinedFunction=[];
+        }
+        reset_()
+        const sym_value=[1,1,2,2,3,3,
+            5,0,0,0,0,0,0,0,0]
+        const sym_=['+','-','*','/','^','!',
+            ',','<','>','==','!=','>=','<=','&&','||']
+
+        function isNumeric(value) {
+            return !isNaN(parseFloat(value)) && !isNaN(value);
+        }
+        function isTrueNumeric(value) {
+            return !isNaN(parseFloat(value)) && !isNaN(value);
+        }
+        function isIExp(x)
+        {
+            return (ops.includes(x)||funs.includes(x)||(isNumeric(x))||definedFunc.includes(x)||x==='Pi'||x==='_t_')
+        }
+        function splitInput(in_exp)
+        {
+            splitResult=[];
+            k=0;
+            temp_='';
+            while(k<in_exp.length)
+            {
+                if('+-*/^!()=<>[]&|,'.includes(in_exp.charAt(k)))
+                {
+                    if(temp_!=''){
+                        splitResult.push(temp_);
+                    }
+                    temp_=''
+                    splitResult.push(in_exp.charAt(k));
+                }else{
+                    temp_ += in_exp.charAt(k)
+                }
+                k++;
+            }
+            if(temp_!=''){
+                splitResult.push(temp_);
+            }
+            return splitResult
+        }
+        function checkExpression(splitResult){
+            k=0;
+            let depth=0;
+            while(k<splitResult.length)
+            {
+                index=splitResult[k];
+                if(['>','<','='].includes(index) && splitResult[k+1]==='=')
+                {
+                    splitResult[k]=index+splitResult[k+1]
+                    splitResult.splice(k+1, 1)
+                }
+                if(index+splitResult[k+1]==='&&')
+                {
+                    splitResult[k]='and'
+                    splitResult.splice(k+1, 1)
+                }else if(index+splitResult[k+1]==='||'){
+                    splitResult[k]='or'
+                    splitResult.splice(k+1, 1)
+                }
+                if(!(isIExp(index))){
+                    //既不是数也不是函数、运算符.
+                    //可能是xsin这类简写，可能是2x这类简写.
+                    //拆分：
+                    substr=Array.from(index);
+                    splitResult.splice(k, 1);
+                    while(substr.length>0)
+                    {
+                        tempindex=substr.join('');
+                        temp_=tempindex
+                        while(!(tempindex.length==1||(isIExp(tempindex))))
+                        {
+                            tempindex=temp_.substring(0, temp_.length-1)
+                            temp_=tempindex
+                        }
+                        splitResult.splice(k, 0, tempindex);
+                        k++;
+                        u=0;
+                        while(u<tempindex.length)
+                        {
+                            substr.splice(0, 1);
+                            u++;
+                        }
+                    }
+                    k-=1;
+                }
+                if(index==='-')
+                {
+                    if(k==0 || ('+-*/==<=>=(^,'.includes(splitResult[k-1]) && (splitResult[k-1]!='')))
+                    {
+                        let temp_add=k+1;
+                        let temp_depth=0
+                        while(!((temp_add>splitResult.length-1) || (temp_depth==0 && '+-) ],<=>=='.includes(splitResult[temp_add]) && splitResult[temp_add]!=='')))
+                        {
+                            if(splitResult[temp_add]==='('){temp_depth++}
+                            if(splitResult[temp_add]===')'){temp_depth--}
+                            temp_add++;
+                        }
+                        splitResult.splice(temp_add, 0, ')')
+                        splitResult.splice(k, 0, '0')
+                        splitResult.splice(k, 0, '(')
+                        k+=2;
+                    }
+                }
+                k++;
+            }
+            k=0;
+            error=false;
+            while(k<=splitResult.length-1)
+            {
+                let index=splitResult[k];
+                if(k!=splitResult.length-1){
+                    if(!(isIExp(index)) && !(ops.includes(splitResult[k+1])) && splitResult[k+1]!=')'){
+                        splitResult.splice(k+1, 0, '*');
+                        k++;
+                    }else{
+                        if(index===')' && !(['and','or'].includes(splitResult[k+1])) && (splitResult[k+1]=='(' || funs.includes(splitResult[k+1]) || !isIExp(splitResult[k+1]))){
+                            splitResult.splice(k+1, 0, '*');
+                            k++;
+                        }else{
+                            if((isNumeric(index)) && splitResult[k+1]=='('){
+                                splitResult.splice(k+1, 0, '*');
+                                k++;
+                            }else{
+                                if((isNumeric(index)) && !(ops.includes(splitResult[k+1]))){
+                                    splitResult.splice(k+1, 0, '*');
+                                    k++;
+                                }
+                            }
+                        }
+                    }
+                }
+                if(standardOps.includes(index) && standardOps.includes(splitResult[k+1]) && index != '!'){
+                    inputerror[i]='Error: 连续使用两个运算符"'+index+splitResult[k+1]+'"';
+                    //语法错误：两个运算符连续使用
+                    error=true;
+                }
+                if(index==='(')
+                {
+                    depth++;
+                    if(splitResult[k+1]===')')
+                    {
+                        inputerror[i]='Error: 空字段';error=true;
+                    }
+                }
+                if(index===')')
+                {
+                    depth--;
+                    if(depth<0){inputerror[i]='Error: 错误的括号深度';error=true;}
+                }
+                k++;
+            }
+            index=splitResult[splitResult.length-1]
+            if(error){
+            }else{
+                if((standardOps.includes(index) && !('!'.includes(index)))||(funs.includes(index))){
+                        //语法错误：末尾未完结的运算符
+                        inputerror[i]='Error: 末尾未完结的运算符"'+index+'"'
+                        error=true;
+                }
+                if(depth>0){inputerror[i]='Error: 括号不匹配: 多余的"("';error=true;}
+                if(depth<0){inputerror[i]='Error: 括号不匹配: 多余的")"';error=true;}
+            }
+            if(error){
+                inputType[i]='error'
+                return []
+            }else{
+                return splitResult;
+            }
+        }
+        var calc_subVar=[];
+        var calc_includeXorY=[];
+        const adv=['prod','diff','sum','int','fsolve'];
+
+        var i_=0;
+
+        function sym()
+        {
+            if(symbolStack_.length==0 || symbolStack_[0]==='(')
+            {
+                symbolStack_.unshift(expr[i_]);
+            }else{
+                if(funs.includes(expr[i_])||definedFunc.includes(expr[i_]))
+                {
+                    _k=4;
+                }else{
+                    _k=sym_value[sym_.indexOf(expr[i_])];
+                }
+                if(funs.includes(symbolStack_[0])||definedFunc.includes(symbolStack_[0]))
+                {
+                    _t=4;
+                }else{
+                    _t=sym_value[sym_.indexOf(symbolStack_[0])];
+                }
+                if(_k>_t)
+                {
+                    symbolStack_.unshift(expr[i_]);
+                }else{
+                    resultStack_.unshift(symbolStack_[0]);
+                    symbolStack_.shift();
+                    sym();
+                }
+            }
+        }
+        function toRPN(expr_,nest)
+        {
+            expr=expr_;
+            if(!nest){
+                calc_subVar=[];
+                calc_includeXorY=[];
+            }
+            if(expr.includes('prod') || expr.includes('diff') || 
+                expr.includes('sum') || expr.includes('int') || expr.includes('fsolve'))
+            {
+                SubExprStack=[];
+                TempExprStack=[];
+                depth=1;
+                exp_i=0;
+                while(exp_i<=expr.length-1)
+                {
+                    expr_i++;
+                    if(adv.includes(expr[expr_i]))
+                    {
+                        exp_i+=2;
+                        while(!(
+                            exp_i>expr.length-1 || (depth=0 && expr[expr_i]==')') || (depth=1 && expr[expr_i]==',')
+                        ))
+                        {
+                            SubExprStack.push(expr[expr_i])
+                            if(expr[expr_i]=='(')
+                            {
+                                depth++;
+                            }else{
+                            if(expr[expr_i]==')')
+                            {
+                                depth--;
+                            }
+                            }
+                            expr.splice(exp_i,1);
+                        }
+                        exp_x=expr[expr_i+1]
+                        while(SubExprStack.includes(exp_x))
+                        {
+                            SubExprStack.splice(SubExprStack.indexOf(exp_x),1,'diff_var'+diffvar)
+                        }
+                        expr.splice(exp_i+1,1,'diff_var'+diffvar)
+                        mainSym.push(expr[exp_i+1]+'_add');
+                        mainNum.push(null);
+                        mainSym.push(mainNum.length-1);
+                        diffvar++;
+                        j_=0
+                        while(j_<=SubExprStack.length-1)
+                        {
+                            expr.splice(exp_i,0,SubExprStack[SubExprStack.length-1])
+                            SubExprStack.pop()
+                        }
+                        exp_i -=2;
+                    }
+                }
+            }
+            resultStack_=[];
+            symbolStack_=[];
+            i_=0
+            while(i_<=expr.length-1)
+            {
+                if(expr[i_]==='e'){expr[i_]=Math.E;}
+                if(expr[i_]==='EulerGamma'){expr[i_]=0.577215664901533;}
+                if(expr[i_]==='π' || expr[i_]==='Pi'){expr[i_]=Math.PI;}
+                if(expr[i_]==='true' || expr[i_]==='false'){expr[i_]=(expr[i_]==='true')}
+                if(isTrueNumeric(expr[i_])){expr[i_]=parseFloat(expr[i_])}
+                if('+-*/^!<=>==&&||'.includes(expr[i_])||funs.includes(expr[i_])||definedFunc.includes(expr[i_])||['and','or'].includes(expr[i_]))
+                {
+                    sym();
+                }else{
+                    if(!(ops.includes(expr[i_])||funs.includes(expr[i_])||definedFunc.includes(expr[i_])))
+                    {
+                        resultStack_.unshift(expr[i_])
+                    }else{
+                        if(expr[i_]==='(')
+                        {
+                            symbolStack_.unshift('(')
+                        }else{
+                            if(expr[i_]===',')
+                            {
+                                if(symbolStack_.includes('('))
+                                {
+                                    while(!(symbolStack_[0]==='('))
+                                    {
+                                        resultStack_.unshift(symbolStack_[0])
+                                        symbolStack_.shift()
+                                    }
+                                }else{
+                                    //错误的逗号，例如 5,2)
+                                    break;
+                                }
+                            }else{
+                                if(expr[i_]===')')
+                                {
+                                    if(symbolStack_.includes('('))
+                                    {
+                                        while(!(symbolStack_[0]==='('))
+                                        {
+                                            resultStack_.unshift(symbolStack_[0])
+                                            symbolStack_.shift()
+                                        }
+                                        symbolStack_.shift()
+                                    }else{
+                                        //缺少(
+                                        break;
+                                    }
+                                }else{
+                                        //未知元素
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+                i_++;
+            }
+            return (symbolStack_.reverse().concat(resultStack_)).reverse()
+        }
+        function createNewVar(Name,Value)
+        {
+            VarName.push(Name)
+            if(Value===null){
+                VarValue.push(1)//默认值为1
+            }else{
+                VarValue.push(Value)
+            }
+            //SGC原版还有添加变量属性...
+        }
+        var _Nums=[];//操作数
+        var _Syms=[];//符号
+        var _tempstack=[];
+        var _x=[];var _y=[];var _z=[];var _t=[];
+        var _VarAdd=[];var _VarName=[];var _VarStackAdd=[];
+        var _Func_VarAdd=[];var _Func_VarName=[];var _Func_VarStackAdd=[];
+        var _Temp_Var=[];var _Temp_Var_Add=[];
+        function AddElement(i)
+        {
+            _Syms.push(_tempstack[_tempstack.length-1-i])
+            _tempstack.splice(_tempstack.length-1-i,1)
+        }
+        function compileExpression(RPNexpression)
+        {
+            _Nums=[];//操作数
+            _Syms=[];//符号
+            _tempstack=[];
+            _x=[];_y=[];_z=[];_t=[];
+            _VarAdd=[];_VarName=[];_VarStackAdd=[];
+            _Func_VarAdd=[];_Func_VarName=[];_Func_VarStackAdd=[];
+            _Temp_Var=[];_Temp_Var_Add=[];
+            result_=RPNexpression;
+            i_=0;
+            sym_i=0;
+            while(i_<=result_.length-1)
+            {
+                _stackIn=result_[i_]
+                if(_stackIn==='x'){
+                    _Nums.push('')
+                    _tempstack.push('x')
+                    _x.push(i_)
+                }else if(_stackIn==='y'){
+                    _Nums.push('')
+                    _tempstack.push('y')
+                    _y.push(i_)
+                }else if(_stackIn==='z'){
+                    _Nums.push('')
+                    _tempstack.push('z')
+                    _z.push(i_)
+                }else if(_stackIn==='_t_'){
+                    _Nums.push('')
+                    _tempstack.push('_t_')
+                    _t.push(i_)
+                }else if(_stackIn.toString().includes('_diff_var')){
+                    _Nums.push('');
+                    _tempstack.push(_stackIn);
+                }else if(!(isIExp(_stackIn)))
+                {
+                    if(_stackIn.toString().includes('_var_'))
+                    {
+                        _Nums.push('')
+                        _tempstack.push(_stackIn)
+                    }else{
+                        _Nums.push('')
+                        _tempstack.push(i_)
+                        _VarName.push(_stackIn)
+                        _VarStackAdd.push(i_)
+                        if(!(VarName.includes(_stackIn)))
+                        {
+                            createNewVar(_stackIn,null)
+                        }
+                        _VarAdd.push(VarName.indexOf(_stackIn))
+                    }
+                }else{
+                if(isNumeric(_stackIn))
+                {
+                    _Nums.push(_stackIn)
+                    _tempstack.push(i_)
+                }else{
+                    sym_i++;
+                    if('+-*/^<=>===&&||'.includes(_stackIn)||_stackIn==='and'||_stackIn==='or')
+                    {
+                        _Syms.push(_stackIn);
+                        AddElement(1);
+                        AddElement(0);
+                        _Nums.push('');
+                        _Syms.push(_Nums.length-1);
+                        _tempstack.push(_Nums.length-1);
+                    }else{
+                        if(definedFunc.includes(_stackIn))
+                        {
+                            //用户自定义函数
+                            _Syms.push(_stackIn);
+                            _Syms.push('?'+mainDefinedFunction[mainDefinedFunction.indexOf(_stackIn)+1]);
+                            _Syms.push('?'+mainDefinedFunction[mainDefinedFunction.indexOf(_stackIn)+2]);
+                            _Syms.push('?'+mainDefinedFunction[mainDefinedFunction.indexOf(_stackIn)+3]);
+                            _Syms.push('?'+mainDefinedFunction[mainDefinedFunction.indexOf(_stackIn)+4]);
+                            let __j=mainDefinedFunction[mainDefinedFunction.indexOf(_stackIn)+1]-1;
+                            let _t_j=__j
+                            let _u=0
+                            while(_u<=_t_j)
+                            {
+                                AddElement(__j)
+                                __j--;
+                                _u++;
+                            }
+                            _Nums.push('');
+                            _Syms.push(_Nums.length-1);
+                            _tempstack.push(_Nums.length-1);
+                        }else{
+                            if(['if','beta','logb','and','or'].includes(_stackIn))
+                            {
+                                _Syms.push(_stackIn);
+                                AddElement(1);
+                                AddElement(0);
+                                _Nums.push('');
+                                _Syms.push(_Nums.length-1);
+                                _tempstack.push(_Nums.length-1);
+                            }else{
+                                //处理一元函数，如sin
+                                _Syms.push(_stackIn);
+                                AddElement(0);
+                                _Nums.push('');
+                                _Syms.push(_Nums.length-1);
+                                _tempstack.push(_Nums.length-1);
+                            }
+                        }
+                    }
+                }
+                }
+                i_++;
+            }
+            _Syms.unshift(sym_i);
+            if(sym_i==0)
+            {
+                if(['x','y','z','_t_'].includes(_stackIn) || _stackIn.toString().includes('_diff_var') || _stackIn.toString().includes('_var_'))
+                {
+                    _Syms[0]=-1;
+                    _Syms.push(_stackIn);
+                }
+            }
+        }
+        function moveCompiledExpressionToMainArray()
+        {
+            address_=[mainSym.length];//解析开始位置
+            stat=mainNum.length
+            mainNum=mainNum.concat(_Nums);
+            mainSym.push(_Syms[0]);
+            i_=1
+            while(i_<=_Syms.length-1)
+            {
+                if(!isTrueNumeric(_Syms[i_]))
+                {
+                    if(['x','y','z','_t_'].includes(_Syms[i_]))
+                    {
+                        mainSym.push(['x','y','z','_t_'].indexOf(_Syms[i_]));
+                    }else{
+                        if(_Syms[i_].includes('_diff_var')||_Syms[i_].includes('_var_'))
+                        {
+                            mainSym.push(mainSym[1+mainSym.indexOf(_Syms[i_]+'_add')]);
+                        }else{
+                            if(_Syms[i_].charAt(0)=='?')
+                            {
+                                mainSym.push(Number(_Syms[i_].substring(1,_Syms[i_].length)));
+                            }else{
+                                mainSym.push(_Syms[i_]);
+                            }
+                        }
+                    }
+                }else{
+                    mainSym.push(stat+_Syms[i_])
+                }
+                i_++;
+            }
+            mainNum.push(VarInArray.length)
+            i_=0
+            while(i_<_VarStackAdd.length)
+            {
+                FreeVar.push(stat+_VarStackAdd[i_])
+                i_++;
+            }
+            VarInArray=VarInArray.concat(_VarAdd)
+            mainNum.push(FreeVar.length-1)
+            address_[1]=mainNum.length-1
+            return address_
+        }
+        function NewFunction(func_expr)
+        {
+            expr=splitInput(func_expr);
+            funcName=expr[0]
+            definedFunc.push(funcName);
+            expr.shift();
+            UserFunc_Var=[];
+            while(!(expr[0]=='='))
+            {
+                if(!('(,)'.includes(expr[0])))
+                {
+                    UserFunc_Var.push(expr[0])
+                }
+                expr.shift();
+            }
+            expr.shift();
+            expr=checkExpression(expr)
+            if(0==0 /* 函数定义式合法？ */)
+            {
+                TempStart=mainSym.length
+                funci=0
+                while(funci<=UserFunc_Var.length-1){
+                    while(expr.includes(UserFunc_Var[funci]))
+                    {
+                        expr[expr.indexOf(UserFunc_Var[funci])]='_var_'+diffvar
+                    }
+                    mainSym.push('_var_'+diffvar+'_add')
+                    mainNum.push(null)
+                    mainSym.push(mainNum.length-1)
+                    diffvar++;
+                    funci++;
+                }
+                compileExpression(toRPN(expr),0)
+                temp_=moveCompiledExpressionToMainArray()
+                mainDefinedFunction.push(funcName)
+                mainDefinedFunction.push(UserFunc_Var.length)
+                mainDefinedFunction.push(temp_[0])//开始位置
+                mainDefinedFunction.push(temp_[1])//计算结束位置
+                mainDefinedFunction.push(TempStart)
+            }
+        }
+        function NewVariable(var_expr)
+        {
+            expr=splitInput(var_expr);
+            VarName_=expr[0]
+            expr.shift();
+            expr.shift();
+            expr=checkExpression(expr)
+            compileExpression(toRPN(expr),0)
+            createNewVar(VarName_,RPNEvalf(moveCompiledExpressionToMainArray()))
+        }
+        function RPNEvalf(add,temp)
+        {
+            let st_=add[0];
+            let ed_=add[1];
+            let _i=mainNum[ed_-1];
+            let j_=0;
+            while(j_<=mainNum[ed_])
+            {
+                mainNum[FreeVar[_i]]=VarValue[VarInArray[_i]];
+                _i++;
+                j_++;
+            }
+            let f_=0
+            let i_=st_+1
+            let result_=0
+            while(f_<mainSym[st_])
+            {
+                op=mainSym[i_]
+                if(definedFunc.includes(op))
+                {
+                    let __i=mainSym[i_+4]
+                    let _t=i_+5
+                    let _k=0
+                    while(_k<mainSym[i_+1])
+                    {
+                        mainNum[mainSym[__i+1]]=mainNum[mainSym[_t]]
+                        _k++;
+                        _t++;
+                        __i+=2
+                    }
+                    mainNum[mainSym[i_+mainSym[i_+1]+5]]=RPNEvalf([mainSym[i_+2],mainSym[i_+3]],i_)
+                    i_+=mainSym[i_+1]+6
+                }else{
+                    if(op.length==1){
+                        if(op==='!'){mainNum[mainSym[i_ + 2]]=gamma(mainNum[mainSym[i_ + 1]]+1); i_ += 3;}else{
+                        let arg1 = mainNum[mainSym[i_ + 1]];
+                        let arg2 = mainNum[mainSym[i_ + 2]];
+                        switch (op) {
+                            case '+': mainNum[mainSym[i_ + 3]] = arg1 + arg2; break;
+                            case '-': mainNum[mainSym[i_ + 3]] = arg1 - arg2; break;
+                            case '*': mainNum[mainSym[i_ + 3]] = arg1 * arg2; break;
+                            case '/': mainNum[mainSym[i_ + 3]] = arg1 / arg2; break;
+                            case '^': mainNum[mainSym[i_ + 3]] = Math.pow(arg1, arg2); break;
+                            case '>': mainNum[mainSym[i_ + 3]] = arg1 > arg2; break;
+                            case '<': mainNum[mainSym[i_ + 3]] = arg1 < arg2; break;
+                        }
+                        i_ += 4;
+                        }
+                    }else{
+                        if(['if','logb','beta','==','>=','<='].includes(op)){
+                            let arg1 = mainNum[mainSym[i_ + 1]];
+                            let arg2 = mainNum[mainSym[i_ + 2]];
+                            switch (op) {
+                                case 'logbase': mainNum[mainSym[i_ + 3]] = Math.log(arg2)/Math.log(arg1); break;
+                                case 'logb': mainNum[mainSym[i_ + 3]] = Math.log(arg2)/Math.log(arg1); break;
+                                case 'beta': mainNum[mainSym[i_ + 3]] = gamma(arg1)*gamma(arg2)/(gamma(arg1+arg2)); break;
+                                case '<=': mainNum[mainSym[i_ + 3]] = arg1 <= arg2; break;
+                                case '>=': mainNum[mainSym[i_ + 3]] = arg1 >= arg2; break;
+                                case 'and': mainNum[mainSym[i_ + 3]] = arg1 && arg2; break;
+                                case 'or': mainNum[mainSym[i_ + 3]] = arg1 || arg2; break;
+                                case '==': mainNum[mainSym[i_ + 3]] = arg1 == arg2; break;
+                                case 'if': mainNum[mainSym[i_ + 3]] = arg1 ? arg2 : NaN; break;
+                            }
+                            i_ += 4;
+                        }else{
+                            let arg = mainNum[mainSym[i_ + 1]];
+                            switch (op) {
+                                case 'sin': mainNum[mainSym[i_ + 2]] = Math.sin(arg); break;
+                                case 'cos': mainNum[mainSym[i_ + 2]] = Math.cos(arg); break;
+                                case 'tan': mainNum[mainSym[i_ + 2]] = Math.tan(arg); break;
+                                case 'sinh': mainNum[mainSym[i_ + 2]] = Math.sinh(arg); break;
+                                case 'cosh': mainNum[mainSym[i_ + 2]] = Math.cosh(arg); break;
+                                case 'tanh': mainNum[mainSym[i_ + 2]] = Math.tanh(arg); break;
+                                case 'csc': mainNum[mainSym[i_ + 2]] = 1/Math.sin(arg); break;
+                                case 'sec': mainNum[mainSym[i_ + 2]] = 1/Math.cos(arg); break;
+                                case 'cot': mainNum[mainSym[i_ + 2]] = 1/Math.tan(arg); break;
+                                case 'csch': mainNum[mainSym[i_ + 2]] = 1/Math.sinh(arg); break;
+                                case 'sech': mainNum[mainSym[i_ + 2]] = 1/Math.cosh(arg); break;
+                                case 'coth': mainNum[mainSym[i_ + 2]] = 1/Math.tanh(arg); break;
+                                case 'abs': mainNum[mainSym[i_ + 2]] = Math.abs(arg); break;
+                                case 'log': mainNum[mainSym[i_ + 2]] = Math.log10(arg); break;
+                                case 'ln': mainNum[mainSym[i_ + 2]] = Math.log(arg); break;
+                                case 'asin': mainNum[mainSym[i_ + 2]] = Math.asin(arg); break;
+                                case 'acos': mainNum[mainSym[i_ + 2]] = Math.acos(arg); break;
+                                case 'atan': mainNum[mainSym[i_ + 2]] = Math.atan(arg); break;
+                                case 'acsc': mainNum[mainSym[i_ + 2]] = Math.asin(1/arg); break;
+                                case 'asec': mainNum[mainSym[i_ + 2]] = Math.acos(1/arg); break;
+                                case 'acot': mainNum[mainSym[i_ + 2]] = Math.atan(1/arg); break;
+                                case 'asinh': mainNum[mainSym[i_ + 2]] = Math.log(arg+(arg**2+1)**0.5); break;
+                                case 'acosh': mainNum[mainSym[i_ + 2]] = Math.log(arg+(arg**2-1)**0.5); break;
+                                case 'atanh': mainNum[mainSym[i_ + 2]] = 0.5*Math.log((1+arg)/(1-arg)); break;
+                                case 'acsch': mainNum[mainSym[i_ + 2]] = Math.log(1/arg+(1/arg**2+1)**0.5); break;
+                                case 'asech': mainNum[mainSym[i_ + 2]] = Math.log(1/arg+(1/arg**2-1)**0.5); break;
+                                case 'acoth': mainNum[mainSym[i_ + 2]] = 0.5*Math.log((1+1/arg)/(1-1/arg)); break;
+                                case 'gamma': mainNum[mainSym[i_ + 2]] = gamma(arg); break;
+                                case 'sqrt': mainNum[mainSym[i_ + 2]] = arg**0.5; break;
+                                case 'floor': mainNum[mainSym[i_ + 2]] = Math.floor(arg); break;
+                                case 'ceil': mainNum[mainSym[i_ + 2]] = Math.ceil(arg); break;
+                                case 'round': mainNum[mainSym[i_ + 2]] = Math.round(arg); break;
+                                case 'exp': mainNum[mainSym[i_ + 2]] = Math.exp(arg); break;
+                                case 'zeta': mainNum[mainSym[i_ + 2]] = zeta(arg); break;
+                                case 'erf': mainNum[mainSym[i_ + 2]] = erf(arg); break;
+                                case 'erfc': mainNum[mainSym[i_ + 2]] = 1-erf(arg); break;
+                                case 'LambertW': mainNum[mainSym[i_ + 2]] = LambertW(arg); break;
+                                case 'Si': mainNum[mainSym[i_ + 2]] = Si(arg); break;
+                                case 'sinIntegral': mainNum[mainSym[i_ + 2]] = Si(arg); break;
+                                case 'Ci': mainNum[mainSym[i_ + 2]] = Ci(arg); break;
+                                case 'cosIntegral': mainNum[mainSym[i_ + 2]] = Ci(arg); break;
+                                case 'Ei': mainNum[mainSym[i_ + 2]] = Ei(arg); break;
+                                case 'expIntegral': mainNum[mainSym[i_ + 2]] = Ei(arg); break;
+                                case 'Li': mainNum[mainSym[i_ + 2]] = Ei(Math.log(arg)); break;
+                                case 'logIntegral': mainNum[mainSym[i_ + 2]] = Ei(Math.log(arg)); break;
+                                case 'FresnelS': mainNum[mainSym[i_ + 2]] = FresnelS(arg); break;
+                                case 'FresnelC': mainNum[mainSym[i_ + 2]] = FresnelC(arg); break;
+                                case 'sinc': mainNum[mainSym[i_ + 2]] = arg==0 ? 1 : Math.sin(arg)/arg; break;
+                                case 'sgn': if(arg!=0){mainNum[mainSym[i_ + 2]] = Math.abs(arg)/arg; }else{mainNum[mainSym[i_ + 2]] = 0}; break;
+                            }
+                            i_ += 3;
+                        }
+                    }
+                }
+                f_++;
+            }
+            result_=mainNum[ed_-2]
+            if(mainSym[st_]==-1){
+                result_=mainNum[mainSym[st_+1]]
+            }
+            i_=temp
+            return result_
+        }
+        function calculate(expression)
+        {
+            compileExpression(toRPN(checkExpression(splitInput(expression))),0)
+            return RPNEvalf(moveCompiledExpressionToMainArray())
+        }
+
+
+
+
+
+
+
+        //SGC Kernel end...
+
+
+
+
+
+
+        //初始化...
+        var px;
+        var py;
+        var scale;
+        function pos_reset(){
+            px=0;
+            py=0;
+            scale=100;
+        }
+
+        pos_reset()
+        var prec_2d=4000;
+        var prec_implicit=40;
+        var params_min=0;
+        var params_max=12*Math.PI;
+        var polar_min=0;
+        var polar_max=12*Math.PI;
+
+        function randomHexColor() 
+        { // 随机生成十六进制颜色
+            var hex = Math.floor(Math.random() * 16777216).toString(16); // 生成ffffff以内16进制数
+            while (hex.length < 6) { // 确保长度为6位
+                hex = '0' + hex;
+            }
+            return '#' + hex; // 返回'#'开头的16进制颜色
+        }
+
+        var x=0;
+        var inputcolor=[
+            "#FF6B6B", // 珊瑚红
+            "#4ECDC4", // 蓝绿色
+            "#FFD166", // 阳光黄
+            "#6A0572", // 深紫色
+            "#118AB2", // 海洋蓝
+            "#06D6A0", // 翡翠绿
+            "#FF9E6D", // 橙黄色
+            "#A663CC",  // 紫罗兰
+            "#114514"  // 紫罗兰
+            ];
+
+        while(inputcolor.length<10000)
+        {
+            inputcolor.push(randomHexColor())
+        }
+        var inputValue=[];
+        var UserInput=[];
+        var input=[];
+        var inputerror=[];
+        var inputType=[];
+        var result=[];
+        var x_result=[];
+        var implicitResult=[];
+        var paramsResult=[];
+        var polarResult=[];
+        var splitResult=[];
+        var UserFunction=[];
+
+        // 更新预览
+        function updatePreview() {
+            const inputs = document.querySelectorAll('.expression-input');
+            UserInput = Array.from(inputs).map(input => input.value);
+            console.log(UserInput)
+            inputType=[];
+            input=[];
+            parseInput();
+            setTimeout(() => {
+                fn();
+                graphfunc();
+                graph();
+            }, 50);
+        }
+        
+        
+
+
+        // 全局设置变量
+        let isAdaptivePlot = false; //避免卡顿
+        let isSmooth = true;
+
+        // 获取视图元素
+        const expressionsView = document.getElementById('expressionsView');
+        const fileView = document.getElementById('fileView');
+        const settingsView = document.getElementById('settingsView');
+
+
+        // 获取新增的DOM元素
+        const drawingMenuItem = document.getElementById('drawingMenuItem');
+        const mainToolbar = document.getElementById('mainToolbar');
+
+        // 绘图菜单项点击事件
+        drawingMenuItem.addEventListener('click', () => {
+            menuPanel.classList.remove('active');
+            showExpressionsView();
+        });
+
+        // 修改视图切换函数
+        function showExpressionsView() {
+            expressionsContainer.style.display = 'block';
+            fileView.style.display = 'none';
+            settingsView.style.display = 'none';
+            // 恢复标题和按钮
+            document.querySelector('.title').textContent = '绘图';
+            addButton.style.display = 'flex'; // 显示加号按钮
+            // 主视图显示工具栏
+            mainToolbar.classList.remove('hidden');
+        }
+
+        function showFileView() {
+            expressionsContainer.style.display = 'none';
+            fileView.style.display = 'flex';
+            settingsView.style.display = 'none';
+            // 恢复标题
+            document.querySelector('.title').textContent = '文件';
+            addButton.style.display = 'none'; // 隐藏加号按钮
+            // 非主视图隐藏工具栏
+            mainToolbar.classList.add('hidden');
+        }
+
+        function showSettingsView() {
+            expressionsContainer.style.display = 'none';
+            fileView.style.display = 'none';
+            settingsView.style.display = 'block';
+            // 修改标题
+            document.querySelector('.title').textContent = '设置';
+            addButton.style.display = 'none'; // 隐藏加号按钮
+            initSettingsView();
+            // 非主视图隐藏工具栏
+            mainToolbar.classList.add('hidden');
+        }
+
+        // 标题点击返回表达式视图
+        document.querySelector('.title').addEventListener('click', showExpressionsView);
+
+
+        // 获取设置元素
+        const prec2dInput = document.getElementById('prec2dInput');
+        const precImplicitInput = document.getElementById('precImplicitInput');
+        const zsyToggle = document.getElementById('zsyToggle');
+        const smoothToggle = document.getElementById('smoothToggle');
+        // 更新显示网格的切换功能
+        const gridToggle = document.getElementById('gridToggle');
+        const axisToggle = document.getElementById('axisToggle');
+        let showGrid = true;
+        
+        gridToggle.addEventListener('change', () => {
+            showGrid = gridToggle.checked;
+            // 重新绘制网格
+            graph();
+        });
+        axisToggle.addEventListener('change', () => {
+            showAxis = axisToggle.checked;
+            // 重新绘制网格
+            graph();
+        });
+
+        // 文件操作按钮
+        const newFileBtn = document.getElementById('newFileBtn');
+        const saveFileBtn = document.getElementById('saveFileBtn');
+        const openFileBtn = document.getElementById('openFileBtn');
+
+        // 初始化设置视图
+        function initSettingsView() {
+            prec2dInput.value = prec_2d;
+            precImplicitInput.value = prec_implicit;
+            zsyToggle.textContent = isAdaptivePlot ? '开启' : '关闭';
+            zsyToggle.classList.toggle('off', !isAdaptivePlot);
+            smoothToggle.textContent = isSmooth ? '开启' : '关闭';
+            smoothToggle.classList.toggle('off', !isSmooth);
+        }
+
+
+        // 菜单项点击事件修改
+        document.querySelectorAll('.menu-item').forEach(item => {
+            const text = item.textContent.trim();
+            
+            if (text === '文件') {
+                item.addEventListener('click', () => {
+                    menuPanel.classList.remove('active');
+                    showFileView();
+                });
+            } 
+            else if (text === '设置') {
+                item.addEventListener('click', () => {
+                    menuPanel.classList.remove('active');
+                    showSettingsView();
+                });
+            }
+            else if (text === '关于') {
+                item.addEventListener('click', () => {
+                    menuPanel.classList.remove('active');
+                    // 显示关于对话框
+                    document.getElementById('aboutDialog').classList.add('active');
+                });
+            }
+        });
+
+        
+        // 添加关闭按钮事件
+        document.querySelector('.close-btn').addEventListener('click', () => {
+            document.getElementById('aboutDialog').classList.remove('active');
+        });
+        
+        // 点击对话框外部关闭
+        document.getElementById('aboutDialog').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('aboutDialog')) {
+                document.getElementById('aboutDialog').classList.remove('active');
+            }
+        });
+
+        // 设置项事件监听
+        prec2dInput.addEventListener('change', () => {
+            prec_2d = parseFloat(prec2dInput.value);
+            fn();
+            graphfunc();
+            graph();
+        });
+
+        precImplicitInput.addEventListener('change', () => {
+            prec_implicit = parseFloat(precImplicitInput.value);
+        });
+
+        zsyToggle.addEventListener('click', () => {
+            isAdaptivePlot = !isAdaptivePlot;
+            zsyToggle.textContent = isAdaptivePlot ? '开启' : '关闭';
+            zsyToggle.classList.toggle('off', !isAdaptivePlot);
+            console.log('自适应绘图:', isAdaptivePlot ? '开启' : '关闭');
+            fn();
+            graphfunc();
+            graph();
+        });
+
+        smoothToggle.addEventListener('click', () => {
+            isSmooth = !isSmooth;
+            smoothToggle.textContent = isSmooth ? '开启' : '关闭';
+            smoothToggle.classList.toggle('off', !isSmooth);
+            console.log('丝滑移动:', isSmooth ? '开启' : '关闭');
+        });
+
+        // 文件操作按钮事件
+        newFileBtn.addEventListener('click', () => {
+            // 清空所有表达式
+            expressions.length = 0;
+            expressionCount = 0;
+            expressionCountEl.textContent = expressionCount;
+            
+            // 移除所有表达式元素
+            expressionsView.querySelectorAll('.expression-item').forEach(el => el.remove());
+            
+            // 显示占位符
+            const placeholder = expressionsView.querySelector('.placeholder');
+            placeholder.style.display = 'block';
+            
+            // 返回表达式视图
+            showExpressionsView();
+            alert('已创建新文件');
+        });
+
+        saveFileBtn.addEventListener('click', () => {
+            alert('保存功能未实现');
+        });
+
+        openFileBtn.addEventListener('click', () => {
+            alert('打开功能未实现');
+        });
+
+        // 添加返回表达式视图的逻辑
+        document.querySelector('.title').addEventListener('click', showExpressionsView);
+
+
+
+
+        // 删除按钮SVG
+        const deleteSVG = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 18.90971 20.47619">
+            <g transform="translate(-230.43861,-169.4423)">
+                <g stroke-miterlimit="10">
+                    <path d="M230.43861,189.91849v-20.47619h18.90971v20.47619z" fill-opacity="0.00392" fill="#ffffff" stroke="none" stroke-width="0" stroke-linecap="butt"/>
+                    <g fill="none" stroke="#ff6b6b" stroke-width="1.25" stroke-linecap="round">
+                        <path d="M244.97068,184.7576l-10.15442,-10.15442"/>
+                        <path d="M244.97067,174.60318l-10.15442,10.15442"/>
+                    </g>
+                </g>
+            </g>
+        </svg>`;
+        const warningSVG = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18.17279" height="17.5539" viewBox="0,0,18.17279,17.5539"><g transform="translate(-230.92655,-168.79992)"><g data-paper-data="{&quot;isPaintingLayer&quot;:true}" fill-rule="nonzero" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" style="mix-blend-mode: normal"><path d="M231.07655,185.28797c1.01058,-1.92242 6.72159,-12.78651 8.43652,-16.04883c0.30785,-0.58563 0.666,-0.58564 0.97386,0c1.71771,3.2676 7.44477,14.16221 8.44801,16.07069c0.2932,0.55776 0.20972,1.04398 -0.37612,1.04398c-3.41602,0 -15.22211,0 -17.11765,0c-0.50278,0 -0.66331,-0.49766 -0.36463,-1.06584z" fill="#ff0000" stroke="none" stroke-width="0" stroke-linecap="butt"/><g fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"><path d="M240,174.67245v5.08349"/><path d="M240,183.1158v0.47657"/></g></g></g></svg>`;
+        
+        
+        const expressionsContainer = document.querySelector('.expressions-container');
+        const addButton = document.querySelector('.add-btn');
+        const placeholder = document.querySelector('.placeholder');
+        const expressionCountEl = document.getElementById('count');
+        const editorContainer = document.querySelector('.editor-container');
+        const resizeHandle = document.querySelector('.resize-handle');
+        
+        // 存储表达式状态
+        const expressions = [];
+        let expressionCount = 0;
+        
+        // 添加表达式项
+        function addExpression(inputType = 'text', inputValue = '') {
+            placeholder.style.display = 'none';
+            
+            const expressionItem = document.createElement('div');
+            expressionItem.className = 'expression-item';
+            
+            // 设置主题颜色
+            const color = inputcolor[expressionCount];
+            
+            // 创建彩色指示器
+            const colorIndicator = document.createElement('div');
+            colorIndicator.className = 'color-indicator active';
+            colorIndicator.style.backgroundColor = color;
+            colorIndicator.style.borderColor = color;
+            
+            // 存储表达式数据
+            const expressionData = {
+                id: Date.now(),
+                isShow: 1,
+                inputType,
+                inputValue,
+                color: color,
+                element: expressionItem
+            };
+            
+            expressions.push(expressionData);
+            
+
+            
+            // 切换可见性
+            colorIndicator.addEventListener('click', () => {
+                // 当inputType为'none'时，不允许切换可见性
+                if (['none','error'].includes(expressionData.inputType)) return;
+                
+                expressionData.isShow = expressionData.isShow === 1 ? 0 : 1;
+                
+                if (expressionData.isShow === 1) {
+                    colorIndicator.classList.add('active');
+                } else {
+                    colorIndicator.classList.remove('active');
+                }
+                
+                updatePreview();
+            });
+            
+            // 创建内容区域
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'expression-content';
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'expression-input';
+            input.placeholder = `输入...`;
+            
+            // 存储输入框引用
+            expressionData.inputElement = input;
+            
+            const inputValueDiv = document.createElement('div');
+            inputValueDiv.className = 'input-value';
+            inputValueDiv.textContent = inputValue;
+            
+            // 存储inputValueDiv引用
+            expressionData.inputValueDiv = inputValueDiv;
+
+            // 错误消息区域
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'error-message';
+            errorMessage.textContent = inputerror;
+            
+            
+            // 存储错误消息引用
+            expressionData.errorMessage = errorMessage;
+            
+            // 存储colorIndicator引用
+            expressionData.colorIndicator = colorIndicator;
+            
+            // 根据inputType初始化显示
+            if (inputType === 'none') {
+                inputValueDiv.classList.add('show');
+                // 添加隐藏类
+                colorIndicator.classList.add('hidden');
+            } else if (inputType === 'error') {
+                // 设置警告图标
+                colorIndicator.innerHTML = warningSVG;
+                colorIndicator.style.backgroundColor = 'transparent';
+                colorIndicator.style.borderColor = 'transparent';
+                colorIndicator.style.cursor = 'default';
+                
+                // 显示错误消息
+                errorMessage.classList.add('show');
+            }
+            
+            contentDiv.appendChild(input);
+            contentDiv.appendChild(inputValueDiv);
+            contentDiv.appendChild(errorMessage);
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.innerHTML = deleteSVG;
+            
+            // 删除表达式项（带动画）
+            deleteBtn.addEventListener('click', () => {
+                expressionItem.classList.add('deleting');
+                
+                setTimeout(() => {
+                    // 从数组中移除表达式
+                    const index = expressions.findIndex(exp => exp.id === expressionData.id);
+                    if (index !== -1) {
+                        temp__=inputcolor[expressionCount];
+                        expressions.splice(index, 1);
+                        inputcolor.splice(index, 1);
+                        inputcolor.push(temp__);
+                    }
+                    
+                    
+                    expressionItem.remove();
+                    expressionCount--;
+                    
+                    updatePreview();
+                    
+                    if (expressionCount === 0) {
+                        placeholder.style.display = 'block';
+                    }
+                }, 400);
+            });
+            
+            // 输入变化时更新预览
+            input.addEventListener('input', () => {
+                updatePreview();
+            });
+            
+            expressionItem.appendChild(colorIndicator);
+            expressionItem.appendChild(contentDiv);
+            expressionItem.appendChild(deleteBtn);
+            expressionsContainer.appendChild(expressionItem);
+            
+            // 滚动到底部
+            expressionsContainer.scrollTop = expressionsContainer.scrollHeight;
+            
+            // 聚焦到新输入框
+            setTimeout(() => {
+                input.focus();
+                
+                // 添加按钮动画
+                addButton.classList.add('add-animation');
+                setTimeout(() => {
+                    addButton.classList.remove('add-animation');
+                }, 300);
+            }, 10);
+            
+            expressionCount++;
+        }
+
+        showExpressionsView();
+
+        // 标题点击返回表达式视图
+        document.querySelector('.title').addEventListener('click', showExpressionsView);
+
+
+        // 获取新增的DOM元素
+        const menuBtn = document.getElementById('menuBtn');
+        const menuPanel = document.getElementById('menuPanel');
+        const functionBtn = document.getElementById('functionBtn');
+        const geometryBtn = document.getElementById('geometryBtn');
+
+        // 汉堡菜单按钮事件
+        menuBtn.addEventListener('click', (e) => {
+            menuPanel.classList.toggle('active');
+            e.stopPropagation();
+        });
+
+        // 点击其他地方关闭菜单
+        document.addEventListener('click', (e) => {
+            if (!menuPanel.contains(e.target)){
+                menuPanel.classList.remove('active');
+            }
+        });
+
+        // 工具栏按钮事件
+        functionBtn.addEventListener('click', () => {
+            alert('函数模式已激活！');
+            // 这里可以添加实际的函数模式逻辑
+        });
+
+        geometryBtn.addEventListener('click', () => {
+            alert('几何模式已激活！');
+            // 这里可以添加实际的几何模式逻辑
+        });
+
+        // 设置分类切换
+        document.querySelectorAll('.settings-category').forEach(button => {
+            button.addEventListener('click', () => {
+                // 移除所有激活状态
+                document.querySelectorAll('.settings-category').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.settings-category-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // 添加当前激活状态
+                button.classList.add('active');
+                const category = button.dataset.category;
+                document.getElementById(`${category}-settings`).classList.add('active');
+            });
+        });
+
+
+        // 网格样式选择器
+        const gridStyleToggle = document.getElementById('gridStyleToggle');
+        const gridStyleSelector = document.querySelector('.grid-style-selector');
+        const selectorOptions = document.querySelectorAll('.selector-option');
+        const selectedText = gridStyleToggle.querySelector('.selected-text');
+        
+        // 当前选择的网格类型（0:主要网格, 1:主要和次要网格, 2:极坐标网格）
+        var grid_type = 1;
+        //是否显示坐标轴
+        var showAxis=1;
+        var showNumber=1;
+        
+        // 切换选择器显示/隐藏
+        gridStyleToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            gridStyleSelector.classList.toggle('active');
+        });
+        
+        // 选择选项
+        selectorOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // 更新选择文本
+                selectedText.textContent = option.textContent;
+                
+                // 更新选中状态
+                selectorOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                
+                // 更新网格类型
+                grid_type = parseInt(option.dataset.value);
+                
+                // 关闭选择器
+                gridStyleSelector.classList.remove('active');
+                
+                // 重新绘制网格
+                graph();
+            });
+        });
+        
+        // 点击页面其他区域关闭选择器
+        document.addEventListener('click', (e) => {
+            if (!gridStyleSelector.contains(e.target)) {
+                gridStyleSelector.classList.remove('active');
+            }
+        });
+
+        resizeHandle.addEventListener('mousedown', initResize);
+        var newWidth=400
+        editorContainer.style.width = `${newWidth}px`;
+
+        function initResize(e) {
+            e.preventDefault();
+            
+            // 添加resizing类以显示视觉反馈
+            editorContainer.classList.add('resizing');
+            
+            // 记录初始位置和宽度
+            const startX = e.clientX;
+            const startWidth = parseInt(document.defaultView.getComputedStyle(editorContainer).width, 10);
+
+
+            // 鼠标移动处理函数
+            function doResize(e) {
+                // 计算新的宽度
+                newWidth = startWidth + (e.clientX - startX);
+                
+                // 应用最小和最大宽度约束
+                const minWidth = 300;
+                const maxWidth = Math.min(window.innerWidth - 40, 1000);
+                if (newWidth < minWidth) {
+                    newWidth=minWidth;
+                }
+                if (newWidth > maxWidth) {
+                    newWidth=maxWidth;
+                }
+                editorContainer.style.width = `${newWidth}px`;
+            }
+            
+            // 停止拖动
+            function stopResize() {
+                document.documentElement.removeEventListener('mousemove', doResize, false);
+                document.documentElement.removeEventListener('mouseup', stopResize, false);
+                editorContainer.classList.remove('resizing');
+            }
+            
+            // 绑定事件
+            document.documentElement.addEventListener('mousemove', doResize, false);
+            document.documentElement.addEventListener('mouseup', stopResize, false);
+        }
+        
+        
+        
+        // 修改后的函数：更改指定表达式的输入类型和值
+        function changeinputType(i, type, value = null) {
+            if (i < 0 || i >= expressions.length) {
+                console.error(`无效的索引: ${i}`);
+                return false;
+            }
+            
+            const expression = expressions[i];
+            expression.inputType = type;
+            
+            // 获取内容区域
+            const contentDiv = expression.element.querySelector('.expression-content');
+            
+            // 移除旧的额外内容
+            const oldVarControl = contentDiv.querySelector('.var-control');
+            const oldTypeTag = expression.element.querySelector('.type-tag');
+            if (oldVarControl) oldVarControl.remove();
+            if (oldTypeTag) oldTypeTag.remove();
+            
+            // 更新inputValue（如果提供了value）
+            if (value !== null) {
+                expression.inputValue = value;
+                expression.inputValueDiv.textContent = value;
+            }
+            
+            // 重置错误消息
+            expression.errorMessage.classList.remove('show');
+            expression.colorIndicator.innerHTML = '';
+            
+            if (type === 'none') {
+                // 显示input-value div
+                expression.inputValueDiv.classList.add('show');
+                // 隐藏左侧圆片
+                expression.colorIndicator.classList.add('hidden');
+                // 当inputType为none时，禁用可见性切换
+                expression.colorIndicator.style.cursor = 'default';
+            } else if (type === 'error') {
+                // 设置警告图标
+                expression.colorIndicator.innerHTML = warningSVG;
+                expression.colorIndicator.style.backgroundColor = 'transparent';
+                expression.colorIndicator.style.borderColor = 'transparent';
+                expression.colorIndicator.style.cursor = 'default';
+                
+                // 显示错误消息
+                expression.errorMessage.classList.add('show');
+                expression.errorMessage.textContent = value;
+                
+                // 隐藏input-value div
+                expression.inputValueDiv.classList.remove('show');
+            } else {
+                // 文本类型
+                // 隐藏input-value div
+                expression.inputValueDiv.classList.remove('show');
+                // 显示左侧圆片
+                expression.colorIndicator.classList.remove('hidden');
+                expression.colorIndicator.style.backgroundColor = expression.color;
+                expression.colorIndicator.style.borderColor = expression.color;
+                expression.colorIndicator.innerHTML = '';
+                // 恢复可见性切换功能
+                expression.colorIndicator.style.cursor = 'pointer';
+            }
+        }
+        
+        
+        // 添加按钮事件
+        addButton.addEventListener('click', () => addExpression());
+        
+        
+
+
+
+
+
+
+        function parseInput()
+        {
+            reset_();
+            definedFunc=[];
+            i=0
+            while(i<UserInput.length)
+            {
+                let IsY=false;
+                if(UserInput[i]===''){
+                    inputType[i]=null;
+                }else{
+                    splitResult=splitInput(UserInput[i])
+                    //解析隐式符号的位置
+                    splitDepth=[];
+                    k=0;
+                    depth=0;
+                    while(k<splitResult.length-1)
+                    {
+                        index=splitResult[k];
+                        if(index == '('){
+                            depth+=1;
+                        }
+                        if(index == ')'){
+                            depth-=1;
+                        }
+                        if(['=','<=','>=','<','>'].includes(index)){
+                            splitDepth[k]=depth;
+                        }
+                        k++;
+                    }
+                    if(splitDepth.includes(0))
+                    {
+                        if(!isIExp(splitResult[0]) && splitResult[1]=='(' && !(funs.some(item => splitResult[0].includes(item))))
+                        {
+                            inputType[i]='UserFunction'
+                        }else{
+                        u=splitDepth.indexOf(0);
+                        if(!(['x','y','z'].includes(splitResult[0])) && u==1 && !isIExp(splitResult[0])){
+                            if(splitResult[0]==='r' && checkExpression(splitResult).includes('θ'))
+                            {
+                                splitResult.splice(0, 2);
+                                splitResult = splitResult.map(item => (item === 'θ' ? 'x' : item));
+                                inputType[i]='polar';
+                            }else{
+                                inputType[i]='UserVar'
+                            }
+                            console.log(inputType)
+                        }else{
+                            if(u==1 && splitResult[0]=='x' && splitResult.join('').includes(',y=')){
+                                splitResult.splice(0, 2);
+                                j=0;
+                                expr1=[];
+                                while(j<=splitResult.length-1 && !(splitResult[j]+splitResult[j+1]+splitResult[j+2]===',y='))
+                                {
+                                    expr1.push(splitResult[j]);
+                                    j++;
+                                }
+                                j+=3;
+                                expr2=[];
+                                while(j<=splitResult.length-1)
+                                {
+                                    expr2.push(splitResult[j]);
+                                    j++;
+                                }
+                                expr1 = toRPN(checkExpression(expr1)).map(item => (item === 't' ? '_t_' : item))
+                                compileExpression(expr1,0)
+                                temp1=moveCompiledExpressionToMainArray()
+                                expr2 = toRPN(checkExpression(expr2)).map(item => (item === 't' ? '_t_' : item))
+                                compileExpression(expr2,0)
+                                temp2=moveCompiledExpressionToMainArray()
+                                input[i]=[temp1,temp2]
+                                inputType[i]='params';
+                            }else if(splitResult[0]==='y' && splitResult[1]==='='){
+                                    //尝试去除y=f(x)的引导
+                                    splitResult.splice(0, 2);
+                                    if(splitResult.includes('y'))
+                                    {
+                                        //发现去除后仍有y，不满足显示关系，复原
+                                        splitResult.splice(0, 0, '=');
+                                        splitResult.splice(0, 0, 'y');
+                                        //认定为隐函数
+                                        splitResult.splice(u, 1, '-'); splitResult.splice(u+1, 0, '('); splitResult.push(')');
+                                        inputType[i]='implicit';
+                                    }else{
+                                        //满足显示关系，显函数
+                                        inputType[i]='function';
+                                        IsY=true
+                                    }
+                                }else{
+                                    //认定为隐函数
+                                    splitResult.splice(u, 1, '-'); splitResult.splice(u+1, 0, '('); splitResult.push(')');
+                                    inputType[i]='implicit';
+                                }
+                            }
+                        }
+                    }else{
+                        inputType[i]='function';
+                    }
+                    if(inputType[i]==='UserFunction'){
+                        NewFunction(splitResult.join(''))
+                        input[i]=[0,0];
+                    }else{
+                        if(inputType[i]==='UserVar'){
+                            NewVariable(splitResult.join(''))
+                            input[i]=[0,0];
+                        }else if(inputType[i]==='params'){
+                        }else{
+                            temp__=checkExpression(splitResult)
+                            if(!IsY && inputType[i]!='error' && (!(temp__.includes('x')||temp__.includes('y')))){
+                                inputType[i]='none'
+                            }
+                            compileExpression(toRPN(temp__),0)
+                            input[i]=moveCompiledExpressionToMainArray()
+                        }
+                    }
+                    
+                }
+                i++;
+            }
+        }
+        
+        parseInput();
+        
+        
+        function roundNum(value, n) {
+            //保留n位小数
+            return Math.round(value*Math.pow(10,n))/Math.pow(10,n);
+        }
+
+        var main_Ox=(-px)*scale;
+        var main_Oy=(-py)*scale;
+        var anspx=px;
+        var anspy=py;
+        var ansScale = scale;
+        var min_x=0;
+        var max_x=width;
+        var dx;
+        var tempresult_i=[];
+
+        function r_dx()
+        {
+            dx=10**(Math.round(Math.log10(100/scale)))*100;
+            if(dx*scale/100<120){dx=dx*2;}
+            if(dx*scale/100<120){dx=dx*2;}
+        }
+
+
+        //计算部分
+        
+
+        function _calc_fn()
+        {
+            let step=width/prec_2d
+            let tempx=[];
+            let tempresult=[];
+            if(isAdaptivePlot){
+                j=0
+                for(var x_=0;x_<=width;true)
+                {
+                    x_value=(x_-width/2)/scale+anspx
+                    mainNum[0]=x_value;
+                    tempresult[j]=(RPNEvalf(input[fn_i]));
+                    tempx[j]=x_;
+                    if(Number.isNaN(tempresult[j])){
+                        mainNum[0]=x_value+width/prec_2d;
+                        if(Number.isNaN(RPNEvalf(input[fn_i]))){
+                            x_+=width/prec_2d
+                        }else{
+                            x_+=0.015
+                        }
+                    }else if(1/scale/Math.abs(tempresult[j]-tempresult[j-1])>0.015){
+                        if(1/scale/Math.abs(tempresult[j]-tempresult[j-1])>width/prec_2d){
+                            x_+=width/prec_2d
+                        }else{
+                            x_+=1/scale/Math.abs(tempresult[j]-tempresult[j-1])
+                        }
+                    }else{
+                        x_+=0.015
+                    }
+                    j++;
+                }
+            }else{
+                j=0
+                for(var x_=0;x_<=width;true)
+                {
+                    mainNum[0]=(x_-width/2)/scale+anspx;
+                    tempresult[j]=(RPNEvalf(input[fn_i]));
+                    tempx[j]=x_;
+                    x_+=width/prec_2d
+                    j++;
+                }
+            }
+            result.push(tempresult);
+            x_result.push(tempx);
+        }
+        function _calc_params()
+        {
+            let tempresult=[];
+            j=0;
+            x_=params_min
+            for(j=0;j<=prec_2d;j++)
+            {
+                mainNum[3]=x_;
+                tempresult.push(RPNEvalf((input[fn_i])[0]));
+                tempresult.push(RPNEvalf((input[fn_i])[1]));
+                x_+=(params_max-params_min)/prec_2d
+            }
+            paramsResult.push(tempresult);
+        }
+        function _calc_polar()
+        {
+            let tempresult=[];
+            j=0;
+            x_=polar_min
+            for(j=0;j<=prec_2d;j++)
+            {
+                mainNum[0]=x_;
+                tempresult[j]=RPNEvalf(input[fn_i]);
+                x_+=(polar_max-polar_min)/prec_2d
+            }
+            polarResult.push(tempresult);
+        }
+        function MarchingSquare_MoveTo(x0,y0,d,n,v1,v2,v3,v4)
+        {
+            if([v1,v2,v3,v4].includes(Infinity) || [v1,v2,v3,v4].includes(-Infinity) || [v1,v2,v3,v4].includes(NaN)){
+                return [0,0];
+            }else{
+                if(n==1){ms_x0=x0+v1/(v1-v2)*d;ms_y0=y0;}
+                if(n==2){ms_x0=x0;ms_y0=y0+v1/(v1-v3)*d;}
+                if(n==3){ms_x0=x0+d;ms_y0=y0+v2/(v2-v4)*d;}
+                if(n==4){ms_x0=x0+v3/(v3-v4)*d;ms_y0=y0+d;}
+            return [ms_x0,ms_y0];
+            }
+        }
+        function MarchingSquare(x0,y0,d,v1,v2,v3,v4)
+        {
+            ms_v=(v1>0)*8+(v2>0)*4+(v3>0)*2+(v4>0)*1
+            if(ms_v==0||ms_v==15){
+                return [0,0,0,0]
+            }else{
+                if(ms_v==6){
+
+                }
+                if(ms_v>7){ms_v=15-ms_v}
+                t1_=MarchingSquare_MoveTo(x0,y0,d,MarchingSquarePos[ms_v-1].charAt(0),v1,v2,v3,v4)
+                t2_=MarchingSquare_MoveTo(x0,y0,d,MarchingSquarePos[ms_v-1].charAt(1),v1,v2,v3,v4)
+                return t1_.concat(t2_)
+            }
+        }
+        function _implicitUnit(x0,y0,d,expr)
+        {
+            let tempresult=new Array((prec_implicit+1)**2);
+            j=0;
+            y_=y0
+            for(let yi=0;yi<=prec_implicit+1;yi++)
+            {
+                x_=x0
+                for(let xi=1;xi<=prec_implicit+1;xi++)
+                {
+                    mainNum[0]=(x_-width/2)/ansScale+anspx;
+                    mainNum[1]=-(y_-height/2)/ansScale-anspy;
+                    tempresult[j]=RPNEvalf(expr)
+                    j++
+                    x_+=d/prec_implicit;
+                }
+                y_+=d/prec_implicit;
+            }
+            tempresult_i.push(tempresult);
+        }
+        function _single_implicit_calc(x,y,jg,expr)
+        {
+            tempresult_i=[];
+            let len=jg*ansScale/100;
+            //计算由若干个隐函数单元组成的隐函数
+            for(let g_y=y % (len)-len;g_y<=height;g_y+=len){
+                for(let g_x=x % (len)-len;g_x<=width;g_x+=len){
+                    _implicitUnit(g_x,g_y,len,expr);
+                }
+            }
+            implicitResult.push(tempresult_i)
+            console.log(expr)
+        }
+        function fn()
+        {
+            UserFunction=[];
+            result=[];
+            x_result=[];
+            implicitResult=[];
+            polarResult=[];
+            paramsResult=[];
+            main_Ox=(-px)*scale;
+            main_Oy=(-py)*scale;
+            ansScale = scale;
+            anspx=px;
+            anspy=py;
+            for(fn_i=0;fn_i<=input.length-1;fn_i++)
+            {
+                if(inputType[fn_i]==='error'){
+                    inputValue[fn_i]=inputerror[fn_i]
+                    changeinputType(fn_i, 'error', inputValue[fn_i])
+                }else if(inputType[fn_i]==='function'){
+                    _calc_fn()
+                    changeinputType(fn_i, 'function')
+                }else if(inputType[fn_i]==='implicit'){
+                    r_dx();
+                    _single_implicit_calc(-(anspx)*ansScale+width/2,-anspy*ansScale+height/2,dx,input[fn_i]);
+                    changeinputType(fn_i, 'implicit')
+                }else if(inputType[fn_i]==='polar'){
+                    _calc_polar();
+                    changeinputType(fn_i, 'polar')
+                }else if(inputType[fn_i]==='params'){
+                    _calc_params();
+                    changeinputType(fn_i, 'params')
+                }else if(inputType[fn_i]==='UserFunction'){
+                    changeinputType(fn_i, 'none', 'Func:'+UserInput[fn_i])
+                }else if(inputType[fn_i]==='UserVar'){
+                    changeinputType(fn_i, 'none', 'Var:'+UserInput[fn_i])
+                }else if(inputType[fn_i]===null){
+                    changeinputType(fn_i, null)
+                }else{
+                    inputValue[fn_i]=RPNEvalf(input[fn_i])
+                    changeinputType(fn_i, 'none', '='+inputValue[fn_i])
+                }
+            }
+            min_x=0;
+            max_x=width;
+        }
+
+        
+
+
+        //绘图部分
+        //坐标轴与网格
+        function axis()
+        {
+            ctx.beginPath();
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.lineTo(-(px)*scale+width/2,0);
+            ctx.lineTo(-(px)*scale+width/2,height);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.lineTo(0,-py*scale+height/2);
+            ctx.lineTo(width,-py*scale+height/2);
+            ctx.stroke();
+        }
+        function grid(x,y,jg,color,num)
+        {
+            //绘制网格，指定网格颜色、是否显示数字
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 1;
+            ctx.fillStyle = '#333';
+            ctx.font = '20px CMU Sans Serif';
+            for(let g_x=(x % (jg*scale/100));g_x<=width;g_x+=jg*scale/100){
+                ctx.beginPath();
+                ctx.lineTo(g_x,0);
+                ctx.lineTo(g_x,height);
+                ctx.stroke();
+                if(num){
+                    if(roundNum((g_x-x)/scale,2+Math.round(Math.log10(scale)))!=0){
+                        let y_=y+18
+                        if(y_>=height-12){y_=height-12;}
+                        if(y_<=18){y_=18;}
+                        ctx.fillText(roundNum((g_x-x)/scale,2+Math.round(Math.log10(scale))), g_x+2, y_);
+                    }
+                }
+            }
+            for(let g_y=(y % (jg*scale/100));g_y<=height;g_y+=jg*scale/100){
+                ctx.beginPath();
+                ctx.lineTo(0,g_y);
+                ctx.lineTo(width,g_y);
+                ctx.stroke();
+                if(num){
+                    if(roundNum(-(g_y-y)/scale,2+Math.round(Math.log10(scale)))!=0){
+                        let text=roundNum(-(g_y-y)/scale,2+Math.round(Math.log10(scale)));
+                        let x_=x+3;
+                        if(x_>=width-ctx.measureText(text).width-5){x_=width-ctx.measureText(text).width-5}
+                        if(x_<=newWidth+25){x_=newWidth+25;}
+                        ctx.fillText(text, x_, g_y+18);
+                    }
+                }
+            }
+        }
+        
+        function _drawImplicitUnit(x0,y0,d,data)
+        {
+            tempresult=data;
+            y_=y0
+            for(let yi=0;yi<=prec_implicit;yi++)
+            {
+                x_=x0
+                for(let xi=1;xi<=prec_implicit;xi++)
+                {
+                    tempMarching=MarchingSquare(x_,y_,d/prec_implicit,tempresult[xi+(prec_implicit+1)*yi-1],tempresult[xi+1+(prec_implicit+1)*yi-1],
+                        tempresult[xi+(prec_implicit+1)*(yi+1)-1],tempresult[xi+1+(prec_implicit+1)*(yi+1)-1]);
+                    o_ctx.moveTo(tempMarching[0],tempMarching[1]);
+                    o_ctx.lineTo(tempMarching[2],tempMarching[3]);
+                    x_+=d/prec_implicit;
+                }
+                y_+=d/prec_implicit;
+            }
+        }
+        function _single_implicit_draw(x,y,jg,id)
+        {
+            o_ctx.beginPath();
+            o_ctx.strokeStyle = inputcolor[fn_i];
+            o_ctx.lineWidth = 2;
+            data0=implicitResult[id];
+            let len=jg*ansScale/100;
+            //绘制由若干个隐函数单元组成的隐函数
+            gi=0;
+            for(let g_y=y % (len)-len;g_y<=height;g_y+=len){
+                for(let g_x=x % (len)-len;g_x<=width;g_x+=len){
+                    _drawImplicitUnit(g_x,g_y,len,data0[gi]);
+                    gi++;
+                }
+            }
+            o_ctx.stroke();
+        }
+        function _fn(id)
+        {
+            let tempresult=result[id];
+            let tempx=x_result[id];
+            //绘制函数
+            o_ctx.beginPath();
+            o_ctx.strokeStyle = inputcolor[fn_i];
+            o_ctx.lineWidth = 2;
+            var j=0;
+            var x_=0
+            for(j=0;j<tempresult.length;j++)
+            {
+                x_=tempx[j]
+                if(j>2){BreakPoint=isBreakPoint(tempresult[j+1],tempresult[j],tempresult[j-1],tempresult[j-2])}else{BreakPoint=false}
+                let y_=(-tempresult[j])*ansScale+height/2+main_Oy;
+                if(y_ < -2500){y_=-2500;};if(y_ > 2500){y_=2500;};
+                if(!BreakPoint){
+                    o_ctx.lineTo(x_,y_);
+                }else{
+                    o_ctx.moveTo(x_,y_);
+                }
+            }
+            o_ctx.stroke();
+        }
+        function _polar(id)
+        {
+            let tempresult=polarResult[id];
+            //绘制极坐标函数
+            o_ctx.beginPath();
+            o_ctx.strokeStyle = inputcolor[fn_i];
+            o_ctx.lineWidth = 2;
+            var x_=x_=polar_min
+            let j=0;
+            for(j=0;j<=prec_2d;j++)
+            {
+                if(j>2 && j<tempresult.length-1){BreakPoint=isBreakPoint(tempresult[j+1],tempresult[j],tempresult[j-1],tempresult[j-2])}else{BreakPoint=false}
+                let r_=(-tempresult[j])*scale;
+                if(!BreakPoint){
+                    o_ctx.lineTo(r_*Math.cos(x_)+width/2+main_Ox,r_*Math.sin(x_)+height/2+main_Oy);
+                }else{
+                    o_ctx.moveTo(r_*Math.cos(x_)+width/2+main_Ox,r_*Math.sin(x_)+height/2+main_Oy);
+                }
+                x_+=(polar_max-polar_min)/prec_2d
+            }
+            o_ctx.stroke();
+        }
+        function _params(id)
+        {
+            console.log(paramsResult[id])
+            let tempresult=paramsResult[id];
+            //绘制极坐标函数
+            o_ctx.beginPath();
+            o_ctx.strokeStyle = inputcolor[fn_i];
+            o_ctx.lineWidth = 2;
+            var i_=0;
+            for(var i_=0;i_<=tempresult.length-1;i_+=2)
+            {
+                if(i_>4){BreakPoint=(isBreakPoint(tempresult[i_+4],tempresult[i_+2],tempresult[i_],tempresult[i_-2]) || isBreakPoint(tempresult[i_+5],tempresult[i_+3],tempresult[i_+1],tempresult[i_-1]))
+                }else{BreakPoint=false}
+                u_=[Math.max(Math.min(tempresult[i_],10000),-10000),
+                    Math.max(Math.min(tempresult[i_+1],10000),-10000),
+                    Math.max(Math.min(tempresult[i_+2],10000),-10000),
+                    Math.max(Math.min(tempresult[i_+3],10000),-10000)]
+                if(!BreakPoint){
+                    o_ctx.lineTo(u_[0]*scale+width/2+main_Ox,-u_[1]*scale+height/2+main_Oy);
+                    o_ctx.lineTo(u_[2]*scale+width/2+main_Ox,-u_[3]*scale+height/2+main_Oy);
+                }else{
+                    o_ctx.moveTo(u_[0]*scale+width/2+main_Ox,-u_[1]*scale+height/2+main_Oy);
+                    o_ctx.moveTo(u_[2]*scale+width/2+main_Ox,-u_[3]*scale+height/2+main_Oy);
+                }
+            }
+            o_ctx.stroke();
+        }
+        function graphfunc()
+        {
+            func_i=0;
+            imp_i=0;
+            polar_i=0;
+            params_i=0;
+            o_ctx.clearRect(0,0,width,height);
+            for(fn_i=0;fn_i<=input.length-1;fn_i++)
+            {
+                if(inputType[fn_i]==='error'){
+
+                }else if(inputType[fn_i]==='function'){
+                    func_i++;
+                    _fn(func_i-1);
+                }else if(inputType[fn_i]==='polar'){
+                    polar_i++;
+                    _polar(polar_i-1);
+                }else if(inputType[fn_i]==='params'){
+                    params_i++;
+                    _params(params_i-1);
+                }else if(inputType[fn_i]==='UserFunction'){
+                                    
+                }else if(inputType[fn_i]==='implicit'){
+                    r_dx();
+                    imp_i++;
+                    _single_implicit_draw(-(anspx)*ansScale+width/2,-anspy*ansScale+height/2,dx,imp_i-1);
+                }else{
+                                        
+                }
+            }
+        }
+
+        function graph(){
+            ctx.clearRect(0, 0, 10000, 10000);
+
+            r_dx();
+            if(grid_type===1){
+                grid(-(px)*scale+width/2,-py*scale+height/2,dx/5,'#e9e9e9',false);
+            }
+            grid(-(px)*scale+width/2,-py*scale+height/2,dx,'#999999',true);
+            axis();
+
+            
+            if (ansScale > 0) {
+                const zoom = scale / ansScale;
+                const destWidth = width * zoom;
+                const destHeight = height * zoom;
+                const destX = (width/2) - (px - anspx) * scale - destWidth/2;
+                const destY = (height/2) - (py - anspy) * scale - destHeight/2;
+                ctx.drawImage(offScreenCanvas, 0, 0, width, height, destX, destY, destWidth, destHeight);
+            }
+        }
+
+        function scheduleRecalculation() {
+            clearTimeout(interactionTimeout);
+            interactionTimeout = setTimeout(() => {
+                fn();
+                graphfunc();
+                graph();
+            }, 250);
+        }
+        fn();
+        graphfunc();
+        graph();
+
+        function getEventPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches ? e.touches[0] : e;
+            return {
+                x: touch.clientX - rect.left,
+                y: touch.clientY - rect.top
+            };
+        }
+        
+        function getPinchDistance(e) {
+            const t1 = e.touches[0];
+            const t2 = e.touches[1];
+            return Math.sqrt(Math.pow(t1.clientX - t2.clientX, 2) + Math.pow(t1.clientY - t2.clientY, 2));
+        }
+
+        function getPinchCenter(e) {
+             const rect = canvas.getBoundingClientRect();
+             const t1 = e.touches[0];
+             const t2 = e.touches[1];
+             return {
+                 x: (t1.clientX + t2.clientX) / 2 - rect.left,
+                 y: (t1.clientY + t2.clientY) / 2 - rect.top
+             };
+        }
+        
+        function startInteraction(e) {
+            // 检查鼠标是否在编辑器区域内
+            const editorContainer = document.querySelector('.editor-container');
+            const isInEditor = editorContainer && editorContainer.contains(e.target);
+    
+            // 如果鼠标在编辑器内，允许默认滚动行为
+            if (isInEditor) return;
+            e.preventDefault();
+            clearTimeout(interactionTimeout);
+            if (e.touches && e.touches.length >= 2) {
+                isDragging = false;
+                initialPinchDistance = getPinchDistance(e);
+            } else {
+                isDragging = true;
+                initialPinchDistance = null;
+                lastPos = getEventPos(e);
+            }
+        }
+
+        function handleInteraction(e) {
+            e.preventDefault();
+            if (e.touches && e.touches.length >= 2 && initialPinchDistance !== null) {
+                const currentPinchDistance = getPinchDistance(e);
+                const zoomFactor = currentPinchDistance / initialPinchDistance;
+                
+                const center = getPinchCenter(e);
+
+                px += (center.x - width / 2) / scale;
+                py += (center.y - height / 2) / scale;
+                scale *= zoomFactor;
+                px -= (center.x - width / 2) / scale;
+                py -= (center.y - height / 2) / scale;
+
+                initialPinchDistance = currentPinchDistance;
+                graph();
+            } else if (isDragging && (!e.touches || e.touches.length === 1)) {
+                const currentPos = getEventPos(e);
+                px += -(currentPos.x - lastPos.x) / scale;
+                py += -(currentPos.y - lastPos.y) / scale;
+                lastPos = currentPos;
+                graph();
+            }
+        }
+
+        function endInteraction(e) {
+            if (e.touches && e.touches.length > 0) {
+                 startInteraction(e);
+                 return;
+            }
+            isDragging = false;
+            initialPinchDistance = null;
+            scheduleRecalculation();
+        }
+        window.addEventListener('wheel', (e) => {
+            // 检查鼠标是否在编辑器区域内
+            const editorContainer = document.querySelector('.editor-container');
+            const isInEditor = editorContainer && editorContainer.contains(e.target);
+    
+            // 如果鼠标在编辑器内，允许默认滚动行为
+            if (isInEditor) return;
+
+            e.preventDefault();
+            clearTimeout(interactionTimeout);
+
+            const zoomIntensity = 0.1;
+            const currentPos = getEventPos(e)
+            
+            px += (currentPos.x - width / 2) / scale;
+            py += (currentPos.y - height / 2) / scale;
+            scale *= e.deltaY > 0 ? 1 - zoomIntensity : 1 + zoomIntensity;
+            px -= (currentPos.x - width / 2) / scale;
+            py -= (currentPos.y - height / 2) / scale;
+            
+            graph();
+            scheduleRecalculation();
+        }, { passive: false });
+
+        function changeScale(expected)
+        {
+            scale += (expected-scale)*0.4;
+            graph();
+        }
+        let resizeTimeout;
+        window.addEventListener('resize', function(event) {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width-5;
+                canvas.height = height-5;
+                offScreenCanvas.width = width-5;
+                offScreenCanvas.height = height-5;
+                
+                fn();
+                graphfunc();
+                graph();
+            }, 200);
+        });
+        document.getElementById('svg-button-home').addEventListener('click', function() {
+            pos_reset()
+            graph();
+            scheduleRecalculation();
+            
+            // 添加点击反馈
+            this.style.transform = 'scale(0.95)';
+            this.style.opacity = '0.8';
+            
+            setTimeout(() => {
+                this.style.transform = '';
+                this.style.opacity = '';
+            }, 150);
+        });
+        document.getElementById('svg-button-add').addEventListener('click', function() {
+            //点击了放大按钮
+            to_=scale*1.6
+            j_=0
+            while(j_<30){
+                setTimeout(() => {
+                    graph();
+                    scale += (to_-scale)*0.1
+                }, 150/60);
+                j_++
+            }
+            scheduleRecalculation();
+            
+            // 添加点击反馈
+            this.style.transform = 'scale(0.95)';
+            this.style.opacity = '0.8';
+            
+            setTimeout(() => {
+                this.style.transform = '';
+                this.style.opacity = '';
+            }, 150);
+        });
+        document.getElementById('svg-button-min').addEventListener('click', function() {
+            //点击了缩小按钮
+            to_=scale/1.6
+            j_=0
+            while(j_<30){
+                setTimeout(() => {
+                    graph();
+                    scale += (to_-scale)*0.1
+                }, 150/60);
+                j_++
+            }
+            graph();
+            scheduleRecalculation();
+            
+            // 添加点击反馈
+            this.style.transform = 'scale(0.95)';
+            this.style.opacity = '0.8';
+            
+            setTimeout(() => {
+                this.style.transform = '';
+                this.style.opacity = '';
+            }, 150);
+        });
+    </script>
+</body>
+</html>
