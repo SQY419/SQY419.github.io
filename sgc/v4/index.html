@@ -9,6 +9,7 @@
 	    margin: 0;
 	    min-width: 800px;
 	    background-color: #ffffff;
+            overflow-y: scroll !important;
 	}
 	/* 导航栏美化 */
         .navbar {
@@ -315,20 +316,17 @@
     </footer>
     <script>
         // 添加禁止滚动功能
-        document.addEventListener('DOMContentLoaded', function() {
-            const iframe = document.getElementById('sgc-iframe');
-            const originalOverflow = document.body.style.overflow;
-            
-            // 当鼠标进入iframe时禁止页面滚动
-            iframe.addEventListener('mouseenter', function() {
-                document.body.style.overflow = 'hidden';
-            });
-            
-            // 当鼠标离开iframe时恢复页面滚动
-            iframe.addEventListener('mouseleave', function() {
-                document.body.style.overflow = originalOverflow;
-            });
-        });
+         document.addEventListener('DOMContentLoaded', function() {
+	     const iframe = document.getElementById('sgc-iframe');
+	     
+	     iframe.addEventListener('mouseenter', function() {
+	         document.body.style.overflowY = 'hidden';
+	     });
+	     
+	     iframe.addEventListener('mouseleave', function() {
+	         document.body.style.overflowY = 'scroll';
+	     });
+	 });
     </script>
 </body>
 </html>
