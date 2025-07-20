@@ -315,31 +315,62 @@
 	<p class="math">Axolotlpower by Gtd232</p>
     </footer>
     <script>
-        // 添加禁止滚动功能
-	document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const overlay = document.getElementById('sgc-overlay');
-            const iframe = document.getElementById('sgc-iframe');
+            const scrollStatus = document.getElementById('scrollStatus');
+            let isScrollEnabled = true;
+            
+            // 更新滚动状态指示器
+            function updateScrollStatus() {
+                if (isScrollEnabled) {
+                    scrollStatus.classList.remove('active');
+                    scrollStatus.innerHTML = '<span class="indicator"></span><span>页面滚动: 启用</span>';
+                } else {
+                    scrollStatus.classList.add('active');
+                    scrollStatus.innerHTML = '<span class="indicator"></span><span>页面滚动: 禁用</span>';
+                }
+                
+                // 5秒后淡出指示器
+                scrollStatus.style.opacity = '1';
+                clearTimeout(scrollStatus.timeout);
+                scrollStatus.timeout = setTimeout(() => {
+                    scrollStatus.style.opacity = '0.5';
+                }, 5000);
+            }
             
             // 当鼠标进入覆盖层时禁用页面滚动
             overlay.addEventListener('mouseenter', function() {
                 document.body.style.overflow = 'hidden';
+                isScrollEnabled = false;
+                updateScrollStatus();
             });
             
             // 当鼠标离开覆盖层时启用页面滚动
             overlay.addEventListener('mouseleave', function() {
                 document.body.style.overflow = '';
+                isScrollEnabled = true;
+                updateScrollStatus();
             });
             
             // 当鼠标进入iframe时禁用页面滚动
+            const iframe = document.getElementById('sgc-iframe');
             iframe.addEventListener('mouseenter', function() {
                 document.body.style.overflow = 'hidden';
+                isScrollEnabled = false;
+                updateScrollStatus();
             });
             
             // 当鼠标离开iframe时启用页面滚动
             iframe.addEventListener('mouseleave', function() {
                 document.body.style.overflow = '';
+                isScrollEnabled = true;
+                updateScrollStatus();
             });
-	});
+            
+            // 初始化滚动状态
+            updateScrollStatus();
+            
+        });
     </script>
 </body>
 </html>
