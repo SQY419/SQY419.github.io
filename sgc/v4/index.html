@@ -316,17 +316,30 @@
     </footer>
     <script>
         // 添加禁止滚动功能
-         document.addEventListener('DOMContentLoaded', function() {
-	     const iframe = document.getElementById('sgc-iframe');
-	     
-	     iframe.addEventListener('mouseenter', function() {
-	         document.body.style.overflowY = 'hidden';
-	     });
-	     
-	     iframe.addEventListener('mouseleave', function() {
-	         document.body.style.overflowY = 'scroll';
-	     });
-	 });
+	document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('sgc-overlay');
+            const iframe = document.getElementById('sgc-iframe');
+            
+            // 当鼠标进入覆盖层时禁用页面滚动
+            overlay.addEventListener('mouseenter', function() {
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // 当鼠标离开覆盖层时启用页面滚动
+            overlay.addEventListener('mouseleave', function() {
+                document.body.style.overflow = '';
+            });
+            
+            // 当鼠标进入iframe时禁用页面滚动
+            iframe.addEventListener('mouseenter', function() {
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // 当鼠标离开iframe时启用页面滚动
+            iframe.addEventListener('mouseleave', function() {
+                document.body.style.overflow = '';
+            });
+	});
     </script>
 </body>
 </html>
