@@ -57,13 +57,18 @@
     }
 	    
 	.image-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .image-container img {
-            display: block;
-        }
+		position: relative;
+		display: block;
+		width: 100%; /* 宽度自动适应网页 */
+	}
+	
+	.image-container img {
+		width: 100%; /* 图片宽度自适应容器 */
+		height: auto;
+		display: block;
+		mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); /* 从上到下渐变透明 */
+		-webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); /* 兼容WebKit浏览器 */
+	}
 
         .image-container .text-overlay {
             position: absolute;
@@ -94,17 +99,16 @@
 	    <a href="/sgc/about.html">关于</a>
         </div>
     </div>
-    <div class="content">
+<div class="content">
        
-          <center>
-		  <div class="image-container">
-        <img style="width: 100%" src="/sgc/Screenshot_20240817_205557_com.huawei.browser_edit_472359964882770.jpg" alt="SGC">
-        <div class="text-overlay">
-		<p style="font-size: 250%;" class="math">
-        
-	</p>
+	<center>
+	<div class="image-container">
+	    <img src="./SGC1_files/Screenshot_20240817_205557_com.huawei.browser_edit_472359964882770.jpg" alt="SGC">
+	    <div class="text-overlay">
+	        <p style="font-size: 250%;" class="math"></p>
+	    </div>
 	</div>
-		  </div>
+</div>
 		  
 </center>
 <div class="container">
