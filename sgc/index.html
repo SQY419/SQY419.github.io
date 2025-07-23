@@ -109,19 +109,9 @@
 	}
 	
 	/* 修复媒体查询语法 */
-	@media (max-width: 991px) {
+	@media (min-width: 992px) {
 	    .pictext {
 	        flex-direction: row;
-	    }
-	    
-	    /* 奇数项：图片在左，文字在右 */
-	    .pictext:nth-child(odd) {
-	        flex-direction: row;
-	    }
-	    
-	    /* 偶数项：文字在左，图片在右 */
-	    .pictext:nth-child(even) {
-	        flex-direction: row-reverse;
 	    }
 	    
 	    .pictext > img {
@@ -134,7 +124,7 @@
 	    }
 	}
 	
-	@media (min-width: 992px) {
+	@media (max-width: 991px) {
 	    .pictext {
 	        flex-direction: column;
 	    }
@@ -235,8 +225,8 @@
 
 <!-- 第一组：图片在左，文字在右 -->
 <div class="pictext">
-    <img src="/sgc/sgc_ys.jpg" alt="SGC">
     <p class="math">在scratch/浏览器上运行，简单好用。随意画出你想要的函数，所见即所得。内置软键盘，键盘坏了也没问题。</p>
+    <img src="/sgc/sgc_ys.jpg" alt="SGC">
 </div>
 
 <!-- 第二组：文字在左，图片在右 -->
@@ -247,8 +237,8 @@
 
 <!-- 第三组：图片在左，文字在右 -->
 <div class="pictext">
-    <img src="/sgc/des_sgc.jpg" alt="SGC">
     <p class="math">太抽象了，desmos画不清楚了。试试SGC吧！全新数据结构，计算速度翻一番。</p>
+    <img src="/sgc/des_sgc.jpg" alt="SGC">
 </div>
 
 <!-- 第四组：文字在左，图片在右 -->
@@ -259,8 +249,8 @@
 
 <!-- 第五组：图片在左，文字在右 -->
 <div class="pictext">
-    <img src="/download/assets/i1.jpg" alt="SGC">
     <p class="math">几何题注意不到，或者建系太难算？SGC助你一臂之力！</p>
+    <img src="/download/assets/i1.jpg" alt="SGC">
 </div>
 </div>
        
