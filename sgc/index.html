@@ -108,7 +108,7 @@
 	    margin: 0 auto; /* 居中 */
 	}
 	
-	/* 添加新的响应式规则 */
+	/* 修复媒体查询语法 */
 	@media (min-width: 992px) {
 	    .pictext {
 	        flex-direction: row;
@@ -125,17 +125,22 @@
 	    }
 	    
 	    .pictext > img {
-	        flex: 0 0 45%; /* 图片宽度占比 */
+	        flex: 0 0 45%;
+	        max-width: 45%;
 	    }
 	    
 	    .pictext > p {
-	        flex: 1; /* 文字区域占满剩余空间 */
+	        flex: 1;
 	    }
 	}
 	
 	@media (max-width: 991px) {
 	    .pictext {
 	        flex-direction: column;
+	    }
+	    
+	    .pictext img {
+	        max-width: 100%;
 	    }
 	}
 	
@@ -254,7 +259,7 @@
 
 <!-- 第五组：图片在左，文字在右 -->
 <div class="pictext">
-    <img src="/sgc/i1.jpg" alt="SGC">
+    <img src="/download/assets/i1.jpg" alt="SGC">
     <p class="math">几何题注意不到，或者建系太难算？SGC助你一臂之力！</p>
 </div>
 </div>
