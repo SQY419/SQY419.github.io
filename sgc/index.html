@@ -98,12 +98,66 @@
 		margin-top: 60px; /* 根据导航栏的高度调整 */
 		padding: 20px;
 	}
+	/* 修改原有 .pictext 样式 */
 	.pictext {
-	        display: flex; /* 使用Flexbox布局 */
-	        align-items: center; /* 垂直居中 */
-	        gap: 60px; /* 设置元素之间的间隔 */
-	        padding: 30px;
-        }
+	    display: flex;
+	    align-items: center;
+	    gap: 60px;
+	    padding: 30px;
+	    max-width: 1200px; /* 限制最大宽度 */
+	    margin: 0 auto; /* 居中 */
+	}
+	
+	/* 添加新的响应式规则 */
+	@media (min-width: 992px) {
+	    .pictext {
+	        flex-direction: row;
+	    }
+	    
+	    /* 奇数项：图片在左，文字在右 */
+	    .pictext:nth-child(odd) {
+	        flex-direction: row;
+	    }
+	    
+	    /* 偶数项：文字在左，图片在右 */
+	    .pictext:nth-child(even) {
+	        flex-direction: row-reverse;
+	    }
+	    
+	    .pictext > img {
+	        flex: 0 0 45%; /* 图片宽度占比 */
+	    }
+	    
+	    .pictext > p {
+	        flex: 1; /* 文字区域占满剩余空间 */
+	    }
+	}
+	
+	@media (max-width: 991px) {
+	    .pictext {
+	        flex-direction: column;
+	    }
+	}
+	
+	/* 图片自适应 */
+	.pictext img {
+	    width: 100%;
+	    max-width: 500px;
+	    height: auto;
+	    object-fit: cover;
+	    border-radius: 10px;
+	    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+	}
+	
+	/* 文字样式优化 */
+	.pictext p {
+	    font-size: 18px;
+	    line-height: 1.6;
+	    text-align: justify;
+	    padding: 15px;
+	    background: rgba(255,255,255,0.8);
+	    border-radius: 8px;
+	}
  
 	img {
 		width: 360px; /* 设置图片宽度 */
@@ -172,28 +226,37 @@
 <p style="font-size: 150%;" class="math">SGC Version 4.7+</p>
 <p style="font-size: 200%; " class="math">享受数学之美</p>  
 
+</center>
+
+<!-- 第一组：图片在左，文字在右 -->
 <div class="pictext">
-    <img src="/sgc/sgc_ys.jpg" alt="SGC">
+    <img src="./SGC1_files/sgc_ys.jpg" alt="SGC">
     <p class="math">在scratch/浏览器上运行，简单好用。随意画出你想要的函数，所见即所得。内置软键盘，键盘坏了也没问题。</p>
 </div>
-  <div class="pictext">
-        <p class="math">使用SGC强大的自定义函数和隐式功能，再抽象的mandelbrot集都可以在坐标系中画出来。</p>
-    <img src="/sgc/Screenshot_20240816_224623_com.huawei.browser_edit_461321887621929.jpg" alt="SGC">
 
-  </div>
-  <div class="pictext">
-    <img src="/sgc/des_sgc.jpg" alt="SGC">
+<!-- 第二组：文字在左，图片在右 -->
+<div class="pictext">
+    <p class="math">使用SGC强大的自定义函数和隐式功能，再抽象的mandelbrot集都可以在坐标系中画出来。</p>
+    <img src="./SGC1_files/Screenshot_20240816_224623_com.huawei.browser_edit_461321887621929.jpg" alt="SGC">
+</div>
+
+<!-- 第三组：图片在左，文字在右 -->
+<div class="pictext">
+    <img src="./SGC1_files/des_sgc.jpg" alt="SGC">
     <p class="math">太抽象了，desmos画不清楚了。试试SGC吧！全新数据结构，计算速度翻一番。</p>
-  </div>
-  <div class="pictext">
-        <p class="math">不善言辞，如何表达情感？面对crush，总不能只用乏味的词语。SGC帮助你使用数学之美，win his/her heart. 我们已经修好了烦人的bug，这种图表计算速度有了极大提升。</p>
-    <img src="/sgc/crr.jpg" alt="SGC">
-  </div>
-	  <div class="pictext">
-    <img src="/download/assets/i1.jpg" alt="SGC">
-    <p class="math">丁真能力不强？几何题看不出来或者建系没思路？SGC助你一臂之力！</p>
-	  </div>
-</center>
+</div>
+
+<!-- 第四组：文字在左，图片在右 -->
+<div class="pictext">
+    <p class="math">不善言辞，如何表达情感？面对crush，总不能只用乏味的词语。SGC帮助你使用数学之美，win his/her heart。</p>
+    <img src="./SGC1_files/crr.jpg" alt="SGC">
+</div>
+
+<!-- 第五组：图片在左，文字在右 -->
+<div class="pictext">
+    <img src="./SGC1_files/i1.jpg" alt="SGC">
+    <p class="math">几何题注意不到，或者建系太难算？SGC助你一臂之力！</p>
+</div>
 </div>
        
     </div>
