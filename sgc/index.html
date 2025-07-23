@@ -6,9 +6,10 @@
     <title>SGC</title>
     <style>
         body {
-            margin: 0;
-      min-width: 800px;
+            	margin: 0;
+      		min-width: 800px;
         }
+	/* 导航栏美化 */
         .navbar {
             position: fixed;
             top: 0;
@@ -18,43 +19,96 @@
             justify-content: space-between;
             align-items: center;
             background: linear-gradient(20deg, #ffe985, #fa742b);
-            padding: 5px;
-            z-index: 1000; /* 确保导航栏在其他内容之上 */
+            padding: 0 20px;
+            z-index: 1000;
+            height: 70px; /* 增加高度 */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
         }
+        
+        .navbar:hover {
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+        }
+        
         .navbar .title {
             color: white;
-            font-size: 20px;
-            font-weight: bold;
-		padding: 0px 10px;
+            font-size: 24px;
+            font-weight: 700;
+            padding: 0 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
         }
+        
+        
         .navbar .links {
             display: flex;
-            gap: 10px;
+            gap: 5px;
+            height: 100%;
         }
+        
         .navbar .links a {
             color: white;
             text-decoration: none;
-            padding: 30px 30px;
+            padding: 0 25px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            margin: 0 5px;
         }
+        
         .navbar .links a:hover {
-            background-color: rgba(220,220,220,0.6);
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
         }
-        /* 为页面内容添加上边距，以避免与固定导航栏重叠 */
-        .content {
-            margin-top: 80px; /* 根据导航栏的高度调整 */
+        
+        .navbar .links a::after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: white;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        .navbar .links a:hover::after {
+            width: 60%;
+        }
+        
+        .navbar .links a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .navbar .links a.active::after {
+            width: 60%;
+        }
+	/* 为页面内容添加上边距，以避免与固定导航栏重叠 */
+	.content {
+		margin-top: 60px; /* 根据导航栏的高度调整 */
 		padding: 20px;
-        }
+	}
 	.pictext {
-        display: flex; /* 使用Flexbox布局 */
-        align-items: center; /* 垂直居中 */
-        gap: 60px; /* 设置元素之间的间隔 */
-        padding: 30px;
+	        display: flex; /* 使用Flexbox布局 */
+	        align-items: center; /* 垂直居中 */
+	        gap: 60px; /* 设置元素之间的间隔 */
+	        padding: 30px;
         }
  
-    img {
-        width: 360px; /* 设置图片宽度 */
-        height: auto; /* 高度自动调整以保持图片比例 */
-    }
+	img {
+		width: 360px; /* 设置图片宽度 */
+		height: auto; /* 高度自动调整以保持图片比例 */
+	}
 	    
 	.image-container {
 		position: relative;
