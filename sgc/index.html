@@ -11,79 +11,79 @@
         }
 	/* 导航栏美化 */
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(20deg, #ffe985, #fa742b);
-            padding: 0 20px;
-            z-index: 1000;
-            height: 70px; /* 增加高度 */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		background: linear-gradient(20deg, #ffe985, #fa742b);
+		padding: 0 20px;
+		z-index: 1000;
+		height: 70px; /* 增加高度 */
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+		transition: all 0.3s ease;
         }
         
         .navbar:hover {
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
         }
         
         .navbar .title {
-            color: white;
-            font-size: 24px;
-            font-weight: 700;
-            padding: 0 15px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
+		color: white;
+		font-size: 24px;
+		font-weight: 700;
+		padding: 0 15px;
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+		letter-spacing: 0.5px;
+		display: flex;
+		align-items: center;
         }
         
         
         .navbar .links {
-            display: flex;
-            gap: 5px;
-            height: 100%;
+		display: flex;
+		gap: 5px;
+		height: 100%;
         }
         
         .navbar .links a {
-            color: white;
-            text-decoration: none;
-            padding: 0 25px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            position: relative;
-            transition: all 0.3s ease;
-            border-radius: 4px;
-            margin: 0 5px;
+		color: white;
+		text-decoration: none;
+		padding: 0 25px;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: 500;
+		letter-spacing: 0.5px;
+		position: relative;
+		transition: all 0.3s ease;
+		border-radius: 4px;
+		margin: 0 5px;
         }
         
         .navbar .links a:hover {
-            background-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
+		background-color: rgba(255, 255, 255, 0.25);
+		transform: translateY(-2px);
         }
         
         .navbar .links a::after {
-            content: '';
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 3px;
-            background: white;
-            border-radius: 10px;
-            transition: width 0.3s ease;
+		content: '';
+		position: absolute;
+		bottom: 15px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 0;
+		height: 3px;
+		background: white;
+		border-radius: 10px;
+		transition: width 0.3s ease;
         }
         
         .navbar .links a:hover::after {
-            width: 60%;
+		width: 60%;
         }
         
         .navbar .links a.active {
@@ -129,15 +129,17 @@
             top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
-            
-            
 	}
-	    footer {
+	footer {
             background-color: #333333; /* 深灰色背景 */
             color: white; /* 文本颜色为白色 */
             padding: 20px; /* 内边距 */
             text-align: center; /* 文本居中对齐 */
 	    }
+	.logo{
+	    height:24px; 
+	    width: auto;
+	}
     </style>
  <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
