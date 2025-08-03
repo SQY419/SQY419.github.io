@@ -193,131 +193,20 @@
 	    background-color: #ffffff; /* 红色背景 */
 	}
 
-	.group {
-	  display: flex;       /* 启用flex布局 */
-	  align-items: center; /* 垂直居中对齐 */
-	  gap: 20px;          /* 元素间距 */
-	  margin-bottom: 30px;
-	}
-
-	.text1 {
-	  white-space: nowrap; /* 防止文字换行 */
-	  font-family: Arial, sans-serif;
-	  min-width: 150px;    /* 保持文本容器宽度一致 */
-	}
 	
-	.rectangle {
-	    height: 30px;
-	    background-color: #4285f4;
-	    width: 0;
-	    animation-fill-mode: forwards;
-	    animation-duration: 2s;
-	}
-	.logo{
-	    height:24px; 
-	    width: auto;
-	}
-	
-	#rect1 { animation-name: animate600; }
-	#rect2 { animation-name: animate500; }
-	#rect3 { animation-name: animate400; }
-	
-	@keyframes animate600 { to { width: 12.5px; } }
-	@keyframes animate500 { to { width: 32.5px; } }
-	@keyframes animate400 { to { width: 500px; } }
     </style>
  <link rel="stylesheet" type="text/css" href="/index.css">
 	
 </head>
 <body>
-    <div class="navbar">
-        <div class="title">
-		<img src="/sgc/v4/logo00.svg" alt="SVG Image" class="logo">
-	</div>
-        <div class="links">
-            <a href="https://sqy419.axolotlpower.com/sgc">首页</a>
-            <a href="/sgc/help.html">帮助</a>
-            <a href="/sgc/v4">在线版</a>
-	    <a href="/sgc/about.html">关于</a>
-        </div>
-    </div>
     <div class="content">
-
-    <center>
-        <h1 class="math">SGC v4.8 在线版</h1>
-    </center>
     <center>
     	<div class="sgc">
 		<iframe id="sgc-iframe" src="https://sqy419.axolotlpower.com/download/assets/SGC v4.8.11.html" title="description"></iframe>
 		<div class="sgc-overlay" id="sgc-overlay"></div>
     	</div>
     </center>
-	    <center>
-	    <div class="col-banner">
-            <center><h2 class="math">SGC V4.8 版本更新 </h2></center>
-
-		
-	<div style="text-align: left;">
-	    <p class="math">· 数值积分采用精度更高的Gauss-Kronrod算法. 支持求解fsolve函数 </p>
-	    <p class="math">· 修复大型运算符bug </p>
-	    <p class="math">· SGC Script 高级脚本，更方便地探索数学世界. 新增ascii功能库</p>
-	    <p class="math">· 内置素材库，直接浏览示例存档. 支持完整的颜色适配</p>
-	    <p class="math">· 功能更强的几何画板，支持数值校验和旋转变换, 增加角平分线</p>
-	</div>
-		
-	    </div>  
-		    <div class="col-banner">
-            <center><h2 class="math">SGC 性能对比 </h2></center>
-		<div style="text-align: left;">
-		
-	<!-- 第一组 -->
-	  <div class="group">
-	    <div class="text1"><p class="math">SGC v1.0.5</p></div>
-	    <div class="rectangle" id="rect1"></div>
-	  </div>
-	
-	  <!-- 第二组 -->
-	  <div class="group">
-	    <div class="text1"><p class="math">SGC plus+</p></div>
-	    <div class="rectangle" id="rect2"></div>
-	  </div>
-	
-	  <!-- 第三组 -->
-	  <div class="group">
-	    <div class="text1"><p class="math">SGC v3/4</p></div>
-	    <div class="rectangle" id="rect3"></div>
-	  </div>
-	</div>
-            </div>
-	    </div>  
-	    </center>
-      
-	     <center>
-	<div class="cof1">
-		<h2 class="cofh1">示例文档</h2>
-		<div class="contentcof">想不出来画什么？来这里看看，随便选择一个存档，体验数学之美！</div>
-		<button onclick="window.location.href = 'https://sqy419.axolotlpower.com/sgc/ys'">点击跳转</button>
-	</div>
-	      
-	<div class="cof1">
-		<h2 class="cofh1">下载</h2>
-		<div class="contentcof">想要将SGC放在本地使用？点击下方按钮，下载不同版本SGC！您也可以下载一些SGC的资源文件！</div>
-		<button onclick="window.location.href = 'https://sqy419.axolotlpower.com/download'">点击下载</button>
-	</div>
-
-	<div class="cof1">
-		<h2 class="cofh1">使用说明</h2>
-		<div class="contentcof">不会使用？查看说明书！</div>
-		<button onclick="window.location.href = 'https://sqy419.axolotlpower.com/sgc/doc/SGCdoc.pdf'">立马查看！</button>
-	</div>
-    </center>
-
-   </div>
-    
-    <footer>
-	<p class="math">&copy; SQY 2025. SQY all rights reserved. 2025.7.27</p>
-	<p class="math">Axolotlpower by Gtd232</p>
-    </footer>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const overlay = document.getElementById('sgc-overlay');
