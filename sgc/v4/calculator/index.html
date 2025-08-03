@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGC</title>
+    <style>
+	body {
+	    margin: 0;
+	    min-width: 800px;
+	    background-color: #ffffff;
+            overflow-y: scroll; /* 始终显示滚动条空间 */
+	}
+	/* 导航栏美化 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(20deg, #ffe985, #fa742b);
+            padding: 0 20px;
+            z-index: 1000;
+            height: 70px; /* 增加高度 */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar:hover {
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .navbar .title {
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            padding: 0 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        
+        .navbar .links {
+            display: flex;
+            gap: 5px;
+            height: 100%;
+        }
+        
+        .navbar .links a {
+            color: white;
+            text-decoration: none;
+            padding: 0 25px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            margin: 0 5px;
+        }
+        
+        .navbar .links a:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        
+        .navbar .links a::after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: white;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        .navbar .links a:hover::after {
+            width: 60%;
+        }
+        
+        .navbar .links a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .navbar .links a.active::after {
+            width: 60%;
+        }
+	/* 为页面内容添加上边距，以避免与固定导航栏重叠 */
+	.content {
+	    margin-top: 60px; /* 根据导航栏的高度调整 */
+	    padding: 20px;
+	}
+	.pictext {
+	    display: flex; /* 使用Flexbox布局 */
+	    align-items: center; /* 垂直居中 */
+	    gap: 60px; /* 设置元素之间的间隔 */
+	    padding: 30px;
+	}
+	
+	img {
+	    width: 360px; /* 设置图片宽度 */
+	    height: auto; /* 高度自动调整以保持图片比*/
+	}
+	    
+	.image-container {
+	    position: relative;
+	    display: inline-block;
+	}
+	
+	.image-container img {
+	    display: block;
+	}
+	
+	.image-container .text-overlay {
+	    position: absolute;
+	    top: 45%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	    
+	}
+	footer {
+	    background-color: #333333; /* 深灰色背景 */
+	    color: white; /* 文本颜色为白色 */
+	    padding: 20px; /* 内边距 */
+	    text-align: center; /* 文本居中对齐 */
+	    }
+	iframe {
+	    width: 100%;
+	    height: 100%;
+	}
+	.sgc {
+	    width: 60%;
+	    aspect-ratio: 4/3;
+	    margin: 0;
+	    padding: 0;
+	    background-attachment: fixed;
+	}   
+	.cof1 {
+	    width: 80%;
+	    margin: 15px; /* 新增外边距 */
+	    padding: 20px;
+	    background-color: #f0f0f0;
+	    border-radius: 10px;
+	    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	}
+	
+	/* 其他样式保持不变... */
+	.cofh1 {
+	    color: #333;
+	    margin-bottom: 15px;
+	    font-family: Arial, sans-serif;
+	}
+	
+	.contentcof {
+	    margin-bottom: 20px;
+	    
+	    color: #666;
+	}
+	
+	button {
+	    padding: 10px 25px;
+	    background-color: #4CAF50;
+	    color: white;
+	    border: none;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    font-size: 16px;
+	    transition: background-color 0.3s;
+	}
+	
+	button:hover {
+	    background-color: #45a049;
+	}
+	
+	.col-banner {
+	    
+	    margin: 15px; /* 新增外边距 */
+	    padding: 20px;
+	    
+	    border-radius: 10px;
+	    width: 80%;          /* 占据页面全部宽度 */
+	    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	    background-color: #ffffff; /* 红色背景 */
+	}
+
+	.group {
+	  display: flex;       /* 启用flex布局 */
+	  align-items: center; /* 垂直居中对齐 */
+	  gap: 20px;          /* 元素间距 */
+	  margin-bottom: 30px;
+	}
+
+	.text1 {
+	  white-space: nowrap; /* 防止文字换行 */
+	  font-family: Arial, sans-serif;
+	  min-width: 150px;    /* 保持文本容器宽度一致 */
+	}
+	
+	.rectangle {
+	    height: 30px;
+	    background-color: #4285f4;
+	    width: 0;
+	    animation-fill-mode: forwards;
+	    animation-duration: 2s;
+	}
+	.logo{
+	    height:24px; 
+	    width: auto;
+	}
+	
+	#rect1 { animation-name: animate600; }
+	#rect2 { animation-name: animate500; }
+	#rect3 { animation-name: animate400; }
+	
+	@keyframes animate600 { to { width: 12.5px; } }
+	@keyframes animate500 { to { width: 32.5px; } }
+	@keyframes animate400 { to { width: 500px; } }
+    </style>
+ <link rel="stylesheet" type="text/css" href="/index.css">
+	
+</head>
+<body>
+    <div class="navbar">
+        <div class="title">
+		<img src="/sgc/v4/logo00.svg" alt="SVG Image" class="logo">
+	</div>
+        <div class="links">
+            <a href="https://sqy419.axolotlpower.com/sgc">首页</a>
+            <a href="/sgc/help.html">帮助</a>
+            <a href="/sgc/v4">在线版</a>
+	    <a href="/sgc/about.html">关于</a>
+        </div>
+    </div>
+    <div class="content">
+
+    <center>
+        <h1 class="math">SGC v4.8 在线版</h1>
+    </center>
+    <center>
+    	<div class="sgc">
+		<iframe id="sgc-iframe" src="https://sqy419.axolotlpower.com/download/assets/SGC v4.8.11.html" title="description"></iframe>
+		<div class="sgc-overlay" id="sgc-overlay"></div>
+    	</div>
+    </center>
+	    <center>
+	    <div class="col-banner">
+            <center><h2 class="math">SGC V4.8 版本更新 </h2></center>
+
+		
+	<div style="text-align: left;">
+	    <p class="math">· 数值积分采用精度更高的Gauss-Kronrod算法. 支持求解fsolve函数 </p>
+	    <p class="math">· 修复大型运算符bug </p>
+	    <p class="math">· SGC Script 高级脚本，更方便地探索数学世界. 新增ascii功能库</p>
+	    <p class="math">· 内置素材库，直接浏览示例存档. 支持完整的颜色适配</p>
+	    <p class="math">· 功能更强的几何画板，支持数值校验和旋转变换, 增加角平分线</p>
+	</div>
+		
+	    </div>  
+		    <div class="col-banner">
+            <center><h2 class="math">SGC 性能对比 </h2></center>
+		<div style="text-align: left;">
+		
+	<!-- 第一组 -->
+	  <div class="group">
+	    <div class="text1"><p class="math">SGC v1.0.5</p></div>
+	    <div class="rectangle" id="rect1"></div>
+	  </div>
+	
+	  <!-- 第二组 -->
+	  <div class="group">
+	    <div class="text1"><p class="math">SGC plus+</p></div>
+	    <div class="rectangle" id="rect2"></div>
+	  </div>
+	
+	  <!-- 第三组 -->
+	  <div class="group">
+	    <div class="text1"><p class="math">SGC v3/4</p></div>
+	    <div class="rectangle" id="rect3"></div>
+	  </div>
+	</div>
+            </div>
+	    </div>  
+	    </center>
+      
+	     <center>
+	<div class="cof1">
+		<h2 class="cofh1">示例文档</h2>
+		<div class="contentcof">想不出来画什么？来这里看看，随便选择一个存档，体验数学之美！</div>
+		<button onclick="window.location.href = 'https://sqy419.axolotlpower.com/sgc/ys'">点击跳转</button>
+	</div>
+	      
+	<div class="cof1">
+		<h2 class="cofh1">下载</h2>
+		<div class="contentcof">想要将SGC放在本地使用？点击下方按钮，下载不同版本SGC！您也可以下载一些SGC的资源文件！</div>
+		<button onclick="window.location.href = 'https://sqy419.axolotlpower.com/download'">点击下载</button>
+	</div>
+
+	<div class="cof1">
+		<h2 class="cofh1">使用说明</h2>
+		<div class="contentcof">不会使用？查看说明书！</div>
+		<button onclick="window.location.href = 'https://sqy419.axolotlpower.com/sgc/doc/SGCdoc.pdf'">立马查看！</button>
+	</div>
+    </center>
+
+   </div>
+    
+    <footer>
+	<p class="math">&copy; SQY 2025. SQY all rights reserved. 2025.7.27</p>
+	<p class="math">Axolotlpower by Gtd232</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('sgc-overlay');
+            const scrollStatus = document.getElementById('scrollStatus');
+            let isScrollEnabled = true;
+            
+            // 更新滚动状态指示器
+            function updateScrollStatus() {
+                if (isScrollEnabled) {
+                    scrollStatus.classList.remove('active');
+                    scrollStatus.innerHTML = '<span class="indicator"></span><span>页面滚动: 启用</span>';
+                } else {
+                    scrollStatus.classList.add('active');
+                    scrollStatus.innerHTML = '<span class="indicator"></span><span>页面滚动: 禁用</span>';
+                }
+                
+                // 5秒后淡出指示器
+                scrollStatus.style.opacity = '1';
+                clearTimeout(scrollStatus.timeout);
+                scrollStatus.timeout = setTimeout(() => {
+                    scrollStatus.style.opacity = '0.5';
+                }, 5000);
+            }
+            
+            // 当鼠标进入覆盖层时禁用页面滚动
+            overlay.addEventListener('mouseenter', function() {
+                document.body.style.overflow = 'hidden';
+                isScrollEnabled = false;
+                updateScrollStatus();
+            });
+            
+            // 当鼠标离开覆盖层时启用页面滚动
+            overlay.addEventListener('mouseleave', function() {
+                document.body.style.overflow = '';
+                isScrollEnabled = true;
+                updateScrollStatus();
+            });
+            
+            // 当鼠标进入iframe时禁用页面滚动
+            const iframe = document.getElementById('sgc-iframe');
+            iframe.addEventListener('mouseenter', function() {
+                document.body.style.overflow = 'hidden';
+                isScrollEnabled = false;
+                updateScrollStatus();
+            });
+            
+            // 当鼠标离开iframe时启用页面滚动
+            iframe.addEventListener('mouseleave', function() {
+                document.body.style.overflow = '';
+                isScrollEnabled = true;
+                updateScrollStatus();
+            });
+            
+            // 初始化滚动状态
+            updateScrollStatus();
+            
+        });
+    </script>
+</body>
+</html>
