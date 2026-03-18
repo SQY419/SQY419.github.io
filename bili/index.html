@@ -1,51 +1,60 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGC</title>
+    <title>跳转到B站PC版</title>
     <style>
-	/* 基础重置 */
-        * {
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            background-color: #f0f0f0;
         }
-        
-        /* 设置html和body高度为100% */
-        html, body {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-	
-	/* 为页面内容添加上边距，以避免与固定导航栏重叠 */
-	.content {
-	    margin: 0px; /* 根据导航栏的高度调整 */
-	    padding: 0px;
-	    width: 100%;
-	    height: 100%;
-	}
-	iframe {
-	    width: 100%;
-	    height: 100%;
-	    border: none;
-	}
-	.sgc {
-	    transform:scale(0.25);
-	    margin: 0;
-	    padding: 0;
-	    background-attachment: fixed;
-	}   
+        h1 {
+            color: #00a1d6;
+        }
+        p {
+            color: #666;
+        }
     </style>
- <link rel="stylesheet" type="text/css" href="/index.css">
-	
 </head>
 <body>
-    <div class="content">
-    	<div class="sgc">
-		<iframe id="sgc-iframe" src="https://bilibili.com" title="description"></iframe>
-    	</div>
+    <div class="container">
+        <h1>正在跳转到B站PC版</h1>
+        <p>请稍候，我们正在为您切换到电脑版界面...</p>
     </div>
+
+    <script>
+        // 检测是否为移动设备
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 跳转到B站PC版
+        function redirectToBilibiliPC() {
+            if (isMobileDevice()) {
+                // 在移动端跳转到PC版B站
+                window.location.href = "https://www.bilibili.com/?spm_id_from=333.1007.0.0";
+            } else {
+                // 在PC端直接访问B站主页
+                window.location.href = "https://www.bilibili.com/";
+            }
+        }
+
+        // 页面加载完成后执行跳转
+        window.addEventListener('DOMContentLoaded', redirectToBilibiliPC);
+    </script>
 </body>
 </html>
