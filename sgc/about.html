@@ -7,7 +7,7 @@
     <style>
         body {
             margin: 0;
-      min-width: 800px;
+            min-width: 800px;
         }
         .navbar {
             position: fixed;
@@ -18,27 +18,80 @@
             justify-content: space-between;
             align-items: center;
             background: linear-gradient(20deg, #ffe985, #fa742b);
-            padding: 5px;
-            z-index: 1000; /* 确保导航栏在其他内容之上 */
+            padding: 0 20px;
+            z-index: 1000;
+            height: 70px; /* 增加高度 */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
         }
+        
+        .navbar:hover {
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+        }
+        
         .navbar .title {
             color: white;
-            font-size: 20px;
-            font-weight: bold;
-		padding: 0px 10px;
+            font-size: 24px;
+            font-weight: 700;
+            padding: 0 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
         }
+        
+        
         .navbar .links {
             display: flex;
-            gap: 10px;
+            gap: 5px;
+            height: 100%;
         }
+        
         .navbar .links a {
             color: white;
             text-decoration: none;
-            padding: 30px 30px;
+            padding: 0 25px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            margin: 0 5px;
         }
+        
         .navbar .links a:hover {
-            background-color: rgba(220,220,220,0.6);
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
         }
+        
+        .navbar .links a::after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: white;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        .navbar .links a:hover::after {
+            width: 60%;
+        }
+        
+        .navbar .links a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .navbar .links a.active::after {
+            width: 60%;
+		}
         /* 为页面内容添加上边距，以避免与固定导航栏重叠 */
         .content {
             margin-top: 80px; /* 根据导航栏的高度调整 */
@@ -84,56 +137,44 @@
 </head>
 <body>
     <div class="navbar">
-        <div class="title">
-		<p class="math">SQY Graphic Calculator</p>
+    <div class="title">
+		<img src="/sgc/v4/logo00.svg" alt="SVG Image" class="logo">
 	</div>
-        <div class="links">
-            <a href="https://sqy419.axolotlpower.com/sgc">首页</a>
-            <a href="/sgc/help.html">帮助</a>
-            <a href="/sgc/v4">在线版</a>
-	    <a href="/sgc/about.html">关于</a>
-        </div>
+    <div class="links">
+        <a href="https://sqy419.axolotlpower.com/sgc">首页</a>
+        <a href="/sgc/help.html">帮助</a>
+        <a href="/sgc/v4">在线版</a>
+		<a href="/sgc/about.html">关于</a>
     </div>
+	</div>
     <div class="content">
-   <center>
-<h2 class="math">致谢</h2>
-    </center>
-  <p class="math">Gtd232： 提供axolotlpower这个域名，教我html。赞赞赞！</p>
-	    
-  <p class="math">obdopqo：四万字超大中文画笔字库。这个字库为scratch实现高级显示效果提供了可能。赞赞赞！</p>
-  <p class="math">-Rex-： SFE font injector。方便的把字体嵌入SGC，避免obdopqo字库部分显示问题。</p>
-	    <p class="math">Au author, KenGi。 他们的Arch、Origin是SGC前行的动力。</p>
-	    <p class="math">Desmos Bezier Render。为SGC绘制Crush函数甚至未来的“函数动画”提供保障。</p>
-	  
-    
-  
-  <center>
-<h2 class="math">旧版展览馆</h2>
-      <img
-  src="/sgc/Screenshot_20240807_214335_com.tencent.mobileqq_edit_505959281113286.jpg"
-  alt="114514"
-  width="720"
-  height="540"
-  title="V3" />
-  <p class="math">SGC V3; 兔子洞. 始于2023.12.14</p>
-              <img
+		<center>
+			<h2 class="math">致谢</h2>
+		</center>
+		<p class="math">Gtd232： 提供axolotlpower这个域名，教我html。赞赞赞！</p>
+		<p class="math">obdopqo：四万字超大中文画笔字库。这个字库为scratch实现高级显示效果提供了可能。赞赞赞！</p>
+		<p class="math">-Rex-： SFE font injector。方便的把字体嵌入SGC，避免obdopqo字库部分显示问题。</p>
+		<p class="math">Au author, KenGi。 他们的Arch、Origin是SGC前行的动力。</p>
+		<center>
+			<h2 class="math">旧版展览馆</h2>
+			<img src="/sgc/Screenshot_20240807_214335_com.tencent.mobileqq_edit_505959281113286.jpg" alt="114514"  width="720"  height="540"  title="V3" />
+			<p class="math">SGC V3; 兔子洞. 始于2023.12.14</p>
+            <img
   src="/sgc/Screenshot_20240818_180109_edit_510953101511173.jpg"
   alt="114514"
   width="720"
   height="540"
   title="V3" />
-  <p class="math">SGC V2; 几何与函数. 始于2023.05.03</p>
-  
-          <img
+			<p class="math">SGC V2; 几何与函数. 始于2023.05.03</p>       
+			<img
   src="/sgc/Screenshot_20231224_230237_com.huawei.browser_edit_506366177342506.jpg"
   alt="114514"
   width="720"
   height="540"
   title="V3" />
-  <p class="math">SGC V1; 隐函数测试. 始于2022.12.04</p>
-  </center>
-       </div>
-    </div>
+			<p class="math">SGC V1; 隐函数测试. 始于2022.12.04</p>
+		</center>
+	</div>
 	<footer>
 		<p class="math">&copy; SQY 2024. SQY all rights reserved. 2024.12.17</p>
 		<p class="math">Axolotlpower by Gtd232</p>
