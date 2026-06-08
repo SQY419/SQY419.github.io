@@ -1,112 +1,316 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>资源下载</title>
-  <style>
-    .custom-font {
-      font-family: "Consolas", Consolas;
-    }
-    .chinese-font {
-      font-family: "宋体", Consolas;
-    }
-    .container {
-      margin-left: 25px;
-      margin-right: 25px;
-    }
-    .col-banner {
-	    
-            margin: 15px; /* 新增外边距 */
-            padding: 20px;
-            
-            border-radius: 10px;
-            width: 95%;          /* 占据页面全部宽度 */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            background-color: #fbeeac; /* 红色背景 */
-            
-
-    }
-	  .col-banner1 {
-	    
-            margin: 15px; /* 新增外边距 */
-            padding: 20px;
-            
-            border-radius: 10px;
-            width: 95%;          /* 占据页面全部宽度 */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            background-color: #a2bffe; /* 红色背景 */
-            
-
-	  }
     <meta charset="UTF-8">
-  </style>
-  <link rel="stylesheet" type="text/css" href="/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资源下载</title>
+    <style>
+        :root {
+            --bg: #f9f9f9;
+            --card-bg: #ffffff;
+            --accent: #4a6fa5;
+            --text: #2c3e50;
+            --sub: #546e7a;
+            --border: #e0e0e0;
+            --hover-bg: #eef2f7;
+            --radius: 12px;
+        }
 
-  
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Consolas', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            padding: 2rem 1.5rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .header .poem {
+            font-size: 1.1rem;
+            color: var(--sub);
+            font-style: italic;
+            margin: 0.2rem 0;
+        }
+
+        /* 树形结构核心样式 */
+        .tree {
+            margin-top: 1.5rem;
+        }
+
+        .tree details {
+            margin-bottom: 0.6rem;
+        }
+
+        .tree details > summary {
+            list-style: none;               /* 隐藏默认三角形 */
+            cursor: pointer;
+            padding: 0.8rem 1rem;
+            background: #f5f7fa;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s;
+            border: 1px solid transparent;
+            user-select: none;
+            color: #1a1a2e;
+        }
+
+        .tree details > summary:hover {
+            background: var(--hover-bg);
+            border-color: #d0d7de;
+        }
+
+        /* 自定义展开/折叠图标 */
+        .tree details > summary::before {
+            content: '▸';
+            display: inline-block;
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+            transition: transform 0.2s ease;
+            color: var(--accent);
+            width: 1.2rem;
+            text-align: center;
+        }
+
+        .tree details[open] > summary::before {
+            content: '▾';
+            transform: rotate(0deg);
+        }
+
+        /* 二级/三级节点缩进与样式 */
+        .tree details details {
+            margin-left: 1.8rem;
+            margin-top: 0.4rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .tree details details > summary {
+            font-size: 1rem;
+            padding: 0.6rem 0.8rem;
+            background: #fafbfc;
+            font-weight: 500;
+        }
+
+        .tree details details > summary::before {
+            font-size: 1rem;
+        }
+
+        /* 叶子节点（资源列表） */
+        .resource-list {
+            margin-left: 2.5rem;
+            padding: 0.5rem 0 0.5rem 1rem;
+            border-left: 2px dashed var(--border);
+            list-style: none;
+        }
+
+        .resource-list li {
+            margin-bottom: 0.6rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.3rem;
+        }
+
+        .resource-list a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            background: #f0f4ff;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: background 0.2s, color 0.2s;
+            white-space: nowrap;
+        }
+
+        .resource-list a:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .resource-list .version-label {
+            color: var(--sub);
+            font-size: 0.95rem;
+        }
+
+        .no-link {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* 外链标识 */
+        .external-link::after {
+            content: ' ↗';
+            font-size: 0.8rem;
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .tree details details {
+                margin-left: 1rem;
+            }
+            .resource-list {
+                margin-left: 1.8rem;
+            }
+            .resource-list a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-<center>
-  <p class="fz" style="font-size: 300%;">资源下载</p>
- <p class="fz">请乘数学之马，挥鞭从此起程。</p>
-     <p class="fz">路上天色正好，天上太阳正晴。</p>
-  <p class="fz" style="font-size: 150%;"> 大型作品</p>
-</center>
-    <p class="fz" style="font-size: 150%;">1.SQY Graphic Calculator</p>
-  <center>
-	    <div class="col-banner">
-            
+    <div class="container">
+        <div class="header">
+            <h1>资源下载</h1>
+            <p class="poem">请乘数学之马，挥鞭从此起程。</p>
+            <p class="poem">路上天色正好，天上太阳正晴。</p>
+        </div>
 
-		<left>
-			<div style="text-align: left;">
-				<h2 class="fz">轮子</h2>
-	    <p class="fz">获取SGC背后的STeX渲染引擎1：原版STeX V0.2.2，不支持编译，但是编辑效果更好 <a href = "/download/assets/STeX V0.2.2.sb3" download = "STeX V0.2.2.sb3">STeX v0.2.2 .sb3文件</a></p>
-  <h2 class="fz">SGC离线版</h2>
-  <p class="fz">V4.10.19 : 2025最新版     <a href = "/download/assets/SGC v4.10.00825.sb3" download = "SGC V4.10.00919.sb3">SGC V4.10.19 .sb3文件</a></p>
-  <p class="fz">V4.5.2 : 稳定版.(更强的几何功能，修复若干bug)     <a href = "/download/assets/SGC v4.5.2.sb3" download = "SGC V4.5.2.sb3">SGC V4.5.2 .sb3文件</a></p>
-  <p class="fz">V4.3.13 : (支持几何，列表，编写自定义脚本，半全局LaTeX)     <a href = "/download/assets/SGC v4.3.13  (1).sb3" download = "SGC V4.3.13.sb3">SGC V4.3.13 .sb3文件</a></p>
-    <p class="fz">V4.2.8 : 2024 latest version. (没有几何和列表)：     <a href = "/download/assets/稽何计算器 V4.2.8.sb3" download = "SGC V4.2.8.sb3">SGC V4.2.8 .sb3文件</a></p>
+        <div class="tree">
+            <!-- 大型作品 1：SQY Graphic Calculator -->
+            <details open>
+                <summary>SQY Graphic Calculator (SGC)</summary>
 
-    <p class="fz"> </p>
+                <!-- 轮子 -->
+                <details open>
+                    <summary>⚙️ 轮子 · STeX 渲染引擎</summary>
+                    <ul class="resource-list">
+                        <li>
+                            <span class="version-label">STeX V0.2.2</span>
+                            <a href="/download/assets/STeX V0.2.2.sb3" download="STeX V0.2.2.sb3">下载 .sb3</a>
+                        </li>
+                    </ul>
+                </details>
 
-    <p class="fz">V3.2.2 g0：<a href = "/download/assets/SGC3.2.2_g0.sb3" download = "SGC V3.2.2 g0.sb3">SGC V3.2.2 .sb3文件</a></p>
+                <!-- SGC 离线版 -->
+                <details open>
+                    <summary>📦 SGC 离线版</summary>
+                    <ul class="resource-list">
+                        <li>
+                            <span class="version-label">V4.10.19 (2025最新)</span>
+                            <a href="/download/assets/SGC v4.10.00825.sb3" download="SGC V4.10.19 .sb3">下载 .sb3</a>
+                        </li>
+                        <li>
+                            <span class="version-label">V4.5.2 (稳定版)</span>
+                            <a href="/download/assets/SGC v4.5.2.sb3" download="SGC V4.5.2.sb3">下载 .sb3</a>
+                        </li>
+                        <li>
+                            <span class="version-label">V4.3.13 (几何/列表/脚本)</span>
+                            <a href="/download/assets/SGC v4.3.13  (1).sb3" download="SGC V4.3.13.sb3">下载 .sb3</a>
+                        </li>
+                        <li>
+                            <span class="version-label">V4.2.8 (2024最新)</span>
+                            <a href="/download/assets/稽何计算器 V4.2.8.sb3" download="SGC V4.2.8.sb3">下载 .sb3</a>
+                        </li>
+                        <li>
+                            <span class="version-label">V3.2.2 g0</span>
+                            <a href="/download/assets/SGC3.2.2_g0.sb3" download="SGC V3.2.2 g0.sb3">下载 .sb3</a>
+                        </li>
+                        <li>
+                            <span class="version-label">V2 plus (LTS)</span>
+                            <a href="/download/SGCv2LTS.sb3" download="SGC V2 plus.sb3">下载 .sb3</a>
+                        </li>
+                        <li>
+                            <span class="version-label">V1.0.5</span>
+                            <a href="/download/assets/SGC v1.0.5.sb3" download="SGC v1.0.5">下载 .sb3</a>
+                        </li>
+                    </ul>
+                </details>
 
-    <p class="fz">V2 plus<a href = "/download/SGCv2LTS.sb3" download = "SGC V2 plus.sb3">SGC V2 plus .sb3文件</a></p>
-    <p class="fz">V1.0.5 <a href = "/download/assets/SGC v1.0.5.sb3" download = "SGC v1.0.5">SGC v1.0.5 .sb3文件</a></p>
-    <h2 class="fz">其他链接</h2>
-				<a href = "https://wwws.lanzouo.com/iNNV12phdisj" class="fz">音乐播放器pro源代码</a>
-				<a href = "https://wwws.lanzouo.com/ioYu72phdiqh" class="fz">SGC音乐_你曾是少年</a>
-				<a href = "https://wwws.lanzouo.com/i4BgM2phdtbi" class="fz">SGC视频_Only my railgun</a>
-				<p class="fz">SGC音乐播放器     <a href = "/download/assets/MediaPlayer.txt" download = "MediaPlayer.txt">MediaPlayer_sgc</a></p>
-                                <p class="fz">SGC音乐 Only my railgun<a href = "/download/assets/onlymyrailgun.txt" download = "S_Only my railgun.txt">S_Only my railgun .sgcm</a></p>
-				<h2 class="fz">SGC lab</h2>
-				<p class="fz">锐锐图像    <a href = "/download/rr.txt" download = "rr.txt">点击下载后在脚本中运行</a></p>
-    
-			</div>
-		</left>
-	    </div>  
-  </center>
-    
-        <p class="fz" style="font-size: 150%;">2.ZB Mathematica</p>
-	<center>
-	    <div class="col-banner1">
-            
+                <!-- 其他链接 -->
+                <details>
+                    <summary>🔗 其他链接</summary>
+                    <ul class="resource-list">
+                        <li>
+                            <span class="version-label">音乐播放器pro源代码</span>
+                            <a href="https://wwws.lanzouo.com/iNNV12phdisj" class="external-link" target="_blank">兰奏云</a>
+                        </li>
+                        <li>
+                            <span class="version-label">SGC音乐《你曾是少年》</span>
+                            <a href="https://wwws.lanzouo.com/ioYu72phdiqh" class="external-link" target="_blank">兰奏云</a>
+                        </li>
+                        <li>
+                            <span class="version-label">SGC视频《Only my railgun》</span>
+                            <a href="https://wwws.lanzouo.com/i4BgM2phdtbi" class="external-link" target="_blank">兰奏云</a>
+                        </li>
+                        <li>
+                            <span class="version-label">SGC音乐播放器</span>
+                            <a href="/download/assets/MediaPlayer.txt" download="MediaPlayer.txt">MediaPlayer.txt</a>
+                        </li>
+                        <li>
+                            <span class="version-label">SGC音乐 Only my railgun</span>
+                            <a href="/download/assets/onlymyrailgun.txt" download="S_Only my railgun.txt">S_Only my railgun .sgcm</a>
+                        </li>
+                    </ul>
+                </details>
+            </details>
 
-		<left>
-			<div style="text-align: left;">
-	    <p class="fz">V1.0.0：    <a href = "/download/assets/ZBMS_v1.sb3" download = "ZBMS v1.0.0">ZB Mathematica .sb3文件</a></p>
-<p class="fz">V0.9.0</p>
-    <p class="fz">ZB Mathematica Kernel</p>
-			</div>
-		</left>
-	    </div>  
-	</center>
-    
-      <p class="fz" style="font-size: 150%;">3.STeX</p>
-    <p class="fz">V0.2.0</p>
-      <p class="fz">fastSTeX V0.1.0</p>
-  <p class="fz" style="font-size: 150%;">4.Cmaths</p>
-    <p class="fz">V2.0.5 LTS</p>
+            <!-- 大型作品 2：ZB Mathematica -->
+            <details open>
+                <summary>ZB Mathematica</summary>
+                <ul class="resource-list">
+                    <li>
+                        <span class="version-label">V1.0.0</span>
+                        <a href="/download/assets/ZBMS_v1.sb3" download="ZBMS v1.0.0">下载 .sb3</a>
+                    </li>
+                    <li><span class="version-label">V0.9.0</span> <span class="no-link">（无下载文件）</span></li>
+                    <li><span class="version-label">ZB Mathematica Kernel</span> <span class="no-link">（组件）</span></li>
+                </ul>
+            </details>
+
+            <!-- 大型作品 3：STeX -->
+            <details>
+                <summary>STeX</summary>
+                <ul class="resource-list">
+                    <li><span class="version-label">V0.2.0</span> <span class="no-link">（暂未提供下载）</span></li>
+                    <li><span class="version-label">fastSTeX V0.1.0</span> <span class="no-link">（暂未提供下载）</span></li>
+                </ul>
+            </details>
+
+            <!-- 大型作品 4：Cmaths -->
+            <details>
+                <summary>Cmaths</summary>
+                <ul class="resource-list">
+                    <li><span class="version-label">V2.0.5 LTS</span> <span class="no-link">（暂未提供下载）</span></li>
+                </ul>
+            </details>
+        </div>
     </div>
-  </body>
-
-    </html>
+</body>
+</html>
