@@ -1,65 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>ZBMS</title>
-  <style>
-    .custom-font {
-      font-family: "Consolas", Consolas;
-    }
-    .chinese-font {
-      font-family: "宋体", Consolas;
-    }
-    .container {
-        margin-left: 50px;
-        margin-right: 50px;
-    }
-    iframe {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZB Mathematica</title>
+    <link rel="stylesheet" type="text/css" href="/index.css">
+    <style>
+        :root {
+            --teal-700: #0d7377;
+            --teal-500: #14a3a8;
+            --teal-200: #a3e4d7;
+            --bg: #f0fdfa;
+            --card-bg: #ffffff;
+            --text: #1a2e2f;
+            --shadow: 0 4px 16px rgba(13, 115, 119, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Consolas', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* 英雄区域：背景图 + 标题 */
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 50vh;
+            background-image: url('/zbms/Screenshot_20240902_214649_com.huawei.photos_edit_880259992608359.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 半透明叠加层，提升文字可读性 */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            background: rgba(13, 115, 119, 0.65); /* 蓝绿遮罩 */
         }
-        .sgc {
-	    width: 60%;
-	    aspect-ratio: 4/3;
-	    margin: 0;
-	    padding: 0;
-	}   
-    <meta charset="UTF-8">
-  </style>
-  <link rel="stylesheet" type="text/css" href="/index.css">
 
-  
+        .hero h1 {
+            position: relative;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            color: #ffffff;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-align: center;
+            padding: 0 1rem;
+            font-family: 'Consolas', monospace;
+        }
+
+        /* 内容容器 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .tagline {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--teal-700);
+            font-weight: 500;
+            margin: 1.5rem 0 2rem;
+            font-style: italic;
+        }
+
+        /* iframe 容器卡片 */
+        .iframe-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin: 0 auto;
+            max-width: 100%;
+            aspect-ratio: 4 / 3;
+            border: 1px solid var(--teal-200);
+        }
+
+        .iframe-card iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* 桌面端调整 iframe 宽度 */
+        @media (min-width: 768px) {
+            .iframe-card {
+                max-width: 70%;
+            }
+        }
+
+        /* 移动端细微优化 */
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 40vh;
+            }
+            .container {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<div style="
-background-image: url(/zbms/Screenshot_20240902_214649_com.huawei.photos_edit_880259992608359.jpg);
-width: 100%;
-height: 600px;
-background-size: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-">
-    <p style="font-size: 300%;" class="math">
-        ZB Mathematica.
-    </p>
-</div>
-  <div class="container">
-<center>
+    <div class="hero">
+        <h1>ZB Mathematica.</h1>
+    </div>
 
-  <p class="math">Calculate Infinity by Scratch.</p>
+    <!-- 主体内容 -->
+    <div class="container">
+        <p class="tagline math">Calculate Infinity by Scratch.</p>
 
-  <p></p>
-
-</center>
-    <p class="math"></p>
-<center>
-<div class="sgc">
-		    <iframe src="https://sqy419.axolotlpower.com/zbms/ZBMS 1.0.5.html" title="description"></iframe>
-</div>
-  
-  
+        <!-- 嵌入 ZBMS 计算器 -->
+        <div class="iframe-card">
+            <iframe src="https://sqy419.axolotlpower.com/zbms/ZBMS%201.0.5.html" title="ZB Mathematica Calculator" allowfullscreen></iframe>
+        </div>
+    </div>
 </body>
 </html>
-
-
-
