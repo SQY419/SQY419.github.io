@@ -1,84 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>SQY的个人主页</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-  <style>
-    .custom-font {
-      font-family: "cmunss", cmunss;
-    }
-    .chinese-font {
-      font-family: "宋体", Consolas;
-    }
-  </style>
-  <link rel="stylesheet" type="text/css" href="index.css">
-  <script src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SQY的个人主页</title>
+    <!-- Bootstrap 4 样式，已包含响应式基础 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        .custom-font {
+            font-family: "cmunss", cmunss;
+        }
+        .chinese-font {
+            font-family: "宋体", Consolas;
+        }
+        /* 确保图片在小屏幕上不会超出容器，并保持圆角 */
+        .avatar-img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 50%;
+        }
+        /* 让卡片中的图片统一高度，视觉更整齐 */
+        .card-img-top {
+            object-fit: cover;
+            height: 200px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
 
-	<div class="container-fluid">
-<p> </p>
-  <p class="math"  style="font-size: 243%;">你好！我是SQY！</p>
+<div class="container py-4">
+    <!-- 头部介绍区域 -->
+    <div class="text-center mb-4">
+        <h1 class="math display-4 mb-3" style="font-size: 2.5rem;">你好！我是SQY！</h1>
+        <img
+                src="https://upload-static.saobby.com/static/upload/zAC4gHRwCLILYOQd.png"
+                alt="Axolotl"
+                class="avatar-img d-block mx-auto mb-3"
+                title="你好！我是Axolotl！"
+        >
+    </div>
 
-  <img
-  src="https://upload-static.saobby.com/static/upload/zAC4gHRwCLILYOQd.png"
-  alt="114514"
-  width="200"
-  height="200"
-  title="你好！我是Axolotl！" />
+    <!-- 关于我 -->
+    <div class="alert alert-primary text-center" role="alert">
+        <strong>关于我</strong>
+    </div>
+    <div class="text-center mb-4">
+        <p class="mb-1">2010.04.19🎂</p>
+        <p class="mb-1">ENTP一枚～</p>
+        <p class="mb-0">喜欢数学. 爱你😘</p>
+    </div>
 
+    <!-- 我的作品 -->
+    <div class="alert alert-primary text-center" role="alert">
+        <strong>我的作品</strong>
+    </div>
+    <h3 class="math text-center mt-3">我的Scratch作品</h3>
+    <p class="text-center text-muted mb-4">点击下方图片试试！</p>
 
-	<div class="alert alert-primary" role="alert">关于我</div>
-<p>2010.04.19🎂</p>
-<p>ENTP一枚～</p>
-<p>喜欢数学. 爱你😘</p>
-		
-	
-		<div class="alert alert-primary" role="alert">我的作品</div>
-		<center>
-<p class="math"  style="font-size: 120%;">我的Scratch作品</p>
-
-
-<p class="math">点击下方图片试试！</p>
-	</center>
-<center>
-  <div class="container">
-        <div class="card">
-            <img src="/img/Screenshot_20240908_084632_com.microsoft.emmx_edit_252318691714678.jpg" alt="">
-		
-            <div class="text">
-                <h2>Enjoy the beauty of mathematics.</h2>
-                <p>使用SGC V4，享受数学之美</p>
-		    <p onclick="window.location.href = 'https://sqy419.axolotlpower.com/sgc/'">*点击这里跳转*</p>
+    <!-- 作品卡片区域：手机一列，平板两列，桌面三列 -->
+    <div class="row">
+        <!-- 卡片1：SGC -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="/img/Screenshot_20240908_084632_com.microsoft.emmx_edit_252318691714678.jpg" class="card-img-top" alt="SGC Graphic Calculator">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Enjoy the beauty of mathematics.</h5>
+                    <p class="card-text">使用SGC V4，享受数学之美</p>
+                    <a href="https://sqy419.axolotlpower.com/sgc/" class="btn btn-primary mt-auto">点击这里跳转</a>
+                </div>
             </div>
-		
+            <p class="math text-center mt-2">SQY Graphic Calculator: 享受数学之美.</p>
         </div>
-	  <p class="math">SQY Graphic Calculator: 享受数学之美. </p>
-        <div class="card">
-            <img src="/zbms/Screenshot_20240902_214649_com.huawei.photos_edit_880259992608359.jpg" alt="">
-            <div class="text">
-                <h2>Calculate Infinity in Scratch</h2>
-                <p>ZB Mathematica 探索无限</p>
-		    <p></p>
+
+        <!-- 卡片2：ZB Mathematica -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="/zbms/Screenshot_20240902_214649_com.huawei.photos_edit_880259992608359.jpg" class="card-img-top" alt="ZB Mathematica">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Calculate Infinity in Scratch</h5>
+                    <p class="card-text">ZB Mathematica 探索无限</p>
+                    <!-- 原代码没有链接，保留为不可点击的说明，保持结构一致 -->
+                    <p class="text-muted small mt-auto mb-0">点击图片跳转（暂未设置链接）</p>
+                </div>
             </div>
+            <p class="math text-center mt-2">ZB Mathematica: 探索无限. 点击图片跳转</p>
         </div>
-	  <p class="math">ZB Mathematica: 探索无限. 点击图片跳转</p>
-        <div class="card">
-            <img src="/img/Screenshot_20240917_222705_com.huawei.browser_edit_323885050428367.jpg" alt="">
-            <div class="text">
-                <h2>beautiful formula.</h2>
-                <p>STeX Scratch上的公式编辑器</p>
-	    </div>
-	</div>
-	  <p class="math">STeX: Scratch公式编辑器，所见即所得. </p>
-  </div>
-	</div>
-</center>
-	<p class="math"></p>
-  <a href="https://www.saobby.com">Saobby的个人主页</a>
-<p class="math"></p>
-  <a href="https://www.axolotlpower.com">Gtd232:Axolotlpower</a>
-<p class="math"></p>
-  <a href="https://sqy419.axolotlpower.com/bili">bili</a>
+
+        <!-- 卡片3：STeX -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="/img/Screenshot_20240917_222705_com.huawei.browser_edit_323885050428367.jpg" class="card-img-top" alt="STeX">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">beautiful formula.</h5>
+                    <p class="card-text">STeX Scratch上的公式编辑器</p>
+                    <p class="text-muted small mt-auto mb-0">所见即所得</p>
+                </div>
+            </div>
+            <p class="math text-center mt-2">STeX: Scratch公式编辑器，所见即所得.</p>
+        </div>
+    </div>
+
+    <!-- 友情链接区域 -->
+    <div class="text-center mt-5 pt-3 border-top">
+        <a href="https://www.saobby.com" class="mx-3">Saobby的个人主页</a>
+        <a href="https://www.axolotlpower.com" class="mx-3">Gtd232:Axolotlpower</a>
+        <a href="https://sqy419.axolotlpower.com/bili" class="mx-3">bili</a>
+    </div>
+</div>
+
+<!-- Live2D 脚本移到末尾，避免阻塞页面渲染 -->
+<script src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
 </body>
 </html>
