@@ -6,13 +6,13 @@
     <title>二中🎶集</title>
     <style>
         :root {
-            --bg: #fdf6f0;
-            --card-bg: #ffffff;
+            --bg: #fef7ed;
+            --card-bg: #fffdf8;
             --accent: #d97706;
             --text: #3d2b1f;
             --sub: #7b6b5b;
-            --shadow: 0 3px 12px rgba(0,0,0,0.06);
-            --radius: 20px;
+            --shadow: 0 2px 10px rgba(0,0,0,0.05);
+            --radius: 16px;
         }
 
         * {
@@ -24,112 +24,84 @@
         body {
             font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
             background: var(--bg);
-            color: var(--text);
             min-height: 100vh;
-            padding: 2rem 1rem;
             display: flex;
             justify-content: center;
-            align-items: center;
+            padding: 2rem 1rem;
         }
 
         .container {
             max-width: 550px;
             width: 100%;
-            background: var(--card-bg);
+            background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 2.5rem 1.8rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* 装饰背景纹理 */
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -30px;
-            right: -30px;
-            width: 100px;
-            height: 100px;
-            background: var(--accent);
-            opacity: 0.05;
-            border-radius: 50%;
+            padding: 2rem 1.5rem;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 2.8rem;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 2.5rem;
         }
-
         .header h1 {
-            font-size: 2.6rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            letter-spacing: 1px;
+            font-size: 2.5rem;
+            margin-bottom: 0.2rem;
             color: #2b1a0e;
         }
-
         .header .sub {
             font-size: 0.95rem;
             color: var(--sub);
-            letter-spacing: 2px;
-            font-style: italic;
+            letter-spacing: 1px;
         }
 
-        /* 分类标题 */
-        .section-title {
+        .category {
+            margin: 1.8rem 0 0.8rem;
             font-size: 1.3rem;
             font-weight: 600;
-            margin: 2rem 0 1rem;
-            padding-left: 0.75rem;
+            padding-left: 0.8rem;
             border-left: 4px solid var(--accent);
             color: #2b1a0e;
         }
 
-        /* 音乐卡片 */
-        .music-item {
+        .song-list {
+            list-style: none;
+        }
+
+        .song-item {
             display: flex;
             align-items: center;
-            background: #fefcf8;
-            border: 1px solid #f0e8dd;
-            border-radius: 14px;
-            padding: 1rem 1.2rem;
-            margin-bottom: 1rem;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            color: inherit;
+            background: var(--card-bg);
+            border: 1px solid #f0e4d4;
+            border-radius: 12px;
+            padding: 0.9rem 1.1rem;
+            margin-bottom: 0.7rem;
+            transition: background 0.2s, border-color 0.2s;
         }
-
-        .music-item:hover {
-            background: #fff9f0;
+        .song-item:hover {
+            background: #fff5e6;
             border-color: var(--accent);
-            box-shadow: 0 2px 8px rgba(217, 119, 6, 0.1);
         }
 
-        .music-emoji {
-            font-size: 1.8rem;
+        .song-emoji {
+            font-size: 1.5rem;
             margin-right: 0.8rem;
             flex-shrink: 0;
         }
 
-        .music-info {
+        .song-info {
             flex: 1;
         }
-
-        .music-name {
+        .song-title {
             font-weight: 600;
             font-size: 1rem;
             margin-bottom: 0.15rem;
         }
-
-        .music-desc {
+        .song-artist {
             font-size: 0.85rem;
             color: var(--sub);
         }
 
-        .play-btn {
+        .play-link {
             background: var(--accent);
             color: white;
             border-radius: 50%;
@@ -139,28 +111,25 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            flex-shrink: 0;
-            margin-left: 0.5rem;
-            transition: transform 0.2s;
             text-decoration: none;
+            flex-shrink: 0;
+            transition: transform 0.2s;
         }
-
-        .music-item:hover .play-btn {
+        .play-link:hover {
             transform: scale(1.08);
         }
 
-        /* 移动端优化 */
         @media (max-width: 480px) {
             .container {
-                padding: 2rem 1.2rem;
+                padding: 1.8rem 1rem;
             }
             .header h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
-            .music-item {
-                padding: 0.9rem 1rem;
+            .song-item {
+                padding: 0.8rem 0.9rem;
             }
-            .play-btn {
+            .play-link {
                 width: 2.2rem;
                 height: 2.2rem;
                 font-size: 1rem;
@@ -176,29 +145,99 @@
         </div>
 
         <!-- 正规英语听力 -->
-        <div class="section-title">🎧 正规英语听力</div>
-        <a href="/2zmusic/I Like To Do.mp3" class="music-item">
-            <span class="music-emoji">🎵</span>
-            <div class="music-info">
-                <div class="music-name">I Like To Do</div>
-                <div class="music-desc">朴尚文 MusicWorks</div>
-            </div>
-            <span class="play-btn">▶</span>
-        </a>
+        <div class="category">正规英语听力</div>
+        <ul class="song-list">
+            <li class="song-item">
+                <span class="song-emoji">🎵</span>
+                <div class="song-info">
+                    <div class="song-title">结束 - I Like To Do</div>
+                    <div class="song-artist">朴尚文 MusicWorks</div>
+                </div>
+                <a href="/2zmusic/I Like To Do.mp3" class="play-link" title="播放">▶</a>
+            </li>
+        </ul>
 
         <!-- 二中广雅 -->
-        <div class="section-title">🏫 二中广雅</div>
-        <a href="/2zmusic/欢沁.mp3" class="music-item">
-            <span class="music-emoji">🎵</span>
-            <div class="music-info">
-                <div class="music-name">欢沁</div>
-                <div class="music-desc">林海</div>
-            </div>
-            <span class="play-btn">▶</span>
-        </a>
+        <div class="category">二中广雅</div>
+        <ul class="song-list">
+            <li class="song-item">
+                <span class="song-emoji">🔔</span>
+                <div class="song-info">
+                    <div class="song-title">上课铃 - 欢沁</div>
+                    <div class="song-artist">林海</div>
+                </div>
+                <a href="/2zmusic/欢沁.mp3" class="play-link" title="播放">▶</a>
+            </li>
+            <li class="song-item">
+                <span class="song-emoji">🌙</span>
+                <div class="song-info">
+                    <div class="song-title">下课铃 - Moonglow</div>
+                    <div class="song-artist">Bandari</div>
+                </div>
+                <a href="/2zmusic/Bandari - Moon Glow 月光.mp3" class="play-link" title="播放">▶</a>
+            </li>
+            <li class="song-item">
+                <span class="song-emoji">📢</span>
+                <div class="song-info">
+                    <div class="song-title">听力1 - 你曾是少年</div>
+                    <div class="song-artist">S.H.E.</div>
+                </div>
+                <a href="/2zmusic/你曾是少年.mp3" class="play-link" title="播放">▶</a>
+            </li>
+            <li class="song-item">
+                <span class="song-emoji">📢</span>
+                <div class="song-info">
+                    <div class="song-title">听力2 - try try try</div>
+                    <div class="song-artist">—</div>
+                </div>
+                <a href="/2zmusic/try try try.mp3" class="play-link" title="播放">▶</a>
+            </li>
+            <li class="song-item">
+                <span class="song-emoji">📢</span>
+                <div class="song-info">
+                    <div class="song-title">听力3 - Love Story</div>
+                    <div class="song-artist">Taylor Swift</div>
+                </div>
+                <a href="/2zmusic/love story.mp3" class="play-link" title="播放">▶</a>
+            </li>
+            <li class="song-item">
+                <span class="song-emoji">☁️</span>
+                <div class="song-info">
+                    <div class="song-title">午休结束 - Kiss The Rain</div>
+                    <div class="song-artist">—</div>
+                </div>
+                <a href="/2zmusic/Kiss The Rain.mp3" class="play-link" title="播放">▶</a>
+            </li>
+            <li class="song-item">
+                <span class="song-emoji">🏠</span>
+                <div class="song-info">
+                    <div class="song-title">放学 - 瓦妮莎的微笑</div>
+                    <div class="song-artist">—</div>
+                </div>
+                <a href="/2zmusic/瓦妮莎的微笑.mp3" class="play-link" title="播放">▶</a>
+            </li>
+        </ul>
 
-        <!-- 原底部文字“结束-I Like To Do,朴尚文 MusicWorks”已整合进卡片描述，保留了全部信息 -->
-        <!-- 若需额外备注可在这里添加，但当前内容已完整呈现 -->
+        <!-- 二高 -->
+        <div class="category">二高</div>
+        <ul class="song-list">
+            <li class="song-item">
+                <span class="song-emoji">🔔</span>
+                <div class="song-info">
+                    <div class="song-title">上课铃 - Caribbean Blue</div>
+                    <div class="song-artist">Bandari</div>
+                </div>
+                <a href="/2zmusic/Bandari - Caribbean Blue 加勒比海蓝.mp3" class="play-link" title="播放">▶</a>
+            </li>
+            <li class="song-item">
+                <span class="song-emoji">🌙</span>
+                <div class="song-info">
+                    <div class="song-title">下课铃 - LADY DY</div>
+                    <div class="song-artist">Richard Clayderman</div>
+                </div>
+                <a href="/2zmusic/LADY DY.mp3" class="play-link" title="播放">▶</a>
+            </li>
+        </ul>
     </div>
 </body>
 </html>
