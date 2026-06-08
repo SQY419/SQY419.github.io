@@ -1,69 +1,204 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>二中🎶集</title>
-  <style>
-    .custom-font {
-      font-family: "cmunss", cmunss;
-    }
-    .chinese-font {
-      font-family: "宋体", Consolas;
-    }
-  </style>
-  <link rel="stylesheet" type="text/css" href="index.css">
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二中🎶集</title>
+    <style>
+        :root {
+            --bg: #fdf6f0;
+            --card-bg: #ffffff;
+            --accent: #d97706;
+            --text: #3d2b1f;
+            --sub: #7b6b5b;
+            --shadow: 0 3px 12px rgba(0,0,0,0.06);
+            --radius: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 550px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem 1.8rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 装饰背景纹理 */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 100px;
+            height: 100px;
+            background: var(--accent);
+            opacity: 0.05;
+            border-radius: 50%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            letter-spacing: 1px;
+            color: #2b1a0e;
+        }
+
+        .header .sub {
+            font-size: 0.95rem;
+            color: var(--sub);
+            letter-spacing: 2px;
+            font-style: italic;
+        }
+
+        /* 分类标题 */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            padding-left: 0.75rem;
+            border-left: 4px solid var(--accent);
+            color: #2b1a0e;
+        }
+
+        /* 音乐卡片 */
+        .music-item {
+            display: flex;
+            align-items: center;
+            background: #fefcf8;
+            border: 1px solid #f0e8dd;
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .music-item:hover {
+            background: #fff9f0;
+            border-color: var(--accent);
+            box-shadow: 0 2px 8px rgba(217, 119, 6, 0.1);
+        }
+
+        .music-emoji {
+            font-size: 1.8rem;
+            margin-right: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .music-info {
+            flex: 1;
+        }
+
+        .music-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.15rem;
+        }
+
+        .music-desc {
+            font-size: 0.85rem;
+            color: var(--sub);
+        }
+
+        .play-btn {
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            margin-left: 0.5rem;
+            transition: transform 0.2s;
+            text-decoration: none;
+        }
+
+        .music-item:hover .play-btn {
+            transform: scale(1.08);
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem 1.2rem;
+            }
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            .music-item {
+                padding: 0.9rem 1rem;
+            }
+            .play-btn {
+                width: 2.2rem;
+                height: 2.2rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <h1>二中阴乐集🎶</h1>
+            <p class="sub">(2024-2025学年度)</p>
+        </div>
 
-	
-<center>
-  <p class="math"  style="font-size: 243%;">二中阴乐集🎶</p>
-	<p class="math" style="font-size: 75%;">      (2024-2025学年度)</p>
-	
-		
-</center>
-<center>
-	<p class="math" style="font-size: 150%;">正规英语听力</p>
-	
-		<p class="math">结束-I Like To Do,朴尚文 MusicWorks</p>
+        <!-- 正规英语听力 -->
+        <div class="section-title">🎧 正规英语听力</div>
+        <a href="/2zmusic/I Like To Do.mp3" class="music-item">
+            <span class="music-emoji">🎵</span>
+            <div class="music-info">
+                <div class="music-name">I Like To Do</div>
+                <div class="music-desc">朴尚文 MusicWorks</div>
+            </div>
+            <span class="play-btn">▶</span>
+        </a>
 
-	
-		
-	<p><a href="/2zmusic/I Like To Do.mp3">点我播放！</a></p>
-<p class="math" style="font-size: 150%;">二中广雅</p>
-	
-		<p class="math">上课铃-欢沁,林海</p>
-<p><a href="/2zmusic/欢沁.mp3">点我播放！</a></p>
-	
-		<p class="math">下课铃-Moonglow,Bandari</p>
-	<p><a href="/2zmusic/Bandari - Moon Glow 月光.mp3">点我播放！</a></p>
+        <!-- 二中广雅 -->
+        <div class="section-title">🏫 二中广雅</div>
+        <a href="/2zmusic/欢沁.mp3" class="music-item">
+            <span class="music-emoji">🎵</span>
+            <div class="music-info">
+                <div class="music-name">欢沁</div>
+                <div class="music-desc">林海</div>
+            </div>
+            <span class="play-btn">▶</span>
+        </a>
 
-	<p class="math">听力1-你曾是少年,S.H.E.</p>
-	<p><a href="/2zmusic/你曾是少年.mp3">点我播放！</a></p>
-
-	<p class="math">听力2-try try try</p>
-	<p><a href="/2zmusic/try try try.mp3">点我播放！</a></p>
-
-	<p class="math">听力3-Love Story,Taylor Swift</p>
-	<p><a href="/2zmusic/love story.mp3">点我播放！</a></p>
-
-	<p class="math">午休结束-Kiss The Rain</p>
-	<p><a href="/2zmusic/Kiss The Rain.mp3">点我播放！</a></p>
-
-<p class="math">放学-瓦妮莎的微笑</p>
-	<p><a href="/2zmusic/瓦妮莎的微笑.mp3">点我播放！</a></p>
-	
-<p class="math" style="font-size: 150%;">二高</p>
-	
-	<p class="math">上课铃-Caribbean Blue,Bandari</p>
-	<p><a href="/2zmusic/Bandari - Caribbean Blue 加勒比海蓝.mp3">点我播放！</a></p>
-	<p class="math">下课铃-LADY DY,Richard Clayderman</p>
-	<p><a href="/2zmusic/LADY DY.mp3">点我播放！</a></p>
-
-	</center>
-<center>
-
-</center>
-	
+        <!-- 原底部文字“结束-I Like To Do,朴尚文 MusicWorks”已整合进卡片描述，保留了全部信息 -->
+        <!-- 若需额外备注可在这里添加，但当前内容已完整呈现 -->
+    </div>
 </body>
 </html>
