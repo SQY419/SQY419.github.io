@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>SGC Bezier 渲染器</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; background: #f0f2f5; color: #333; min-height: 100vh; }
+.container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+h1 { font-size: 22px; margin-bottom: 4px; }
+.sub { color: #888; font-size: 13px; margin-bottom: 20px; }
+.card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,.08); margin-bottom: 16px; }
+#dropzone { border: 2px dashed #c8cdd4; border-radius: 10px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all .2s; }
+#dropzone:hover, #dropzone.dragover { border-color: #4a90d9; background: #f0f6ff; }
+#dropzone .icon { font-size: 40px; margin-bottom: 8px; }
+#dropzone p { color: #666; font-size: 14px; }
+.row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; margin-top: 14px; }
+.field label { display: block; font-size: 12px; color: #888; margin-bottom: 4px; }
+.field input, .field select { width: 120px; padding: 6px 8px; border: 1px solid #d0d5dc; border-radius: 6px; font-size: 14px; }
+.btn { padding: 10px 22px; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; transition: all .15s; }
+.btn-primary { background: #4a90d9; color: #fff; }
+.btn-primary:hover { background: #3a7fc9; }
+.btn-primary:disabled { background: #a9c6e4; cursor: not-allowed; }
+.btn-green { background: #3cb371; color: #fff; }
+.btn-green:hover { background: #2ea05f; }
+#preview { display: none; margin-top: 16px; }
+#preview img, #preview canvas { max-width: 100%; border-radius: 8px; border: 1px solid #e0e3e8; }
+textarea { width: 100%; height: 180px; font-family: Consolas, Menlo, monospace; font-size: 12px; border: 1px solid #d0d5dc; border-radius: 8px; padding: 10px; resize: vertical; }
+#stats { font-size: 13px; color: #666; margin-top: 10px; }
+#progress { display: none; margin-top: 14px; font-size: 14px; color: #4a90d9; }
+.preview-flex { display: flex; gap: 16px; flex-wrap: wrap; }
+.preview-flex > div { flex: 1; min-width: 200px; }
+.preview-flex .cap { font-size: 12px; color: #888; margin-bottom: 6px; }
+.hidden { display: none !important; }
+#filename { font-size: 13px; color: #666; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>SGC Bezier 渲染器</h1>
+<div class="sub">上传图片变成参数方程</div>
+
+<div class="card">
+  <div id="dropzone">
+    <div class="icon">🖼️</div>
+    <p><b>点击选择</b> 或 <b>拖拽图片</b> 到此处</p>
+    <p style="font-size:12px;color:#aaa;margin-top:6px">支持 PNG / JPG / WebP / GIF</p>
+  </div>
+  <input type="file" id="file" accept="image/*" style="display:none">
+  <div id="filename"></div>
+
+  <div class="row">
+    <div class="field"><label>目标宽度 (px)</label><input type="number" id="width" value="480" min="100" max="2000"></div>
+    <div class="field"><label>Canny 低阈值</label><input type="number" id="low" value="30" min="0" max="255"></div>
+    <div class="field"><label>Canny 高阈值</label><input type="number" id="high" value="200" min="1" max="255"></div>
+    <button class="btn btn-primary" id="generate" disabled>生成</button>
+    <button class="btn btn-green hidden" id="download">下载</button>
+  </div>
+  <div id="progress">正在处理...</div>
+</div>
+
+<div class="card" id="preview">
+  <div class="preview-flex">
+    <div><div class="cap">原图</div><img id="orig" alt="原图"></div>
+    <div><div class="cap">边缘检测</div><canvas id="edgeview"></canvas></div>
+  </div>
+  <div id="stats"></div>
+</div>
+
+<div class="card hidden" id="resultcard">
+  <div class="cap">产物预览（前 2000 字符）</div>
+  <textarea id="result" readonly></textarea>
+</div>
+</div>
+
+<script>
+// ===== potrace-js bundle (ISC License, https://github.com/casperlamboo/potrace) =====
+// ===== Point.js =====
+class Point {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+  copy() {
+    return new Point(this.x, this.y);
+  }
+  toIndex(width, height) {
+    if (this.x < 0 || this.y < 0 || this.x >= width || this.y >= height) return null;
+    return width * this.y + this.x;
+  }
+  lerp(point, lambda) {
+    const x = this.x + lambda * (point.x - this.x);
+    const y = this.y + lambda * (point.y - this.y);
+
+    return new Point(x, y);
+  }
+  dorthInfty(point) {
+    const x = -sign(point.y - this.y);
+    const y = sign(point.x - this.x);
+
+    return new Point(x, y);
+  }
+  ddenom(point) {
+    const r = this.dorthInfty(point);
+
+    return r.y * (point.x - this.x) - r.x * (point.y - this.y);
+  }
+}
+// ===== Quad.js =====
+class Quad {
+  constructor() {
+    this.data = [
+      0, 0, 0,
+      0, 0, 0,
+      0, 0, 0
+    ];
+  }
+  at(x, y) {
+    return this.data[x * 3 + y];
+  };
+}
+// ===== Sum.js =====
+class Sum {
+  constructor(x, y, xy, x2, y2) {
+    this.x = x;
+    this.y = y;
+    this.xy = xy;
+    this.x2 = x2;
+    this.y2 = y2;
+  }
+}
+// ===== Curve.js =====
+function Curve(n) {
+  this.n = n;
+  this.tag = new Array(n);
+  this.c = new Array(n * 3);
+  this.alphaCurve = 0;
+  this.vertex = new Array(n);
+  this.alpha = new Array(n);
+  this.alpha0 = new Array(n);
+  this.beta = new Array(n);
+}
+
+Curve;
+// ===== Bitmap.js =====
+class Bitmap {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+    this.size = width * height;
+    this.data = new Int8Array(this.size);
+  }
+
+  at(x, y) {
+    return (x >= 0 && x < this.width && y >=0 && y < this.height) &&
+        this.data[this.width * y + x] === 1;
+  }
+
+  flip(x, y) {
+    if (this.at(x, y)) {
+      this.data[this.width * y + x] = 0;
+    } else {
+      this.data[this.width * y + x] = 1;
+    }
+  }
+
+  copy() {
+    const bitmap = new Bitmap(this.width, this.height);
+    for (let i = 0; i < this.size; i ++) {
+      bitmap.data[i] = this.data[i];
+    }
+    return bitmap;
+  }
+
+  index(i) {
+    const x = i % this.width;
+    const y = Math.floor(i / this.width);
+    return new Point(x, y);
+  }
+
+  xOrPath(path) {
+    let y1 = path.points[0].y;
+
+    for (let i = 1; i < path.points.length; i ++) {
+      const x = path.points[i].x;
+      const y = path.points[i].y;
+
+      if (y !== y1) {
+        const minY = Math.min(y1, y);
+        const maxX = path.maxX;
+        for (let j = x; j < maxX; j ++) {
+          this.flip(j, minY);
+        }
+        y1 = y;
+      }
+    }
+  }
+}
+// ===== Path.js =====
+class Path {
+  constructor(points, area, isHole) {
+    this.points = points;
+    this.area = area;
+    this.isHole = isHole;
+
+    const xValues = this.points.map(({ x }) => x);
+    const yValues = this.points.map(({ y }) => y);
+
+    this.minX = Math.min(...xValues);
+    this.minY = Math.min(...yValues);
+    this.maxX = Math.max(...xValues);
+    this.maxY = Math.max(...yValues);
+
+    this.curve = {};
+  }
+  reverse() {
+    this.curve.vertex.reverse();
+  }
+}
+// ===== utils.js =====
+function loadImage(url) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = url;
+  });
+}
+
+function createBitmap(canvas) {
+  const { width, height } = canvas;
+  const imageData = canvas.getContext('2d').getImageData(0, 0, width, height);
+  const bitmap = new Bitmap(width, height);
+
+  let imageDataIndex = 0;
+  const length = width * height;
+  for (let bitmapIndex = 0; bitmapIndex < length; bitmapIndex ++) {
+    const r = 0.2126 * imageData.data[imageDataIndex ++];
+    const g = 0.7153 * imageData.data[imageDataIndex ++];
+    const b = 0.0721 * imageData.data[imageDataIndex ++];
+    const a = imageDataIndex ++; // alpha
+    const color = r + g + b;
+
+    bitmap.data[bitmapIndex] = (color < 128 ? 1 : 0);
+  }
+
+  return bitmap;
+}
+
+function sign(i) {
+  return i > 0 ? 1 : i < 0 ? -1 : 0;
+}
+// ===== bitmapToPathList.js =====
+function bitmapToPathList(bitmap, options) {
+  const bitmapTarget = bitmap.copy();
+  const pathList = [];
+
+  for (let point = findNext(new Point(0, 0), bitmapTarget); point; point = findNext(point, bitmapTarget)) {
+    const path = findPath(point, bitmap, bitmapTarget, options);
+    if (path.area > options.turdsize) pathList.push(path);
+
+    bitmapTarget.xOrPath(path);
+  }
+
+  return pathList;
+}
+
+function findNext(point, bitmapTarget) {
+  for (let i = point.toIndex(bitmapTarget.width, bitmapTarget.height); i < bitmapTarget.size; i ++) {
+    if (bitmapTarget.data[i]) return bitmapTarget.index(i);
+  }
+  return false;
+}
+
+function findPath(point, bitmap, bitmapTarget, options) {
+  let { x, y } = point;
+  let dirX = 0;
+  let dirY = 1;
+
+  const points = [];
+  let area = 0;
+  const isHole = !bitmap.at(x, y);
+
+  while (true) {
+    points.push(new Point(x, y));
+
+    x += dirX;
+    y += dirY;
+    area -= x * dirY;
+
+    if (x === point.x && y === point.y) break;
+
+    const left = bitmapTarget.at(x + (dirX + dirY - 1 ) / 2, y + (dirY - dirX - 1) / 2);
+    const right = bitmapTarget.at(x + (dirX - dirY - 1) / 2, y + (dirY + dirX - 1) / 2);
+
+    if (right && !left) {
+      if (turn(options.turnpolicy, isHole, bitmapTarget, x, y)) {
+        const tmp = dirX;
+        dirX = -dirY;
+        dirY = tmp;
+      } else {
+        const tmp = dirX;
+        dirX = dirY;
+        dirY = -tmp;
+      }
+    } else if (right) {
+      const tmp = dirX;
+      dirX = -dirY;
+      dirY = tmp;
+    } else if (!left) {
+      const tmp = dirX;
+      dirX = dirY;
+      dirY = -tmp;
+    }
+  }
+
+  return new Path(points, area, isHole);
+}
+
+function turn(turnpolicy, isHole, bitmap, x, y) {
+  switch (turnpolicy) {
+    case 'right':
+      return true;
+
+    case 'black':
+      return !isHole;
+
+    case 'white':
+      return isHole;
+
+    case 'majority':
+      return majority(x, y, bitmap);
+
+    case 'minority':
+      return !majority(x, y, bitmap);
+
+    default:
+      return true;
+  }
+}
+
+function majority(x, y, bitmap) {
+  for (let i = 2; i < 5; i ++) {
+    let ct = 0;
+    for (let a = -i + 1; a <= i - 1; a ++) {
+      ct += bitmap.at(x + a, y + i - 1) ? 1 : -1;
+      ct += bitmap.at(x + i - 1, y + a - 1) ? 1 : -1;
+      ct += bitmap.at(x + a - 1, y - i) ? 1 : -1;
+      ct += bitmap.at(x - i, y + a) ? 1 : -1;
+    }
+
+    if (ct > 0) {
+      return true;
+    } else if (ct < 0) {
+      return false;
+    }
+  }
+  return false;
+}
+// ===== processPath.js =====
+function processPath(pathList, options) {
+  for (const path of pathList) {
+    calcSums(path);
+    calcLon(path);
+    bestPolygon(path);
+    adjustVertices(path);
+
+    if (path.isHole) path.reverse();
+
+    smooth(path, options);
+
+    if (options.optcurve) optiCurve(path, options);
+  }
+}
+
+function mod(a, n) {
+  return a >= n ? a % n : a >= 0 ? a : n - 1 - (-1 - a) % n;
+}
+
+function xprod(p1, p2) {
+  return p1.x * p2.y - p1.y * p2.x;
+}
+
+function cyclic(a, b, c) {
+  if (a <= c) {
+    return (a <= b && b < c);
+  } else {
+    return (a <= b || b < c);
+  }
+}
+
+function quadform(Q, w) {
+  var v = new Array(3), i, j, sum;
+
+  v[0] = w.x;
+  v[1] = w.y;
+  v[2] = 1;
+  sum = 0.0;
+
+  for (i=0; i<3; i++) {
+    for (j=0; j<3; j++) {
+      sum += v[i] * Q.at(i, j) * v[j];
+    }
+  }
+  return sum;
+}
+
+function dpara(p0, p1, p2) {
+  var x1, y1, x2, y2;
+
+  x1 = p1.x - p0.x;
+  y1 = p1.y - p0.y;
+  x2 = p2.x - p0.x;
+  y2 = p2.y - p0.y;
+
+  return x1 * y2 - x2 * y1;
+}
+
+function cprod(p0, p1, p2, p3) {
+  var x1, y1, x2, y2;
+
+  x1 = p1.x - p0.x;
+  y1 = p1.y - p0.y;
+  x2 = p3.x - p2.x;
+  y2 = p3.y - p2.y;
+
+  return x1 * y2 - x2 * y1;
+}
+
+function iprod(p0, p1, p2) {
+  var x1, y1, x2, y2;
+
+  x1 = p1.x - p0.x;
+  y1 = p1.y - p0.y;
+  x2 = p2.x - p0.x;
+  y2 = p2.y - p0.y;
+
+  return x1 * x2 + y1 * y2;
+}
+
+function iprod1(p0, p1, p2, p3) {
+  var x1, y1, x2, y2;
+
+  x1 = p1.x - p0.x;
+  y1 = p1.y - p0.y;
+  x2 = p3.x - p2.x;
+  y2 = p3.y - p2.y;
+
+  return x1 * x2 + y1 * y2;
+}
+
+function ddist(p, q) {
+  return Math.sqrt((p.x - q.x) * (p.x - q.x) + (p.y - q.y) * (p.y - q.y));
+}
+
+function bezier(t, p0, p1, p2, p3) {
+  var s = 1 - t, res = new Point();
+
+  res.x = s*s*s*p0.x + 3*(s*s*t)*p1.x + 3*(t*t*s)*p2.x + t*t*t*p3.x;
+  res.y = s*s*s*p0.y + 3*(s*s*t)*p1.y + 3*(t*t*s)*p2.y + t*t*t*p3.y;
+
+  return res;
+}
+
+function tangent(p0, p1, p2, p3, q0, q1) {
+  var A, B, C, a, b, c, d, s, r1, r2;
+
+  A = cprod(p0, p1, q0, q1);
+  B = cprod(p1, p2, q0, q1);
+  C = cprod(p2, p3, q0, q1);
+
+  a = A - 2 * B + C;
+  b = -2 * A + 2 * B;
+  c = A;
+
+  d = b * b - 4 * a * c;
+
+  if (a===0 || d<0) {
+    return -1.0;
+  }
+
+  s = Math.sqrt(d);
+
+  r1 = (-b + s) / (2 * a);
+  r2 = (-b - s) / (2 * a);
+
+  if (r1 >= 0 && r1 <= 1) {
+    return r1;
+  } else if (r2 >= 0 && r2 <= 1) {
+    return r2;
+  } else {
+    return -1.0;
+  }
+}
+
+function calcSums(path) {
+  var i, x, y;
+  path.x0 = path.points[0].x;
+  path.y0 = path.points[0].y;
+
+  path.sums = [];
+  var s = path.sums;
+  s.push(new Sum(0, 0, 0, 0, 0));
+  for(i = 0; i < path.points.length; i++){
+    x = path.points[i].x - path.x0;
+    y = path.points[i].y - path.y0;
+    s.push(new Sum(s[i].x + x, s[i].y + y, s[i].xy + x * y,
+        s[i].x2 + x * x, s[i].y2 + y * y));
+  }
+}
+
+function calcLon(path) {
+
+  var n = path.points.length, pt = path.points, dir,
+    pivk = new Array(n),
+    nc = new Array(n),
+    ct = new Array(4);
+  path.lon = new Array(n);
+
+  var constraint = [new Point(), new Point()],
+      cur = new Point(),
+      off = new Point(),
+      dk = new Point(),
+      foundk;
+
+  var i, j, k1, a, b, c, d, k = 0;
+  for(i = n - 1; i >= 0; i--){
+    if (pt[i].x != pt[k].x && pt[i].y != pt[k].y) {
+      k = i + 1;
+    }
+    nc[i] = k;
+  }
+
+  for (i = n - 1; i >= 0; i--) {
+    ct[0] = ct[1] = ct[2] = ct[3] = 0;
+    dir = (3 + 3 * (pt[mod(i + 1, n)].x - pt[i].x) +
+        (pt[mod(i + 1, n)].y - pt[i].y)) / 2;
+    ct[dir]++;
+
+    constraint[0].x = 0;
+    constraint[0].y = 0;
+    constraint[1].x = 0;
+    constraint[1].y = 0;
+
+    k = nc[i];
+    k1 = i;
+    while (1) {
+      foundk = 0;
+      dir =  (3 + 3 * sign(pt[k].x - pt[k1].x) +
+          sign(pt[k].y - pt[k1].y)) / 2;
+      ct[dir]++;
+
+      if (ct[0] && ct[1] && ct[2] && ct[3]) {
+        pivk[i] = k1;
+        foundk = 1;
+        break;
+      }
+
+      cur.x = pt[k].x - pt[i].x;
+      cur.y = pt[k].y - pt[i].y;
+
+      if (xprod(constraint[0], cur) < 0 || xprod(constraint[1], cur) > 0) {
+        break;
+      }
+
+      if (Math.abs(cur.x) <= 1 && Math.abs(cur.y) <= 1) {
+
+      } else {
+        off.x = cur.x + ((cur.y >= 0 && (cur.y > 0 || cur.x < 0)) ? 1 : -1);
+        off.y = cur.y + ((cur.x <= 0 && (cur.x < 0 || cur.y < 0)) ? 1 : -1);
+        if (xprod(constraint[0], off) >= 0) {
+          constraint[0].x = off.x;
+          constraint[0].y = off.y;
+        }
+        off.x = cur.x + ((cur.y <= 0 && (cur.y < 0 || cur.x < 0)) ? 1 : -1);
+        off.y = cur.y + ((cur.x >= 0 && (cur.x > 0 || cur.y < 0)) ? 1 : -1);
+        if (xprod(constraint[1], off) <= 0) {
+          constraint[1].x = off.x;
+          constraint[1].y = off.y;
+        }
+      }
+      k1 = k;
+      k = nc[k1];
+      if (!cyclic(k, i, k1)) {
+        break;
+      }
+    }
+    if (foundk === 0) {
+      dk.x = sign(pt[k].x-pt[k1].x);
+      dk.y = sign(pt[k].y-pt[k1].y);
+      cur.x = pt[k1].x - pt[i].x;
+      cur.y = pt[k1].y - pt[i].y;
+
+      a = xprod(constraint[0], cur);
+      b = xprod(constraint[0], dk);
+      c = xprod(constraint[1], cur);
+      d = xprod(constraint[1], dk);
+
+      j = 10000000;
+      if (b < 0) {
+        j = Math.floor(a / -b);
+      }
+      if (d > 0) {
+        j = Math.min(j, Math.floor(-c / d));
+      }
+      pivk[i] = mod(k1+j,n);
+    }
+  }
+
+  j=pivk[n-1];
+  path.lon[n-1]=j;
+  for (i=n-2; i>=0; i--) {
+    if (cyclic(i+1,pivk[i],j)) {
+      j=pivk[i];
+    }
+    path.lon[i]=j;
+  }
+
+  for (i=n-1; cyclic(mod(i+1,n),j,path.lon[i]); i--) {
+    path.lon[i] = j;
+  }
+}
+
+function bestPolygon(path) {
+
+  function penalty3(path, i, j) {
+
+    var n = path.points.length, pt = path.points, sums = path.sums;
+    var x, y, xy, x2, y2,
+      k, a, b, c, s,
+      px, py, ex, ey,
+      r = 0;
+    if (j>=n) {
+      j -= n;
+      r = 1;
+    }
+
+    if (r === 0) {
+      x = sums[j+1].x - sums[i].x;
+      y = sums[j+1].y - sums[i].y;
+      x2 = sums[j+1].x2 - sums[i].x2;
+      xy = sums[j+1].xy - sums[i].xy;
+      y2 = sums[j+1].y2 - sums[i].y2;
+      k = j+1 - i;
+    } else {
+      x = sums[j+1].x - sums[i].x + sums[n].x;
+      y = sums[j+1].y - sums[i].y + sums[n].y;
+      x2 = sums[j+1].x2 - sums[i].x2 + sums[n].x2;
+      xy = sums[j+1].xy - sums[i].xy + sums[n].xy;
+      y2 = sums[j+1].y2 - sums[i].y2 + sums[n].y2;
+      k = j+1 - i + n;
+    }
+
+    px = (pt[i].x + pt[j].x) / 2.0 - pt[0].x;
+    py = (pt[i].y + pt[j].y) / 2.0 - pt[0].y;
+    ey = (pt[j].x - pt[i].x);
+    ex = -(pt[j].y - pt[i].y);
+
+    a = ((x2 - 2*x*px) / k + px*px);
+    b = ((xy - x*py - y*px) / k + px*py);
+    c = ((y2 - 2*y*py) / k + py*py);
+
+    s = ex*ex*a + 2*ex*ey*b + ey*ey*c;
+
+    return Math.sqrt(s);
+  }
+
+  var i, j, m, k,
+  n = path.points.length,
+  pen = new Array(n + 1),
+  prev = new Array(n + 1),
+  clip0 = new Array(n),
+  clip1 = new Array(n + 1),
+  seg0 = new Array (n + 1),
+  seg1 = new Array(n + 1),
+  thispen, best, c;
+
+  for (i=0; i<n; i++) {
+    c = mod(path.lon[mod(i-1,n)]-1,n);
+    if (c == i) {
+      c = mod(i+1,n);
+    }
+    if (c < i) {
+      clip0[i] = n;
+    } else {
+      clip0[i] = c;
+    }
+  }
+
+  j = 1;
+  for (i=0; i<n; i++) {
+    while (j <= clip0[i]) {
+      clip1[j] = i;
+      j++;
+    }
+  }
+
+  i = 0;
+  for (j=0; i<n; j++) {
+    seg0[j] = i;
+    i = clip0[i];
+  }
+  seg0[j] = n;
+  m = j;
+
+  i = n;
+  for (j=m; j>0; j--) {
+    seg1[j] = i;
+    i = clip1[i];
+  }
+  seg1[0] = 0;
+
+  pen[0]=0;
+  for (j=1; j<=m; j++) {
+    for (i=seg1[j]; i<=seg0[j]; i++) {
+      best = -1;
+      for (k=seg0[j-1]; k>=clip1[i]; k--) {
+        thispen = penalty3(path, k, i) + pen[k];
+        if (best < 0 || thispen < best) {
+          prev[i] = k;
+          best = thispen;
+        }
+      }
+      pen[i] = best;
+    }
+  }
+  path.m = m;
+  path.po = new Array(m);
+
+  for (i=n, j=m-1; i>0; j--) {
+    i = prev[i];
+    path.po[j] = i;
+  }
+}
+
+function adjustVertices(path) {
+
+  function pointslope(path, i, j, ctr, dir) {
+
+    var n = path.points.length, sums = path.sums,
+      x, y, x2, xy, y2,
+      k, a, b, c, lambda2, l, r=0;
+
+    while (j>=n) {
+      j-=n;
+      r+=1;
+    }
+    while (i>=n) {
+      i-=n;
+      r-=1;
+    }
+    while (j<0) {
+      j+=n;
+      r-=1;
+    }
+    while (i<0) {
+      i+=n;
+      r+=1;
+    }
+
+    x = sums[j+1].x-sums[i].x+r*sums[n].x;
+    y = sums[j+1].y-sums[i].y+r*sums[n].y;
+    x2 = sums[j+1].x2-sums[i].x2+r*sums[n].x2;
+    xy = sums[j+1].xy-sums[i].xy+r*sums[n].xy;
+    y2 = sums[j+1].y2-sums[i].y2+r*sums[n].y2;
+    k = j+1-i+r*n;
+
+    ctr.x = x/k;
+    ctr.y = y/k;
+
+    a = (x2-x*x/k)/k;
+    b = (xy-x*y/k)/k;
+    c = (y2-y*y/k)/k;
+
+    lambda2 = (a+c+Math.sqrt((a-c)*(a-c)+4*b*b))/2;
+
+    a -= lambda2;
+    c -= lambda2;
+
+    if (Math.abs(a) >= Math.abs(c)) {
+      l = Math.sqrt(a*a+b*b);
+      if (l!==0) {
+        dir.x = -b/l;
+        dir.y = a/l;
+      }
+    } else {
+      l = Math.sqrt(c*c+b*b);
+      if (l!==0) {
+        dir.x = -c/l;
+        dir.y = b/l;
+      }
+    }
+    if (l===0) {
+      dir.x = dir.y = 0;
+    }
+  }
+
+  var m = path.m, po = path.po, n = path.points.length, pt = path.points,
+    x0 = path.x0, y0 = path.y0,
+    ctr = new Array(m), dir = new Array(m),
+    q = new Array(m),
+    v = new Array(3), d, i, j, k, l,
+    s = new Point();
+
+  path.curve = new Curve(m);
+
+  for (i=0; i<m; i++) {
+    j = po[mod(i+1,m)];
+    j = mod(j-po[i],n)+po[i];
+    ctr[i] = new Point();
+    dir[i] = new Point();
+    pointslope(path, po[i], j, ctr[i], dir[i]);
+  }
+
+  for (i=0; i<m; i++) {
+    q[i] = new Quad();
+    d = dir[i].x * dir[i].x + dir[i].y * dir[i].y;
+    if (d === 0.0) {
+      for (j=0; j<3; j++) {
+        for (k=0; k<3; k++) {
+          q[i].data[j * 3 + k] = 0;
+        }
+      }
+    } else {
+      v[0] = dir[i].y;
+      v[1] = -dir[i].x;
+      v[2] = - v[1] * ctr[i].y - v[0] * ctr[i].x;
+      for (l=0; l<3; l++) {
+        for (k=0; k<3; k++) {
+          q[i].data[l * 3 + k] = v[l] * v[k] / d;
+        }
+      }
+    }
+  }
+
+  var Q, w, dx, dy, det, min, cand, xmin, ymin, z;
+  for (i=0; i<m; i++) {
+    Q = new Quad();
+    w = new Point();
+
+    s.x = pt[po[i]].x-x0;
+    s.y = pt[po[i]].y-y0;
+
+    j = mod(i-1,m);
+
+    for (l=0; l<3; l++) {
+      for (k=0; k<3; k++) {
+        Q.data[l * 3 + k] = q[j].at(l, k) + q[i].at(l, k);
+      }
+    }
+
+    while(1) {
+
+      det = Q.at(0, 0)*Q.at(1, 1) - Q.at(0, 1)*Q.at(1, 0);
+      if (det !== 0.0) {
+        w.x = (-Q.at(0, 2)*Q.at(1, 1) + Q.at(1, 2)*Q.at(0, 1)) / det;
+        w.y = ( Q.at(0, 2)*Q.at(1, 0) - Q.at(1, 2)*Q.at(0, 0)) / det;
+        break;
+      }
+
+      if (Q.at(0, 0)>Q.at(1, 1)) {
+        v[0] = -Q.at(0, 1);
+        v[1] = Q.at(0, 0);
+      } else if (Q.at(1, 1)) {
+        v[0] = -Q.at(1, 1);
+        v[1] = Q.at(1, 0);
+      } else {
+        v[0] = 1;
+        v[1] = 0;
+      }
+      d = v[0] * v[0] + v[1] * v[1];
+      v[2] = - v[1] * s.y - v[0] * s.x;
+      for (l=0; l<3; l++) {
+        for (k=0; k<3; k++) {
+          Q.data[l * 3 + k] += v[l] * v[k] / d;
+        }
+      }
+    }
+    dx = Math.abs(w.x-s.x);
+    dy = Math.abs(w.y-s.y);
+    if (dx <= 0.5 && dy <= 0.5) {
+      path.curve.vertex[i] = new Point(w.x+x0, w.y+y0);
+      continue;
+    }
+
+    min = quadform(Q, s);
+    xmin = s.x;
+    ymin = s.y;
+
+    if (Q.at(0, 0) !== 0.0) {
+      for (z=0; z<2; z++) {
+        w.y = s.y-0.5+z;
+        w.x = - (Q.at(0, 1) * w.y + Q.at(0, 2)) / Q.at(0, 0);
+        dx = Math.abs(w.x-s.x);
+        cand = quadform(Q, w);
+        if (dx <= 0.5 && cand < min) {
+          min = cand;
+          xmin = w.x;
+          ymin = w.y;
+        }
+      }
+    }
+
+    if (Q.at(1, 1) !== 0.0) {
+      for (z=0; z<2; z++) {
+        w.x = s.x-0.5+z;
+        w.y = - (Q.at(1, 0) * w.x + Q.at(1, 2)) / Q.at(1, 1);
+        dy = Math.abs(w.y-s.y);
+        cand = quadform(Q, w);
+        if (dy <= 0.5 && cand < min) {
+          min = cand;
+          xmin = w.x;
+          ymin = w.y;
+        }
+      }
+    }
+
+    for (l=0; l<2; l++) {
+      for (k=0; k<2; k++) {
+        w.x = s.x-0.5+l;
+        w.y = s.y-0.5+k;
+        cand = quadform(Q, w);
+        if (cand < min) {
+          min = cand;
+          xmin = w.x;
+          ymin = w.y;
+        }
+      }
+    }
+
+    path.curve.vertex[i] = new Point(xmin + x0, ymin + y0);
+  }
+}
+
+function smooth(path, info) {
+  var m = path.curve.n, curve = path.curve;
+
+  var i, j, k, dd, denom, alpha,
+    p2, p3, p4;
+
+  for (i=0; i<m; i++) {
+    j = mod(i+1, m);
+    k = mod(i+2, m);
+    p4 = curve.vertex[k].lerp(curve.vertex[j], 0.5);
+
+    denom = curve.vertex[i].ddenom(curve.vertex[k]);
+    if (denom !== 0.0) {
+      dd = dpara(curve.vertex[i], curve.vertex[j], curve.vertex[k]) / denom;
+      dd = Math.abs(dd);
+      alpha = dd>1 ? (1 - 1.0/dd) : 0;
+      alpha = alpha / 0.75;
+    } else {
+      alpha = 4/3.0;
+    }
+    curve.alpha0[j] = alpha;
+
+    if (alpha >= info.alphamax) {
+      curve.tag[j] = 'CORNER';
+      curve.c[3 * j + 1] = curve.vertex[j];
+      curve.c[3 * j + 2] = p4;
+    } else {
+      if (alpha < 0.55) {
+        alpha = 0.55;
+      } else if (alpha > 1) {
+        alpha = 1;
+      }
+      const lambda = 0.5 + 0.5 * alpha;
+      p2 = curve.vertex[i].lerp(curve.vertex[j], lambda);
+      p3 = curve.vertex[k].lerp(curve.vertex[j], lambda);
+      curve.tag[j] = 'CURVE';
+      curve.c[3 * j + 0] = p2;
+      curve.c[3 * j + 1] = p3;
+      curve.c[3 * j + 2] = p4;
+    }
+    curve.alpha[j] = alpha;
+    curve.beta[j] = 0.5;
+  }
+  curve.alphacurve = 1;
+}
+
+function optiCurve(path, info) {
+  function Opti(){
+    this.pen = 0;
+    this.c = [new Point(), new Point()];
+    this.t = 0;
+    this.s = 0;
+    this.alpha = 0;
+  }
+
+  function opti_penalty(path, i, j, res, opttolerance, convc, areac) {
+    var m = path.curve.n, curve = path.curve, vertex = curve.vertex,
+      k, k1, k2, conv, i1,
+      area, alpha, d, d1, d2,
+      p0, p1, p2, p3, pt,
+      A, R, A1, A2, A3, A4,
+      s, t;
+
+    if (i==j) {
+      return 1;
+    }
+
+    k = i;
+    i1 = mod(i+1, m);
+    k1 = mod(k+1, m);
+    conv = convc[k1];
+    if (conv === 0) {
+      return 1;
+    }
+    d = ddist(vertex[i], vertex[i1]);
+    for (k=k1; k!=j; k=k1) {
+      k1 = mod(k+1, m);
+      k2 = mod(k+2, m);
+      if (convc[k1] != conv) {
+        return 1;
+      }
+      if (sign(cprod(vertex[i], vertex[i1], vertex[k1], vertex[k2])) !=
+          conv) {
+        return 1;
+      }
+      if (iprod1(vertex[i], vertex[i1], vertex[k1], vertex[k2]) <
+          d * ddist(vertex[k1], vertex[k2]) * -0.999847695156) {
+        return 1;
+      }
+    }
+
+    p0 = curve.c[mod(i,m) * 3 + 2].copy();
+    p1 = vertex[mod(i+1,m)].copy();
+    p2 = vertex[mod(j,m)].copy();
+    p3 = curve.c[mod(j,m) * 3 + 2].copy();
+
+    area = areac[j] - areac[i];
+    area -= dpara(vertex[0], curve.c[i * 3 + 2], curve.c[j * 3 + 2])/2;
+    if (i>=j) {
+      area += areac[m];
+    }
+
+    A1 = dpara(p0, p1, p2);
+    A2 = dpara(p0, p1, p3);
+    A3 = dpara(p0, p2, p3);
+
+    A4 = A1+A3-A2;
+
+    if (A2 == A1) {
+      return 1;
+    }
+
+    t = A3/(A3-A4);
+    s = A2/(A2-A1);
+    A = A2 * t / 2.0;
+
+    if (A === 0.0) {
+      return 1;
+    }
+
+    R = area / A;
+    alpha = 2 - Math.sqrt(4 - R / 0.3);
+
+    res.c[0] = p0.lerp(p1, t * alpha);
+    res.c[1] = p3.lerp(p2, s * alpha);
+    res.alpha = alpha;
+    res.t = t;
+    res.s = s;
+
+    p1 = res.c[0].copy();
+    p2 = res.c[1].copy();
+
+    res.pen = 0;
+
+    for (k=mod(i+1,m); k!=j; k=k1) {
+      k1 = mod(k+1,m);
+      t = tangent(p0, p1, p2, p3, vertex[k], vertex[k1]);
+      if (t<-0.5) {
+        return 1;
+      }
+      pt = bezier(t, p0, p1, p2, p3);
+      d = ddist(vertex[k], vertex[k1]);
+      if (d === 0.0) {
+        return 1;
+      }
+      d1 = dpara(vertex[k], vertex[k1], pt) / d;
+      if (Math.abs(d1) > opttolerance) {
+        return 1;
+      }
+      if (iprod(vertex[k], vertex[k1], pt) < 0 ||
+          iprod(vertex[k1], vertex[k], pt) < 0) {
+        return 1;
+      }
+      res.pen += d1 * d1;
+    }
+
+    for (k=i; k!=j; k=k1) {
+      k1 = mod(k+1,m);
+      t = tangent(p0, p1, p2, p3, curve.c[k * 3 + 2], curve.c[k1 * 3 + 2]);
+      if (t<-0.5) {
+        return 1;
+      }
+      pt = bezier(t, p0, p1, p2, p3);
+      d = ddist(curve.c[k * 3 + 2], curve.c[k1 * 3 + 2]);
+      if (d === 0.0) {
+        return 1;
+      }
+      d1 = dpara(curve.c[k * 3 + 2], curve.c[k1 * 3 + 2], pt) / d;
+      d2 = dpara(curve.c[k * 3 + 2], curve.c[k1 * 3 + 2], vertex[k1]) / d;
+      d2 *= 0.75 * curve.alpha[k1];
+      if (d2 < 0) {
+        d1 = -d1;
+        d2 = -d2;
+      }
+      if (d1 < d2 - opttolerance) {
+        return 1;
+      }
+      if (d1 < d2) {
+        res.pen += (d1 - d2) * (d1 - d2);
+      }
+    }
+
+    return 0;
+  }
+
+  var curve = path.curve, m = curve.n, vert = curve.vertex,
+    pt = new Array(m + 1),
+    pen = new Array(m + 1),
+    len = new Array(m + 1),
+    opt = new Array(m + 1),
+    om, i,j,r,
+    o = new Opti(), p0,
+    i1, area, alpha, ocurve,
+    s, t;
+
+  var convc = new Array(m), areac = new Array(m + 1);
+
+  for (i=0; i<m; i++) {
+    if (curve.tag[i] == 'CURVE') {
+      convc[i] = sign(dpara(vert[mod(i-1,m)], vert[i], vert[mod(i+1,m)]));
+    } else {
+      convc[i] = 0;
+    }
+  }
+
+  area = 0.0;
+  areac[0] = 0.0;
+  p0 = curve.vertex[0];
+  for (i=0; i<m; i++) {
+    i1 = mod(i+1, m);
+    if (curve.tag[i1] == 'CURVE') {
+      alpha = curve.alpha[i1];
+      area += 0.3 * alpha * (4-alpha) *
+          dpara(curve.c[i * 3 + 2], vert[i1], curve.c[i1 * 3 + 2])/2;
+      area += dpara(p0, curve.c[i * 3 + 2], curve.c[i1 * 3 + 2])/2;
+    }
+    areac[i+1] = area;
+  }
+
+  pt[0] = -1;
+  pen[0] = 0;
+  len[0] = 0;
+
+
+  for (j=1; j<=m; j++) {
+    pt[j] = j-1;
+    pen[j] = pen[j-1];
+    len[j] = len[j-1]+1;
+
+    for (i=j-2; i>=0; i--) {
+      r = opti_penalty(path, i, mod(j,m), o, info.opttolerance, convc,
+          areac);
+      if (r) {
+        break;
+      }
+        if (len[j] > len[i]+1 ||
+            (len[j] == len[i]+1 && pen[j] > pen[i] + o.pen)) {
+          pt[j] = i;
+          pen[j] = pen[i] + o.pen;
+          len[j] = len[i] + 1;
+          opt[j] = o;
+          o = new Opti();
+        }
+    }
+  }
+  om = len[m];
+  ocurve = new Curve(om);
+  s = new Array(om);
+  t = new Array(om);
+
+  j = m;
+  for (i=om-1; i>=0; i--) {
+    if (pt[j]==j-1) {
+      ocurve.tag[i]     = curve.tag[mod(j,m)];
+      ocurve.c[i * 3 + 0]    = curve.c[mod(j,m) * 3 + 0];
+      ocurve.c[i * 3 + 1]    = curve.c[mod(j,m) * 3 + 1];
+      ocurve.c[i * 3 + 2]    = curve.c[mod(j,m) * 3 + 2];
+      ocurve.vertex[i]  = curve.vertex[mod(j,m)];
+      ocurve.alpha[i]   = curve.alpha[mod(j,m)];
+      ocurve.alpha0[i]  = curve.alpha0[mod(j,m)];
+      ocurve.beta[i]    = curve.beta[mod(j,m)];
+      s[i] = t[i] = 1.0;
+    } else {
+      ocurve.tag[i] = 'CURVE';
+      ocurve.c[i * 3 + 0] = opt[j].c[0];
+      ocurve.c[i * 3 + 1] = opt[j].c[1];
+      ocurve.c[i * 3 + 2] = curve.c[mod(j,m) * 3 + 2];
+
+      ocurve.vertex[i] = curve.c[mod(j, m) * 3 + 2].lerp(vert[mod(j, m)], opt[j].s);
+      ocurve.alpha[i] = opt[j].alpha;
+      ocurve.alpha0[i] = opt[j].alpha;
+      s[i] = opt[j].s;
+      t[i] = opt[j].t;
+    }
+    j = pt[j];
+  }
+
+  for (i=0; i<om; i++) {
+    i1 = mod(i + 1, om);
+    ocurve.beta[i] = s[i] / (s[i] + t[i1]);
+  }
+  ocurve.alphacurve = 1;
+  path.curve = ocurve;
+}
+// ===== getSVG.js =====
+function getSVG(pathList, size, opt_type) {
+
+  function path(curve) {
+
+    function bezier(i) {
+      var b = 'C ' + (curve.c[i * 3 + 0].x * size).toFixed(3) + ' ' +
+          (curve.c[i * 3 + 0].y * size).toFixed(3) + ',';
+      b += (curve.c[i * 3 + 1].x * size).toFixed(3) + ' ' +
+          (curve.c[i * 3 + 1].y * size).toFixed(3) + ',';
+      b += (curve.c[i * 3 + 2].x * size).toFixed(3) + ' ' +
+          (curve.c[i * 3 + 2].y * size).toFixed(3) + ' ';
+      return b;
+    }
+
+    function segment(i) {
+      var s = 'L ' + (curve.c[i * 3 + 1].x * size).toFixed(3) + ' ' +
+          (curve.c[i * 3 + 1].y * size).toFixed(3) + ' ';
+      s += (curve.c[i * 3 + 2].x * size).toFixed(3) + ' ' +
+          (curve.c[i * 3 + 2].y * size).toFixed(3) + ' ';
+      return s;
+    }
+
+    var n = curve.n, i;
+    var p = 'M' + (curve.c[(n - 1) * 3 + 2].x * size).toFixed(3) +
+        ' ' + (curve.c[(n - 1) * 3 + 2].y * size).toFixed(3) + ' ';
+    for (i = 0; i < n; i++) {
+      if (curve.tag[i] === "CURVE") {
+        p += bezier(i);
+      } else if (curve.tag[i] === "CORNER") {
+        p += segment(i);
+      }
+    }
+    //p +=
+    return p;
+  }
+
+  var w = 846, h = 352,
+    len = pathList.length, c, i, strokec, fillc, fillrule;
+
+  var svg = '<svg id="svg" version="1.1" width="' + w + '" height="' + h +
+      '" xmlns="http://www.w3.org/2000/svg">';
+  svg += '<path d="';
+  for (i = 0; i < len; i++) {
+    c = pathList[i].curve;
+    svg += path(c);
+  }
+  if (opt_type === "curve") {
+    strokec = "black";
+    fillc = "none";
+    fillrule = '';
+  } else {
+    strokec = "none";
+    fillc = "black";
+    fillrule = ' fill-rule="evenodd"';
+  }
+  svg += '" stroke="' + strokec + '" fill="' + fillc + '"' + fillrule + '/></svg>';
+  return svg;
+}
+
+getSVG;
+// ===== getPaths.js =====
+function getPaths(pathlist) {
+
+  function path(curve) {
+    function bezier(i) {
+      var x1 = curve.c[i * 3 + 0].x;
+      var y1 = curve.c[i * 3 + 0].y;
+      var x2 = curve.c[i * 3 + 1].x;
+      var y2 = curve.c[i * 3 + 1].y;
+      var x = curve.c[i * 3 + 2].x;
+      var y = curve.c[i * 3 + 2].y;
+
+      return {
+        type: "CURVE",
+        x1: x1,
+        y1: y1,
+        x2: x2,
+        y2: y2,
+        x: x,
+        y: y,
+      }
+    }
+
+    function segment(i) {
+      var x1 = curve.c[i * 3 + 1].x;
+      var y1 = curve.c[i * 3 + 1].y;
+      var x2 = curve.c[i * 3 + 2].x;
+      var y2 = curve.c[i * 3 + 2].y;
+
+      return [
+        {
+          type: "POINT",
+          x: x1,
+          y: y1
+        }, {
+          type: "POINT",
+          x: x2,
+          y: y2
+        }
+      ];
+    }
+    var p = [];
+
+    var n = curve.n, i, s;
+
+    var x = curve.c[(n - 1) * 3 + 2].x;
+    var y = curve.c[(n - 1) * 3 + 2].y;
+
+    p.push({
+      type: "POINT",
+      x: x,
+      y: y
+    });
+
+    for (i = 0; i < n; i++) {
+      if (curve.tag[i] === "CURVE") {
+        p.push(bezier(i));
+      } else if (curve.tag[i] === "CORNER") {
+        s = segment(i);
+        p.push(s[0], s[1]);
+      }
+    }
+    //p +=
+    return p;
+  }
+
+  var len = pathlist.length, c, i;
+
+  var paths = [];
+  for (i = 0; i < len; i++) {
+    c = pathlist[i].curve;
+    paths.push(path(c));
+  }
+
+  return paths;
+}
+// ===== index.js =====
+const OPTIONS = {
+  turnpolicy: 'right',
+  turdsize: 2,
+  optcurve: true,
+  alphamax: 1,
+  opttolerance: 0.2
+};
+
+async function traceUrl(url, options) {
+  const image = await loadImage(url, options);
+
+  return traceImage(image, options);
+}
+
+function traceImage(image, options) {
+  const canvas = document.createElement('canvas');
+  canvas.width = image.width;
+  canvas.height = image.height;
+
+  const context = canvas.getContext('2d');
+  context.drawImage(image, 0, 0);
+
+  return traceCanvas(canvas, options);
+}
+
+function traceCanvas(canvas, options) {
+  const bitmap = createBitmap(canvas);
+
+  return traceBitmap(bitmap, options);
+}
+
+function traceBitmap(bitmap, options = OPTIONS) {
+  const pathList = bitmapToPathList(bitmap, options);
+  processPath(pathList, options);
+
+  return pathList;
+}
+
+// ===== public API =====
+window.PotraceJS = {
+  Bitmap: Bitmap,
+  traceBitmap: traceBitmap,
+  getSVG: getSVG,
+  getPaths: getPaths,
+  OPTIONS: {
+    turnpolicy: 'minority',
+    turdsize: 2,
+    optcurve: true,
+    alphamax: 1,
+    opttolerance: 0.5
+  }
+};
+
+</script>
+<script>
+// ===== 核心逻辑：Canny + 表达式生成 =====
+// ===== Canny 边缘检测（复刻 OpenCV cv2.Canny(gray, 30, 200)）=====
+// 输入: ImageData 或 {data, width, height}（RGBA 字节数组）
+// 输出: Uint8Array 二值边缘图（1=边缘），尺寸 w*h，y 向下
+
+function grayscale(rgba, w, h) {
+  const gray = new Float32Array(w * h);
+  for (let i = 0, p = 0; i < gray.length; i++, p += 4) {
+    // OpenCV cvtColor BGR2GRAY: 0.299R + 0.587G + 0.114B
+    gray[i] = 0.299 * rgba[p] + 0.587 * rgba[p + 1] + 0.114 * rgba[p + 2];
+  }
+  return gray;
+}
+
+function sobel(gray, w, h) {
+  const gx = new Float32Array(w * h);
+  const gy = new Float32Array(w * h);
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const y0 = Math.max(0, y - 1), y1 = Math.min(h - 1, y + 1);
+      const x0 = Math.max(0, x - 1), x1 = Math.min(w - 1, x + 1);
+      const tl = gray[y0 * w + x0], tc = gray[y0 * w + x], tr = gray[y0 * w + x1];
+      const ml = gray[y * w + x0], mr = gray[y * w + x1];
+      const bl = gray[y1 * w + x0], bc = gray[y1 * w + x], br = gray[y1 * w + x1];
+      // Sobel 3x3
+      gx[y * w + x] = (tr + 2 * mr + br) - (tl + 2 * ml + bl);
+      gy[y * w + x] = (bl + 2 * bc + br) - (tl + 2 * tc + tr);
+    }
+  }
+  return { gx, gy };
+}
+
+function canny(rgba, w, h, low = 30, high = 200) {
+  const gray = grayscale(rgba, w, h);
+  const { gx, gy } = sobel(gray, w, h);
+
+  const mag = new Float32Array(w * h);
+  const dir = new Int8Array(w * h); // 0=0°, 1=45°, 2=90°, 3=135°
+  for (let i = 0; i < w * h; i++) {
+    // L2gradient=false 时 OpenCV 用 |Gx|+|Gy|
+    mag[i] = Math.abs(gx[i]) + Math.abs(gy[i]);
+    const a = Math.atan2(gy[i], gx[i]) * 180 / Math.PI; // [-180,180]
+    let d = 0;
+    if ((a >= -22.5 && a < 22.5) || (a >= 157.5 || a < -157.5)) d = 0;       // 水平
+    else if ((a >= 22.5 && a < 67.5) || (a >= -157.5 && a < -112.5)) d = 1;  // 45°
+    else if ((a >= 67.5 && a < 112.5) || (a >= -112.5 && a < -67.5)) d = 2;  // 垂直
+    else d = 3;                                                               // 135°
+    dir[i] = d;
+  }
+
+  // 非极大值抑制（沿梯度方向比较，d=梯度方向；OpenCV: m > m1 && m >= m2）
+  const nms = new Float32Array(w * h);
+  const reflect = (i, n) => (i < 0 ? -i : (i >= n ? 2 * n - 2 - i : i));
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const i = y * w + x;
+      const d = dir[i];
+      let m1 = 0, m2 = 0;
+      if (d === 0) { m1 = mag[y * w + reflect(x - 1, w)]; m2 = mag[y * w + reflect(x + 1, w)]; }            // 梯度水平 → 比较左右
+      else if (d === 2) { m1 = mag[reflect(y - 1, h) * w + x]; m2 = mag[reflect(y + 1, h) * w + x]; } // 梯度垂直 → 比较上下
+      else if (d === 1) { m1 = mag[reflect(y - 1, h) * w + reflect(x - 1, w)]; m2 = mag[reflect(y + 1, h) * w + reflect(x + 1, w)]; } // 45°
+      else { m1 = mag[reflect(y - 1, h) * w + reflect(x + 1, w)]; m2 = mag[reflect(y + 1, h) * w + reflect(x - 1, w)]; } // 135°
+      if (mag[i] > m1 && mag[i] >= m2) nms[i] = mag[i];
+      else nms[i] = 0;
+    }
+  }
+
+  // 双阈值 + 滞后连接（复刻 OpenCV: mag>high 强, mag>low 弱, BFS 传播）
+  const out = new Uint8Array(w * h);
+  const strong = new Int8Array(w * h);
+  const weak = new Int8Array(w * h);
+  const queue = new Int32Array(w * h);
+  let qh = 0, qt = 0;
+  for (let i = 0; i < w * h; i++) {
+    if (nms[i] > high) { strong[i] = 1; out[i] = 1; queue[qt++] = i; }
+    else if (nms[i] > low) weak[i] = 1;
+  }
+  // BFS：从强边缘向弱边缘传播
+  while (qh < qt) {
+    const i = queue[qh++];
+    const x = i % w, y = (i / w) | 0;
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
+        if (dx === 0 && dy === 0) continue;
+        const nx = x + dx, ny = y + dy;
+        if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
+        const ni = ny * w + nx;
+        if (weak[ni] && !out[ni]) { out[ni] = 1; queue[qt++] = ni; }
+      }
+    }
+  }
+  return out;
+}
+
+// ===== 表达式生成（与 backend.py 一致）=====
+function fmtNum(x) {
+  let s = x.toFixed(6);
+  if (s.indexOf('.') >= 0) {
+    s = s.replace(/0+$/, '').replace(/\.$/, '');
+  }
+  return s;
+}
+
+// 从 potrace-js 的 curve 生成 x=...,y=... 表达式列表
+function curveToExprs(curve) {
+  const exprs = [];
+  const n = curve.n;
+  for (let i = 0; i < n; i++) {
+    const tag = curve.tag[i];
+    const prev = curve.c[((i - 1 + n) % n) * 3 + 2]; // 段起点 = 上一段终点
+    if (tag === 'CORNER') {
+      const c = curve.c[i * 3 + 1];
+      const end = curve.c[i * 3 + 2];
+      exprs.push(`x=(1-t)${fmtNum(prev.x)}+t${fmtNum(c.x)},y=(1-t)${fmtNum(prev.y)}+t${fmtNum(c.y)}`);
+      exprs.push(`x=(1-t)${fmtNum(c.x)}+t${fmtNum(end.x)},y=(1-t)${fmtNum(c.y)}+t${fmtNum(end.y)}`);
+    } else { // CURVE
+      const c1 = curve.c[i * 3 + 0];
+      const c2 = curve.c[i * 3 + 1];
+      const end = curve.c[i * 3 + 2];
+      const bx = `(1-t)((1-t)((1-t)${fmtNum(prev.x)}+t${fmtNum(c1.x)})+t((1-t)${fmtNum(c1.x)}+t${fmtNum(c2.x)}))+t((1-t)((1-t)${fmtNum(c1.x)}+t${fmtNum(c2.x)})+t((1-t)${fmtNum(c2.x)}+t${fmtNum(end.x)}))`;
+      const by = `(1-t)((1-t)((1-t)${fmtNum(prev.y)}+t${fmtNum(c1.y)})+t((1-t)${fmtNum(c1.y)}+t${fmtNum(c2.y)}))+t((1-t)((1-t)${fmtNum(c1.y)}+t${fmtNum(c2.y)})+t((1-t)${fmtNum(c2.y)}+t${fmtNum(end.y)}))`;
+      exprs.push(`x=${bx},y=${by}`);
+    }
+  }
+  return exprs;
+}
+
+function toTxt(exprs) {
+  return '┋!' + exprs.map(e => `□${e}□62999900□1`).join('') + '□┋Null┋';
+}
+
+// 生成完整产物: 输入 RGBA 像素数据 -> txt 字符串
+function generateTxt(rgba, width, height) {
+  const edges = canny(rgba, width, height);
+  // 构建 potrace Bitmap（1=边缘），并 y 翻转（等价 edged[::-1]）
+  const Bitmap = window.PotraceJS.Bitmap;
+  const bmp = new Bitmap(width, height);
+  for (let y = 0; y < height; y++) {
+    const srcRow = (height - 1 - y) * width; // y 翻转
+    for (let x = 0; x < width; x++) {
+      bmp.data[y * width + x] = edges[srcRow + x];
+    }
+  }
+  const paths = window.PotraceJS.traceBitmap(bmp, window.PotraceJS.OPTIONS);
+  let exprs = [];
+  for (const path of paths) {
+    exprs = exprs.concat(curveToExprs(path.curve));
+  }
+  return toTxt(exprs);
+}
+
+
+</script>
+<script>
+// ===== UI 交互 =====
+(function() {
+  const dropzone = document.getElementById("dropzone");
+  const fileInput = document.getElementById("file");
+  const generateBtn = document.getElementById("generate");
+  const downloadBtn = document.getElementById("download");
+  const progress = document.getElementById("progress");
+  const preview = document.getElementById("preview");
+  const resultcard = document.getElementById("resultcard");
+  const origImg = document.getElementById("orig");
+  const edgeCanvas = document.getElementById("edgeview");
+  const statsEl = document.getElementById("stats");
+  const resultEl = document.getElementById("result");
+  const filenameEl = document.getElementById("filename");
+
+  let currentRgba = null, currentW = 0, currentH = 0, currentTxt = "", currentBaseName = "desmos_bezier";
+
+  dropzone.addEventListener("click", () => fileInput.click());
+  dropzone.addEventListener("dragover", e => { e.preventDefault(); dropzone.classList.add("dragover"); });
+  dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
+  dropzone.addEventListener("drop", e => {
+    e.preventDefault();
+    dropzone.classList.remove("dragover");
+    if (e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener("change", () => { if (fileInput.files.length) loadFile(fileInput.files[0]); });
+
+  function loadFile(file) {
+    currentBaseName = file.name.replace(/\.[^.]+$/, "") || "desmos_bezier";
+    filenameEl.textContent = "📄 " + file.name + " (" + (file.size / 1024).toFixed(1) + " KB)";
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = new Image();
+      img.onload = () => {
+        origImg.src = ev.target.result;
+        origImg.onload = () => { preview.style.display = "block"; };
+        // 按目标宽度缩放
+        const targetW = parseInt(document.getElementById("width").value) || 480;
+        const w = Math.min(img.width, targetW);
+        const h = Math.round(img.height * w / img.width);
+        const canvas = document.createElement("canvas");
+        canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0, w, h);
+        const imageData = ctx.getImageData(0, 0, w, h);
+        currentRgba = new Uint8Array(imageData.data);
+        currentW = w; currentH = h;
+        generateBtn.disabled = false;
+        // 预览边缘
+        const low = parseInt(document.getElementById("low").value) || 30;
+        const high = parseInt(document.getElementById("high").value) || 200;
+        const edges = canny(currentRgba, w, h, low, high);
+        edgeCanvas.width = w; edgeCanvas.height = h;
+        const ectx = edgeCanvas.getContext("2d");
+        const eimg = ectx.createImageData(w, h);
+        for (let i = 0; i < w * h; i++) {
+          const v = edges[i] ? 0 : 255;
+          eimg.data[i*4] = v; eimg.data[i*4+1] = v; eimg.data[i*4+2] = v; eimg.data[i*4+3] = 255;
+        }
+        ectx.putImageData(eimg, 0, 0);
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  generateBtn.addEventListener("click", () => {
+    if (!currentRgba) return;
+    generateBtn.disabled = true;
+    progress.style.display = "block";
+    // 让 UI 先刷新
+    setTimeout(() => {
+      try {
+        const low = parseInt(document.getElementById("low").value) || 30;
+        const high = parseInt(document.getElementById("high").value) || 200;
+        currentTxt = generateTxtWithParams(currentRgba, currentW, currentH, low, high);
+        resultEl.value = currentTxt.slice(0, 2000) + (currentTxt.length > 2000 ? "\\n...(已截断，完整内容见下载文件)" : "");
+        statsEl.textContent = "✅ 生成完成：" + currentTxt.length + " 字符，" +
+          (currentTxt.split("□62999900□1").length - 1) + " 条表达式，无空格、无重复分隔符";
+        resultcard.classList.remove("hidden");
+        downloadBtn.classList.remove("hidden");
+      } catch (e) {
+        statsEl.textContent = "❌ 生成失败：" + e.message;
+      }
+      progress.style.display = "none";
+      generateBtn.disabled = false;
+    }, 30);
+  });
+
+  downloadBtn.addEventListener("click", () => {
+    const blob = new Blob([currentTxt], { type: "text/plain;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = currentBaseName + ".txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  });
+
+  function generateTxtWithParams(rgba, w, h, low, high) {
+    const edges = canny(rgba, w, h, low, high);
+    const Bitmap = window.PotraceJS.Bitmap;
+    const bmp = new Bitmap(w, h);
+    for (let y = 0; y < h; y++) {
+      const srcRow = (h - 1 - y) * w;
+      for (let x = 0; x < w; x++) {
+        bmp.data[y * w + x] = edges[srcRow + x];
+      }
+    }
+    const paths = window.PotraceJS.traceBitmap(bmp, window.PotraceJS.OPTIONS);
+    let exprs = [];
+    for (const path of paths) exprs = exprs.concat(curveToExprs(path.curve));
+    return toTxt(exprs);
+  }
+})();
+</script>
+</body>
+</html>
