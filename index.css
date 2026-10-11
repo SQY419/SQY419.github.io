@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'math';
-    src: url('/cmunss.otf') format('opentype');
+    src: url('/assets/font/cmunss.otf') format('opentype');
 }
 
 @font-face {
     font-family: 'script';
-    src: url('/MapleMonoNL-Regular.ttf') format('truetype');
+    src: url('/assets/font/MapleMonoNL-Regular.ttf') format('truetype');
 }
 
 
