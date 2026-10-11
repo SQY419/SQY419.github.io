@@ -4,36 +4,18 @@
 }
 
 @font-face {
-    font-family: 'jb';
+    font-family: 'script';
     src: url('/MapleMonoNL-Regular.ttf') format('truetype');
 }
 
-
-@font-face {
-    font-family: 'fz';
-    src: url('/fzletter.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'fzi';
-    src: url('/fzletteri.ttf') format('truetype');
-}
 
 .math {
     font-family: 'math';
 }
 
-.fz {
-    font-family: 'fz';
-}
 
-
-.fzi {
-    font-family: 'fzi';
-}
-
-.jb {
-    font-family: 'jb', serif;
+.script {
+    font-family: 'script', serif;
 }
 
 p{
@@ -41,11 +23,7 @@ p{
     word-break: break-all;
 }
 
-/*   
- * 设置全局样式，将所有元素的外边距和内边距都设置为0，  
- * 并设置盒模型为border-box，使得元素的宽度和高度  
- * 包括内容、内边距和边框，但不包括外边距。  
- */  
+
 * {  
     
     box-sizing: border-box;      /* 设置盒模型为border-box */  
@@ -70,9 +48,6 @@ p{
     
 }  
   
-/*   
- * 卡片内的图片样式，设置图片的尺寸，并添加过渡效果。  
- */  
 .card img {  
     width: 100%;                 /* 图片宽度为卡片宽度 */  
     height: 100%;                /* 图片高度为卡片高度 */  
