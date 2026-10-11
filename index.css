@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'math';
-    src: url('/assets/font/cmunss.otf') format('opentype');
+    src: url('/assets/font/cmunss.ttf') format('truetype');
 }
 
 @font-face {
