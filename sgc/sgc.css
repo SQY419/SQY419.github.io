@@ -1,0 +1,128 @@
+/* Shared responsive layout for the SGC pages. */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    min-width: 0;
+}
+
+h1,
+h2,
+h3 {
+    overflow-wrap: anywhere;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+iframe {
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        position: sticky;
+        height: auto;
+        min-height: 56px;
+        flex-wrap: wrap;
+        gap: 2px;
+        padding: 8px 10px;
+    }
+
+    .navbar .title {
+        padding: 0 2px;
+    }
+
+    .navbar .links {
+        flex: 1 0 100%;
+        justify-content: space-between;
+        height: auto;
+        gap: 0;
+    }
+
+    .navbar .links a {
+        flex: 1 1 0;
+        min-width: 0;
+        margin: 0;
+        padding: 8px 2px;
+        height: auto;
+        font-size: 15px;
+        letter-spacing: 0;
+    }
+
+    .navbar .links a::after {
+        bottom: 2px;
+    }
+
+    .content {
+        margin-top: 0;
+        padding: 12px;
+    }
+
+    .container {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+
+
+    .pictext {
+        flex-direction: column;
+        gap: 14px;
+        padding: 6px 0 20px;
+    }
+
+    .pictext > p,
+    .pictext > img,
+    .pictext img {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .pictext p {
+        padding: 14px;
+        font-size: 16px;
+        line-height: 1.65;
+    }
+
+    .image-container {
+        width: 100%;
+    }
+
+    footer {
+        padding: 16px 12px;
+        font-size: 13px;
+    }
+
+    .sgc {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+    }
+
+    .cof1,
+    .col-banner {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    .group {
+        gap: 10px;
+    }
+
+    .text1 {
+        min-width: 0;
+        white-space: normal;
+    }
+
+    .rectangle {
+        max-width: 100%;
+    }
+
+    #rect3 {
+        width: 100%;
+        animation-name: none;
+    }
+}
