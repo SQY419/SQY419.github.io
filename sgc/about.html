@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGC</title>
+    <title>SGC · 关于</title>
     <style>
         body {
             margin: 0;
             min-width: 800px;
+            background-color: #ffffff;
         }
+
         .navbar {
             position: fixed;
             top: 0;
@@ -20,15 +22,15 @@
             background: linear-gradient(20deg, #ffe985, #fa742b);
             padding: 0 20px;
             z-index: 1000;
-            height: 70px; /* 增加高度 */
+            height: 70px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             transition: all 0.3s ease;
         }
-        
+
         .navbar:hover {
             box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
         }
-        
+
         .navbar .title {
             color: white;
             font-size: 24px;
@@ -39,14 +41,13 @@
             display: flex;
             align-items: center;
         }
-        
-        
+
         .navbar .links {
             display: flex;
             gap: 5px;
             height: 100%;
         }
-        
+
         .navbar .links a {
             color: white;
             text-decoration: none;
@@ -62,12 +63,12 @@
             border-radius: 4px;
             margin: 0 5px;
         }
-        
+
         .navbar .links a:hover {
             background-color: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
         }
-        
+
         .navbar .links a::after {
             content: '';
             position: absolute;
@@ -80,114 +81,216 @@
             border-radius: 10px;
             transition: width 0.3s ease;
         }
-        
+
         .navbar .links a:hover::after {
             width: 60%;
         }
-        
+
         .navbar .links a.active {
             background-color: rgba(255, 255, 255, 0.2);
         }
-        
+
         .navbar .links a.active::after {
             width: 60%;
-		}
-        /* 为页面内容添加上边距，以避免与固定导航栏重叠 */
-        .content {
-            margin-top: 80px; /* 根据导航栏的高度调整 */
-			padding: 20px;
-		}
-		.pictext {
-			display: flex;
-			align-items: center; 
-			gap: 60px;
-			padding: 30px;
         }
- 
-    
-		img {
-			width: 360px; /* 设置图片宽度 */
-			height: auto; /* 高度自动调整以保持图片比例 */
-		}
-	    
-		.image-container {
+
+        .content {
+            margin-top: 80px;
+            padding: 20px;
+        }
+
+        .image-container {
             position: relative;
-            display: inline-block;
+            display: block;
+            width: 100%;
         }
 
         .image-container img {
+            width: 100%;
+            height: auto;
             display: block;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
         }
 
-        .image-container .text-overlay {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .about-heading {
+            text-align: center;
+            padding: 18px 0 4px;
         }
-	    footer {
-            background-color: #333333; /* 深灰色背景 */
-            color: white; /* 文本颜色为白色 */
-            padding: 20px; /* 内边距 */
-            text-align: center; /* 文本居中对齐 */
-	    }
-		.logo{
-			height:24px; width: auto;
-		}
+
+        .about-kicker {
+            margin: 0;
+            color: #fa742b;
+            font-size: 14px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+
+        .about-title {
+            margin: 10px 0 0;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1.15;
+        }
+
+        .about-section {
+            max-width: 1200px;
+            margin: 44px auto 0;
+        }
+
+        .about-section h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin: 0 0 22px;
+        }
+
+        .about-card {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 28px 32px;
+            background: rgba(255, 255, 255, 0.86);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .about-card p {
+            margin: 0 0 14px;
+            font-size: 17px;
+            line-height: 1.8;
+            text-align: left;
+            word-break: normal;
+            overflow-wrap: break-word;
+        }
+
+        .about-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .pictext {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pictext img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .pictext p {
+            flex: 1;
+            word-break: normal;
+            overflow-wrap: break-word;
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.6;
+            text-align: justify;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+        }
+
+        @media (min-width: 992px) {
+            .pictext > img {
+                flex: 0 0 45%;
+                max-width: 45%;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .pictext {
+                flex-direction: column;
+            }
+
+            .pictext img {
+                max-width: 100%;
+            }
+        }
+
+        footer {
+            background-color: #333333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
     </style>
- <link rel="stylesheet" type="text/css" href="/index.css">
- <link rel="stylesheet" type="text/css" href="/sgc/sgc.css">
- <script src="/sgc/sgc-menu.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="/index.css">
+    <link rel="stylesheet" type="text/css" href="/sgc/sgc.css">
+    <script src="/sgc/sgc-menu.js" defer></script>
 </head>
 <body>
     <div class="navbar">
-    <div class="title">
-		<img src="/sgc/v4/logo.svg" alt="SVG Image" class="logo">
-	</div>
-                <button class="menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="sgc-nav-links">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="links" id="sgc-nav-links">
-        <a href="/sgc">首页</a>
-        <a href="/sgc/help.html">帮助</a>
-        <a href="/sgc/v4">在线版</a>
-		<a href="/sgc/about.html">关于</a>
+        <div class="title">
+            <img src="/sgc/logo.svg" alt="SGC" class="logo">
+        </div>
+        <button class="menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="sgc-nav-links">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="links" id="sgc-nav-links">
+            <a href="/sgc">首页</a>
+            <a href="/sgc/help.html">帮助</a>
+            <a href="/sgc/v4">在线版</a>
+            <a href="/sgc/about.html" class="active">关于</a>
+        </div>
     </div>
-	</div>
+
     <div class="content">
-		<center>
-			<h2 class="math">致谢</h2>
-		</center>
-		<p class="math">Gtd232： 提供axolotlpower这个域名，教我html。赞赞赞！</p>
-		<p class="math">obdopqo：四万字超大中文画笔字库。赞赞赞！</p>
-		<p class="math">-Rex-： SFE font injector, 将字体嵌入SGC</p>
-		<p class="math">Au author, KenGi。 他们的Arch、Origin是SGC前行的动力。</p>
-		<center>
-			<h2 class="math">旧版展览馆</h2>
-			<img src="/sgc/screenshot-v3.jpg" alt="114514"  width="720"  height="540"  title="V3" />
-			<p class="math">SGC V3; 兔子洞. 始于2023.12.14</p>
-            <img
-  src="/sgc/screenshot-v2.jpg"
-  alt="114514"
-  width="720"
-  height="540"
-  title="V3" />
-			<p class="math">SGC V2; 几何与函数. 始于2023.05.03</p>       
-			<img
-  src="/sgc/screenshot-v1.jpg"
-  alt="114514"
-  width="720"
-  height="540"
-  title="V3" />
-			<p class="math">SGC V1; 隐函数测试. 始于2022.12.04</p>
-		</center>
-	</div>
-	<footer>
-		<p class="math">&copy; SQY 2026. SQY all rights reserved. 2026.3.22</p>
-		<p class="math">Axolotlpower by Gtd232</p>
-	</footer>
+        <div class="image-container about-hero">
+            <img src="/sgc/cover.png" alt="SGC">
+        </div>
+
+        <div class="container about-container">
+            <header class="about-heading">
+                <p class="about-kicker math">SGC · About</p>
+                <h1 class="about-title math">感谢与旧版展览馆</h1>
+            </header>
+
+            <section class="about-section">
+                <h2 class="math">致谢</h2>
+                <div class="about-card">
+                    <p class="math">Gtd232： 提供axolotlpower这个域名，教我html。赞赞赞！</p>
+                    <p class="math">obdopqo：四万字超大中文画笔字库。赞赞赞！</p>
+                    <p class="math">-Rex-： SFE font injector, 将字体嵌入SGC</p>
+                    <p class="math">Au author, KenGi。 他们的Arch、Origin是SGC前行的动力。</p>
+                </div>
+            </section>
+
+            <section class="about-section">
+                <h2 class="math">旧版展览馆</h2>
+
+                <div class="pictext">
+                    <img src="/sgc/screenshot-v3.jpg" alt="SGC V3">
+                    <p class="math">SGC V3; 兔子洞. 始于2023.12.14</p>
+                </div>
+
+                <div class="pictext">
+                    <p class="math">SGC V2; 几何与函数. 始于2023.05.03</p>
+                    <img src="/sgc/screenshot-v2.jpg" alt="SGC V2">
+                </div>
+
+                <div class="pictext">
+                    <img src="/sgc/screenshot-v1.jpg" alt="SGC V1">
+                    <p class="math">SGC V1; 隐函数测试. 始于2022.12.04</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <p class="math">&copy; SQY 2026. SQY all rights reserved. 2026.3.22</p>
+        <p class="math">Axolotlpower by Gtd232</p>
+    </footer>
 </body>
 </html>
-
-
-

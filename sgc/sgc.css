@@ -12,6 +12,11 @@ body {
     display: none;
 }
 
+.logo {
+    height: 40px;
+    width: auto;
+}
+
 h1,
 h2,
 h3 {
@@ -38,6 +43,10 @@ iframe {
 
     .navbar .title {
         padding: 0;
+    }
+
+    .logo {
+        height: 34px;
     }
 
     .menu-toggle {
