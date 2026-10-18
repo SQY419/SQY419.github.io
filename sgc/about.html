@@ -137,13 +137,17 @@
     </style>
  <link rel="stylesheet" type="text/css" href="/index.css">
  <link rel="stylesheet" type="text/css" href="/sgc/sgc.css">
+ <script src="/sgc/sgc-menu.js" defer></script>
 </head>
 <body>
     <div class="navbar">
     <div class="title">
 		<img src="/sgc/v4/logo.svg" alt="SVG Image" class="logo">
 	</div>
-    <div class="links">
+                <button class="menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="sgc-nav-links">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="links" id="sgc-nav-links">
         <a href="/sgc">首页</a>
         <a href="/sgc/help.html">帮助</a>
         <a href="/sgc/v4">在线版</a>
