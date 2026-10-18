@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGC · 关于</title>
+    <title>SGC · 致谢</title>
     <style>
         body {
             margin: 0;
@@ -118,18 +118,20 @@
             padding: 18px 0 4px;
         }
 
-        .about-kicker {
-            margin: 0;
-            color: #fa742b;
-            font-size: 14px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-        }
-
         .about-title {
             margin: 10px 0 0;
             font-size: clamp(2rem, 4vw, 3.2rem);
             line-height: 1.15;
+        }
+
+        .about-title::after {
+            content: '';
+            display: block;
+            width: 48px;
+            height: 3px;
+            margin: 14px auto 0;
+            border-radius: 2px;
+            background: #fa742b;
         }
 
         .about-section {
@@ -227,10 +229,10 @@
         }
     </style>
     <link rel="stylesheet" type="text/css" href="/index.css">
-    <link rel="stylesheet" type="text/css" href="/sgc/sgc.css">
-    <script src="/sgc/sgc-menu.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="/sgc/sgc.css?v=3">
+    <script src="/sgc/sgc-menu.js?v=3" defer></script>
 </head>
-<body>
+<body class="about-page">
     <div class="navbar">
         <div class="title">
             <img src="/sgc/logo.svg" alt="SGC" class="logo">
@@ -253,12 +255,10 @@
 
         <div class="container about-container">
             <header class="about-heading">
-                <p class="about-kicker math">SGC · About</p>
-                <h1 class="about-title math">感谢与旧版展览馆</h1>
+                <h1 class="about-title math">致谢</h1>
             </header>
 
             <section class="about-section">
-                <h2 class="math">致谢</h2>
                 <div class="about-card">
                     <p class="math">Gtd232： 提供axolotlpower这个域名，教我html。赞赞赞！</p>
                     <p class="math">obdopqo：四万字超大中文画笔字库。赞赞赞！</p>

@@ -189,4 +189,66 @@ iframe {
         width: 100%;
         animation-name: none;
     }
+
+    .about-page .about-heading {
+        padding: 10px 0 0;
+    }
+
+    .about-page .about-title {
+        margin-top: 0;
+        font-size: 2rem;
+    }
+
+    .about-page .about-title::after {
+        margin-top: 12px;
+    }
+
+    .about-page .about-section {
+        margin-top: 26px;
+    }
+
+    .about-page .about-section h2 {
+        margin-bottom: 14px;
+        font-size: 1.45rem;
+    }
+
+    .about-page .about-card {
+        padding: 18px 16px;
+        border-radius: 12px;
+    }
+
+    .about-page .about-card p {
+        margin-bottom: 12px;
+        font-size: 15.5px;
+        line-height: 1.75;
+    }
+
+    .about-page .pictext {
+        width: 100%;
+        margin: 0 0 14px;
+        padding: 10px;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+    }
+
+    .about-page .pictext img {
+        order: 1;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: none;
+    }
+
+    .about-page .pictext p {
+        order: 2;
+        width: 100%;
+        flex: none;
+        padding: 2px 4px 4px;
+        font-size: 15.5px;
+        line-height: 1.6;
+        text-align: left;
+        background: transparent;
+    }
 }
