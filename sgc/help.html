@@ -1,256 +1,300 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGC</title>
-    <style>
-        body {
-            margin: 0;
-			min-width: 800px;
-        }
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(20deg, #ffe985, #fa742b);
-            padding: 0 20px;
-            z-index: 1000;
-            height: 70px; /* 增加高度 */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-        }
-        
-        .navbar:hover {
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .navbar .title {
-            color: white;
-            font-size: 24px;
-            font-weight: 700;
-            padding: 0 15px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-        }
-        
-        
-        .navbar .links {
-            display: flex;
-            gap: 5px;
-            height: 100%;
-        }
-        
-        .navbar .links a {
-            color: white;
-            text-decoration: none;
-            padding: 0 25px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            position: relative;
-            transition: all 0.3s ease;
-            border-radius: 4px;
-            margin: 0 5px;
-        }
-        
-        .navbar .links a:hover {
-            background-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
-        }
-        
-        .navbar .links a::after {
-            content: '';
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 3px;
-            background: white;
-            border-radius: 10px;
-            transition: width 0.3s ease;
-        }
-        
-        .navbar .links a:hover::after {
-            width: 60%;
-        }
-        
-        .navbar .links a.active {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        
-        .navbar .links a.active::after {
-            width: 60%;
-		}
-        /* 为页面内容添加上边距，以避免与固定导航栏重叠 */
-        .content {
-            margin-top: 80px; /* 根据导航栏的高度调整 */
-		padding: 20px;
-        }
-	    .pictext {
-            display: flex; /* 使用Flexbox布局 */
-            align-items: center; /* 垂直居中 */
-            gap: 60px; /* 设置元素之间的间隔 */
-            padding: 30px;
-        }
- 
-        img {
-            width: 360px; /* 设置图片宽度 */
-            height: auto; /* 高度自动调整以保持图片比*/
-        }
-	    
-        .image-container {
-            position: relative;
-            display: inline-block;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SGC - 帮助</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
 
-        .image-container img {
-            display: block;
-        }
+  :root {
+    --brand-start: #ffe985;
+    --brand-end: #fa742b;
+    --text: #2c3e50;
+    --muted: #6b7280;
+    --card-bg: #ffffff;
+    --page-bg: #f6f7f9;
+    --radius: 14px;
+    --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.10);
+  }
 
-        .image-container .text-overlay {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            
-        }
-        footer {
-            background-color: #333333; /* 深灰色背景 */
-            color: white; /* 文本颜色为白色 */
-            padding: 20px; /* 内边距 */
-            text-align: center; /* 文本居中对齐 */
-	    }
-	iframe {
-            width: 100%;
-            height: 100%;
-        }
-        .sgc {
-	    width: 70%;
-	    aspect-ratio: 4/3;
-	    margin: 0;
-	    padding: 0;
-	}   
-      .cof1 {
-            width: 80%;
-            margin: 15px; /* 新增外边距 */
-            padding: 20px;
-            background-color: #f0f0f0;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
-        /* 其他样式保持不变... */
-        .cofh1 {
-            color: #333;
-            margin-bottom: 15px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .contentcof {
-            margin-bottom: 20px;
-            
-            color: #666;
-        }
-        
-        button {
-            padding: 10px 25px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        
-        button:hover {
-            background-color: #45a049;
-	}
-    
-       .col-banner {	    
-            margin: 15px; /* 新增外边距 */
-            padding: 20px;  
-            border-radius: 10px;
-            width: 80%;          /* 占据页面全部宽度 */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            background-color: fbeeac; /* 红色背景 */
-       }
-		.logo{
-	    height:24px; 
-	    width: auto;
-		}
-    </style>
-	<link rel="stylesheet" type="text/css" href="/index.css">
- <link rel="stylesheet" type="text/css" href="/sgc/sgc.css?v=3">
- <script src="/sgc/sgc-menu.js?v=3" defer></script>
+  body {
+    margin: 0;
+    background: var(--page-bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.65;
+  }
+
+  /* ---------- 导航栏 ---------- */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(20deg, var(--brand-start), var(--brand-end));
+    padding: 0 20px;
+    z-index: 1000;
+    height: 70px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease;
+  }
+  .navbar:hover { box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2); }
+
+  .navbar .title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 0 15px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar .links { display: flex; gap: 5px; height: 100%; }
+
+  .navbar .links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 25px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    position: relative;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 4px;
+    margin: 0 5px;
+  }
+  .navbar .links a:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+  .navbar .links a::after {
+    content: "";
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: #fff;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+  }
+  .navbar .links a:hover::after { width: 60%; }
+  .navbar .links a.active { background-color: rgba(255, 255, 255, 0.2); }
+  .navbar .links a.active::after { width: 60%; }
+
+  .logo { height: 32px; width: auto; }
+
+  /* ---------- 页面主体 ---------- */
+  .content {
+    max-width: 1000px;
+    margin: 80px auto 0;
+    padding: 24px 20px 56px;
+  }
+
+  .page-header { text-align: center; padding: 12px 0 28px; }
+  .page-header h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .page-header h2::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 4px;
+    margin: 12px auto 0;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--brand-start), var(--brand-end));
+  }
+  .page-subtitle {
+    margin: 12px 0 0;
+    color: var(--muted);
+    font-size: 0.98rem;
+  }
+
+  .section { margin-top: 12px; }
+  .section-title {
+    margin: 0 0 16px;
+    font-size: 1.3rem;
+    color: var(--text);
+    padding-left: 12px;
+    border-left: 4px solid var(--brand-end);
+    line-height: 1.2;
+  }
+
+  /* ---------- 卡片网格 ---------- */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .content .col-banner,
+  .content .cof1 {
+    width: 100%;
+    margin: 0;
+    padding: 24px 20px;
+    background: var(--card-bg);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .content .col-banner:hover,
+  .content .cof1:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .version-card h4 {
+    margin: 0 0 6px;
+    font-size: 1.15rem;
+    color: var(--text);
+  }
+  .version-meta {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .cofh1 {
+    margin: 0 0 10px;
+    color: var(--text);
+    font-size: 1.2rem;
+  }
+  .contentcof {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  /* ---------- 按钮（只作用于内容区，避免影响菜单按钮） ---------- */
+  .content button {
+    padding: 10px 26px;
+    background: linear-gradient(135deg, #ffb347, var(--brand-end));
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    box-shadow: 0 6px 16px rgba(250, 116, 43, 0.28);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  }
+  .content button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(250, 116, 43, 0.38);
+    filter: brightness(1.04);
+  }
+  .content button:active { transform: translateY(0); }
+
+  /* ---------- 页脚 ---------- */
+  footer {
+    background-color: #2b2f36;
+    color: #d7dbe0;
+    padding: 22px 20px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  footer p { margin: 4px 0; }
+
+  /* ---------- 移动端 ---------- */
+  @media (max-width: 720px) {
+    .card-grid { grid-template-columns: 1fr; gap: 14px; }
+    .page-header h2 { font-size: 1.7rem; }
+    .content { padding-left: 14px; padding-right: 14px; }
+    .content .col-banner,
+    .content .cof1 { padding: 20px 16px; }
+  }
+</style>
+<link rel="stylesheet" type="text/css" href="/index.css">
+<link rel="stylesheet" type="text/css" href="/sgc/sgc.css?v=3">
+<script src="/sgc/sgc-menu.js?v=3" defer></script>
 </head>
 <body>
-    <div class="navbar">
+  <div class="navbar">
     <div class="title">
-		<img src="/sgc/logo.svg" alt="SGC" class="logo">
-	</div>
-                <button class="menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="sgc-nav-links">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="links" id="sgc-nav-links">
-        <a href="/sgc">首页</a>
-        <a href="/sgc/help.html">帮助</a>
-        <a href="/sgc/v4">在线版</a>
-		<a href="/sgc/about.html">关于</a>
+      <img src="/sgc/logo.svg" alt="SGC" class="logo">
     </div>
-	</div>
-    <div class="content">
-    <center><h2 class="math">SGC 帮助</h2></center>
+    <button class="menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="sgc-nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="links" id="sgc-nav-links">
+      <a href="/sgc">首页</a>
+      <a href="/sgc/help.html" class="active">帮助</a>
+      <a href="/sgc/v4">在线版</a>
+      <a href="/sgc/about.html">关于</a>
+    </div>
+  </div>
 
-	<center>
-	    <div class="col-banner">
-            <center><h2 class="math">多版本与兼容性 </h2></center>
-			<div class="col-banner">
-				<center><h4 class="math">SGC V4 于2025.3</h4></center>
-				<button onclick="window.location.href = '/sgc/v4'">点击前往</button>
-			</div>  
-			<div class="col-banner">
-				<center><h4 class="math">SGC V3 于2024.7</h4></center>
-				<button onclick="window.location.href = '/sgc/v3'">点击前往</button>
-			</div>  
-		    <div class="col-banner">
-				<center><h4 class="math">SGC V2 于2023</h4></center>
-				<button onclick="window.location.href = '/sgc/v2'">点击前往</button>
-			</div>  
-		    <div class="col-banner">
-				<center><h4 class="math">SGC V1.0.5 于2023</h4></center>
-				<button onclick="window.location.href = '/sgc/v105'">点击前往</button>
-			</div>  
-	    </div>  
-	    </center>
-      
-	    <center>
-			<div class="cof1">
-				<h2 class="cofh1">用户说明</h2>
-				<div class="contentcof">点击查看SGC用户说明.</div>
-				<button onclick="window.location.href = '/sgc/v4'">点击跳转</button>
-			</div>
-			<div class="cof1">
-				<h2 class="cofh1">理论文档</h2>
-				<div class="contentcof">探秘SGC底层原理.</div>
-				<button onclick="window.location.href = '/sgc'">点击查看</button>
-			</div>
-		</center>
-	</div>
-	<footer>
-		<p class="math">&copy; SQY 2025. SQY all rights reserved. 2025.3.27</p>
-		<p class="math">Axolotlpower by Gtd232</p>
-	</footer>
+  <main class="content">
+    <header class="page-header">
+      <h2 class="math">SGC 帮助</h2>
+      <p class="page-subtitle">选择适合你的版本，或查看使用说明与理论文档</p>
+    </header>
+
+    <section class="section">
+      <h3 class="section-title">多版本与兼容性</h3>
+      <div class="card-grid">
+        <article class="col-banner version-card">
+          <h4 class="math">SGC V4</h4>
+          <p class="version-meta">2025.3</p>
+          <button onclick="window.location.href = '/sgc/v4'">点击前往</button>
+        </article>
+        <article class="col-banner version-card">
+          <h4 class="math">SGC V3</h4>
+          <p class="version-meta">2024.7</p>
+          <button onclick="window.location.href = '/sgc/v3'">点击前往</button>
+        </article>
+        <article class="col-banner version-card">
+          <h4 class="math">SGC V2</h4>
+          <p class="version-meta">2023</p>
+          <button onclick="window.location.href = '/sgc/v2'">点击前往</button>
+        </article>
+        <article class="col-banner version-card">
+          <h4 class="math">SGC V1.0.5</h4>
+          <p class="version-meta">2023</p>
+          <button onclick="window.location.href = '/sgc/v105'">点击前往</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3 class="section-title">文档与说明</h3>
+      <div class="card-grid">
+        <article class="cof1 info-card">
+          <h2 class="cofh1">用户说明</h2>
+          <p class="contentcof">点击查看 SGC 用户说明。</p>
+          <button onclick="window.location.href = '/sgc/v4'">点击跳转</button>
+        </article>
+        <article class="cof1 info-card">
+          <h2 class="cofh1">理论文档</h2>
+          <p class="contentcof">探秘 SGC 底层原理。</p>
+          <button onclick="window.location.href = '/sgc'">点击查看</button>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="math">&copy; SQY 2025. SQY all rights reserved. 2025.3.27</p>
+    <p class="math">Axolotlpower by Gtd232</p>
+  </footer>
 </body>
 </html>
