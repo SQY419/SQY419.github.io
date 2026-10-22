@@ -98,8 +98,12 @@ iframe {
         height: auto;
         gap: 2px;
         padding: 8px 12px 12px;
-        background: linear-gradient(20deg, #ffe985, #fa742b);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+        background: linear-gradient(180deg, #fffdf3 0%, #fff6cf 100%);
+        border: 1px solid rgba(196, 160, 48, 0.22);
+        border-top: 0;
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 12px 24px rgba(120, 96, 20, 0.16);
+        overflow: hidden;
     }
 
     .navbar .links.open {
@@ -116,6 +120,14 @@ iframe {
         font-size: 16px;
         letter-spacing: 0;
         justify-content: flex-start;
+        color: #4a3f14;
+        transition: background-color 0.18s ease, color 0.18s ease;
+    }
+
+    .navbar .links a:hover,
+    .navbar .links a:focus-visible {
+        background: #fff0a8;
+        color: #2e2606;
     }
 
     .navbar .links a::after {
