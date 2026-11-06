@@ -1,268 +1,181 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGC</title>
-    <style>
-        body {
-            margin: 0;
-      		min-width: 800px;
-        }
-	/* 导航栏美化 */
-        .navbar {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		background: linear-gradient(20deg, #ffe985, #fa742b);
-		padding: 0 20px;
-		z-index: 1000;
-		height: 70px; /* 增加高度 */
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-		transition: all 0.3s ease;
-        }
-        
-        .navbar:hover {
-		box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .navbar .title {
-		color: white;
-		font-size: 24px;
-		font-weight: 700;
-		padding: 0 15px;
-		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-		letter-spacing: 0.5px;
-		display: flex;
-		align-items: center;
-        }
-        
-        
-        .navbar .links {
-		display: flex;
-		gap: 5px;
-		height: 100%;
-        }
-        
-        .navbar .links a {
-		color: white;
-		text-decoration: none;
-		padding: 0 25px;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-weight: 500;
-		letter-spacing: 0.5px;
-		position: relative;
-		transition: all 0.3s ease;
-		border-radius: 4px;
-		margin: 0 5px;
-        }
-        
-        .navbar .links a:hover {
-		background-color: rgba(255, 255, 255, 0.25);
-		transform: translateY(-2px);
-        }
-        
-        .navbar .links a::after {
-		content: '';
-		position: absolute;
-		bottom: 15px;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 0;
-		height: 3px;
-		background: white;
-		border-radius: 10px;
-		transition: width 0.3s ease;
-        }
-        
-        .navbar .links a:hover::after {
-		width: 60%;
-        }
-        
-        .navbar .links a.active {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        
-        .navbar .links a.active::after {
-            width: 60%;
-        }
-	/* 为页面内容添加上边距，以避免与固定导航栏重叠 */
-	.content {
-		margin-top: 60px; /* 根据导航栏的高度调整 */
-		padding: 20px;
-	}
-	/* 修改原有 .pictext 样式 */
-	.pictext {
-	    display: flex;
-	    align-items: center;
-	    gap: 60px;
-	    padding: 30px;
-	    max-width: 1200px; /* 限制最大宽度 */
-	    margin: 0 auto; /* 居中 */
-	}
-	
-	/* 修复媒体查询语法 */
-	@media (min-width: 992px) {
-	    .pictext {
-	        flex-direction: row;
-	    }
-	    
-	    .pictext > img {
-	        flex: 0 0 45%;
-	        max-width: 45%;
-	    }
-	    
-	    .pictext > p {
-	        flex: 1;
-	    }
-	}
-	
-	@media (max-width: 991px) {
-	    .pictext {
-	        flex-direction: column;
-	    }
-	    
-	    .pictext img {
-	        max-width: 100%;
-	    }
-	}
-	
-	/* 图片自适应 */
-	.pictext img {
-	    width: 100%;
-	    max-width: 500px;
-	    height: auto;
-	    object-fit: cover;
-	    border-radius: 10px;
-	    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-	}
-	
-	/* 文字样式优化 */
-	.pictext p {
-	    font-size: 18px;
-	    line-height: 1.6;
-	    text-align: justify;
-	    padding: 15px;
-	    background: rgba(255,255,255,0.8);
-	    border-radius: 8px;
-	}
- 
-	img {
-		width: 360px; /* 设置图片宽度 */
-		height: auto; /* 高度自动调整以保持图片比例 */
-	}
-	    
-	.image-container {
-		position: relative;
-		display: block;
-		width: 100%; /* 宽度自动适应网页 */
-	}
-	
-	.image-container img {
-		width: 100%; /* 图片宽度自适应容器 */
-		height: auto;
-		display: block;
-		mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); /* 从上到下渐变透明 */
-		-webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); /* 兼容WebKit浏览器 */
-	}
-
-    .image-container .text-overlay {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-	}
-	footer {
-            background-color: #333333; /* 深灰色背景 */
-            color: white; /* 文本颜色为白色 */
-            padding: 20px; /* 内边距 */
-            text-align: center; /* 文本居中对齐 */
-	    }
-	.logo{
-	    height:24px; 
-	    width: auto;
-	}
-    </style>
- <link rel="stylesheet" type="text/css" href="/index.css">
- <link rel="stylesheet" type="text/css" href="/sgc/sgc.css?v=3">
- <script src="/sgc/sgc-menu.js?v=3" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#faf7f0">
+<title>SGC · 图形计算器</title>
+<meta name="description" content="SGC 是一款在浏览器与 Scratch 上运行的图形计算器：函数、隐函数、几何与 Mandelbrot 集，所见即所得。">
+<link rel="stylesheet" type="text/css" href="/index.css">
+<link rel="stylesheet" type="text/css" href="/sgc/canvas.css?v=14">
+<noscript>
+<style>
+  body { overflow: auto; }
+  #grid, .hud { display: none; }
+  #stage { position: static; pointer-events: auto; }
+  .panel { position: static; width: auto !important; max-width: 760px; margin: 14px auto; }
+</style>
+</noscript>
 </head>
 <body>
-    <div class="navbar">
-	<div class="title">
-		<img src="/sgc/logo.svg" alt="SGC" class="logo">
-	</div>
-            <button class="menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="sgc-nav-links">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="links" id="sgc-nav-links">
-            <a href="/sgc">首页</a>
-            <a href="/sgc/help.html">帮助</a>
-            <a href="/sgc/v4">在线版</a>
-	    <a href="/sgc/about.html">关于</a>
+
+<canvas id="grid" aria-hidden="true"></canvas>
+
+<div id="stage">
+
+  <!-- 01 首页 -->
+  <article class="panel" data-card="home" role="region" aria-label="首页" style="--w:470px">
+    <header class="panel__head" tabindex="0">
+      <span class="panel__num">01</span>
+      <h1 class="panel__title">首页</h1>
+      <span class="panel__tag">SGC</span>
+      <button class="panel__toggle" type="button" aria-expanded="true" aria-controls="body-home" aria-label="收起首页">
+        <span class="panel__chev"></span>
+      </button>
+    </header>
+    <div class="panel__bodywrap" id="body-home">
+      <div class="panel__body">
+        <div class="panel__inner">
+          <p class="eyebrow">图形计算器 · 浏览器 / Scratch</p>
+          <h2 class="hero-title">SGC</h2>
+          <p class="hero-sub">享受数学之美</p>
+          <p class="hero-lead">在浏览器里画函数、解几何、跑 Mandelbrot。所见即所得，内置软键盘，键盘坏了也不影响。</p>
+          <p class="hero-meta">Version 4.13.4 · 更新于 2026.11</p>
+
+          <div class="hero-actions">
+            <button class="btn btn--primary" type="button" data-open="online">在线使用 <span class="arrow">→</span></button>
+            <a class="btn btn--ghost" href="/download/">下载 <span class="arrow">↓</span></a>
+          </div>
+
+          <ul class="features">
+            <li><i>01</i><b>函数与隐函数</b><span>再抽象的 Mandelbrot 集，也能在坐标系里画出来。</span></li>
+            <li><i>02</i><b>全新数据结构</b><span>计算速度翻一番，desmos 画不清的交给它。</span></li>
+            <li><i>03</i><b>内置软键盘</b><span>随手输入，不依赖物理键盘。</span></li>
+            <li><i>04</i><b>几何与建系</b><span>几何题注意不到的，或者建系太难算的，都能帮上忙。</span></li>
+          </ul>
         </div>
+      </div>
     </div>
-<div class="content">
-       
-	<center>
-	<div class="image-container">
-	    <img src="/sgc/cover.png" alt="SGC">
-	    <div class="text-overlay">
-	    </div>
-	</div>
-</div>
-		  
-</center>
-<div class="container">
-<center>
+  </article>
 
-<p style="font-size: 150%;" class="math">SGC Version 4.13+</p>
-<p style="font-size: 200%; " class="math">享受数学之美</p>  
+  <!-- 02 在线版 -->
+  <article class="panel" data-card="online" role="region" aria-label="在线版" style="--w:700px">
+    <header class="panel__head" tabindex="0">
+      <span class="panel__num">02</span>
+      <h2 class="panel__title">在线版</h2>
+      <span class="panel__tag">v4.13.4</span>
+      <button class="panel__toggle" type="button" aria-expanded="true" aria-controls="body-online" aria-label="收起在线版">
+        <span class="panel__chev"></span>
+      </button>
+    </header>
+    <div class="panel__bodywrap" id="body-online">
+      <div class="panel__body">
+        <div class="panel__inner">
+          <div class="frame-toolbar">
+            <a class="icon-btn" href="/sgc/v4/calculator/" target="_blank" rel="noopener" aria-label="在新标签打开">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 5H19v5.5"/><path d="M18.6 5.4 11 13"/><path d="M18 14v5H5V6h5"/></svg>
+            </a>
+            <button class="icon-btn" type="button" id="fullscreen-btn" aria-label="全屏" aria-pressed="false">
+              <svg class="ic ic-enter" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5"/><path d="M20 9V4h-5"/><path d="M4 15v5h5"/><path d="M20 15v5h-5"/></svg>
+              <svg class="ic ic-exit" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4"/><path d="M15 4v5h5"/><path d="M9 20v-5H4"/><path d="M15 20v-5h5"/></svg>
+            </button>
+            <span class="spacer"></span>
+          </div>
+          <div class="frame-holder" id="frame-holder">
+            <div class="frame-placeholder" id="frame-placeholder">
+              <p class="big">SGC v4.13.4</p>
+              <button class="btn btn--primary" type="button" id="load-frame">载入计算器</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
 
-</center>
+  <!-- 03 帮助 -->
+  <article class="panel" data-card="help" role="region" aria-label="帮助" style="--w:430px">
+    <header class="panel__head" tabindex="0">
+      <span class="panel__num">03</span>
+      <h2 class="panel__title">帮助</h2>
+      <span class="panel__tag">版本 · 文档</span>
+      <button class="panel__toggle" type="button" aria-expanded="true" aria-controls="body-help" aria-label="收起帮助">
+        <span class="panel__chev"></span>
+      </button>
+    </header>
+    <div class="panel__bodywrap" id="body-help">
+      <div class="panel__body">
+        <div class="panel__inner">
+          <p class="section-label">多版本与兼容性</p>
+          <ul class="rows">
+            <li><a href="/sgc/v4"><span class="v">SGC V4</span><span class="d">2026.11</span></a><span class="s is-now">当前</span></li>
+            <li><a href="/sgc/v3"><span class="v">SGC V3</span><span class="d">2024.7</span></a><span class="s">归档</span></li>
+            <li><a href="/sgc/v2"><span class="v">SGC V2</span><span class="d">2023</span></a><span class="s">归档</span></li>
+            <li><a href="/sgc/v105"><span class="v">SGC V1.0.5</span><span class="d">2023</span></a><span class="s">归档</span></li>
+          </ul>
 
-<!-- 第一组：图片在左，文字在右 -->
-<div class="pictext">
-    <p class="math">在scratch/浏览器上运行，简单好用。随意画出你想要的函数，所见即所得。内置软键盘，键盘坏了也没问题。</p>
-    <img src="/sgc/sgc-screenshot.jpg" alt="SGC">
+          <p class="section-label">文档与说明</p>
+          <ul class="rows">
+            <li><a href="/sgc/v4"><span class="v">用户说明</span><span class="d">操作与语法</span></a><span class="s">↗</span></li>
+            <li><a href="/sgc/doc/sgc-doc-20.pdf"><span class="v">理论文档</span><span class="d">PDF · 7.9 MB</span></a><span class="s">↗</span></li>
+            <li><a href="/sgc/tips/howtoload/"><span class="v">加载教程</span><span class="d">三步上手</span></a><span class="s">↗</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 04 关于 -->
+  <article class="panel" data-card="about" role="region" aria-label="关于" style="--w:430px">
+    <header class="panel__head" tabindex="0">
+      <span class="panel__num">04</span>
+      <h2 class="panel__title">关于</h2>
+      <span class="panel__tag">致谢</span>
+      <button class="panel__toggle" type="button" aria-expanded="true" aria-controls="body-about" aria-label="收起关于">
+        <span class="panel__chev"></span>
+      </button>
+    </header>
+    <div class="panel__bodywrap" id="body-about">
+      <div class="panel__body">
+        <div class="panel__inner">
+          <p>没有这些人，就没有现在的 SGC。</p>
+          <ul class="rows thanks">
+            <li><b>Gtd232</b><span>提供 axolotlpower 域名，教我写 HTML。赞赞赞！</span></li>
+            <li><b>obdopqo</b><span>四万字超大中文画笔字库。赞赞赞！</span></li>
+            <li><b>-Rex-</b><span>SFE font injector，把字体嵌进 SGC。</span></li>
+            <li><b>Au / KenGi</b><span>他们的 Arch、Origin 是 SGC 前行的动力。</span></li>
+          </ul>
+
+          <p class="section-label">旧版展览馆</p>
+          <ul class="rows">
+            <li><a href="/sgc/v3"><span class="v">V3 · 兔子洞</span><span class="d">2023.12.14</span></a></li>
+            <li><a href="/sgc/v2"><span class="v">V2 · 几何与函数</span><span class="d">2023.05.03</span></a></li>
+            <li><a href="/sgc/v105"><span class="v">V1 · 隐函数测试</span><span class="d">2022.12.04</span></a></li>
+          </ul>
+
+          <p class="note">© SQY 2026 · Axolotlpower by Gtd232</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
 </div>
 
-<!-- 第二组：文字在左，图片在右 -->
-<div class="pictext">
-    <p class="math">使用SGC强大的自定义函数和隐式功能，再抽象的mandelbrot集都可以在坐标系中画出来。</p>
-    <img src="/sgc/demo-mandelbrot.jpg" alt="SGC">
+<!-- 悬浮控件 -->
+<div class="hud">
+  <div class="brand"><b>SGC</b><span>4.13.4</span></div>
+  <div class="tools">
+    <button type="button" data-act="expand" aria-label="展开全部">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M12 8.5v7M8.5 12h7"/></svg>
+    </button>
+    <button type="button" data-act="collapse" aria-label="收起全部">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8.5 12h7"/></svg>
+    </button>
+    <button type="button" data-act="reset" aria-label="复位视图">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.6v3.2M12 18.2v3.2M2.6 12h3.2M18.2 12h3.2"/></svg>
+    </button>
+  </div>
 </div>
 
-<!-- 第三组：图片在左，文字在右 -->
-<div class="pictext">
-    <p class="math">太抽象了，desmos画不清楚了。试试SGC吧！全新数据结构，计算速度翻一番。</p>
-    <img src="/sgc/desmos-comparison.jpg" alt="SGC">
-</div>
-
-<!-- 第四组：文字在左，图片在右 -->
-<div class="pictext">
-    <p class="math">不善言辞，如何表达情感？面对crush，总不能只用乏味的词语。SGC帮助你使用数学之美，win his/her heart。</p>
-    <img src="/sgc/crush-preview.jpg" alt="SGC">
-</div>
-
-<!-- 第五组：图片在左，文字在右 -->
-<div class="pictext">
-    <p class="math">几何题注意不到，或者建系太难算？SGC助你一臂之力！</p>
-    <img src="/download/assets/geometry-demo.jpg" alt="SGC">
-</div>
-</div>
-       
-</div>
-	<footer>
-		<p class="math">&copy; SQY. 2026.10.19</p>
-		<p class="math">Axolotlpower by Gtd232</p>
-	</footer>
+<script src="/sgc/canvas.js?v=14"></script>
 </body>
 </html>
