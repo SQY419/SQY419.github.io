@@ -126,17 +126,6 @@ body.is-panning #grid { cursor: grabbing; }
     text-overflow: ellipsis;
 }
 
-.panel__tag {
-    font-family: 'script', ui-monospace, monospace;
-    font-size: 10.5px;
-    letter-spacing: .04em;
-    color: var(--ink-3);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 2px 7px;
-    white-space: nowrap;
-}
-
 .panel__toggle {
     flex: 0 0 auto;
     width: 26px;
