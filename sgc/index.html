@@ -7,7 +7,7 @@
 <title>SGC · 图形计算器</title>
 <meta name="description" content="SGC 是一款在浏览器与 Scratch 上运行的图形计算器：函数、隐函数、几何与 Mandelbrot 集，所见即所得。">
 <link rel="stylesheet" type="text/css" href="/index.css">
-<link rel="stylesheet" type="text/css" href="/sgc/canvas.css?v=14">
+<link rel="stylesheet" type="text/css" href="/sgc/canvas.css?v=16">
 <noscript>
 <style>
   body { overflow: auto; }
@@ -26,7 +26,6 @@
   <!-- 01 首页 -->
   <article class="panel" data-card="home" role="region" aria-label="首页" style="--w:470px">
     <header class="panel__head" tabindex="0">
-      <span class="panel__num">01</span>
       <h1 class="panel__title">首页</h1>
       <span class="panel__tag">SGC</span>
       <button class="panel__toggle" type="button" aria-expanded="true" aria-controls="body-home" aria-label="收起首页">
@@ -48,10 +47,10 @@
           </div>
 
           <ul class="features">
-            <li><i>01</i><b>函数与隐函数</b><span>再抽象的 Mandelbrot 集，也能在坐标系里画出来。</span></li>
-            <li><i>02</i><b>全新数据结构</b><span>计算速度翻一番，desmos 画不清的交给它。</span></li>
-            <li><i>03</i><b>内置软键盘</b><span>随手输入，不依赖物理键盘。</span></li>
-            <li><i>04</i><b>几何与建系</b><span>几何题注意不到的，或者建系太难算的，都能帮上忙。</span></li>
+            <li><b>函数与隐函数</b><span>再抽象的 Mandelbrot 集，也能在坐标系里画出来。</span></li>
+            <li><b>全新数据结构</b><span>计算速度翻一番，desmos 画不清的交给它。</span></li>
+            <li><b>内置软键盘</b><span>随手输入，不依赖物理键盘。</span></li>
+            <li><b>几何与建系</b><span>几何题注意不到的，或者建系太难算的，都能帮上忙。</span></li>
           </ul>
         </div>
       </div>
@@ -61,7 +60,6 @@
   <!-- 02 在线版 -->
   <article class="panel" data-card="online" role="region" aria-label="在线版" style="--w:700px">
     <header class="panel__head" tabindex="0">
-      <span class="panel__num">02</span>
       <h2 class="panel__title">在线版</h2>
       <span class="panel__tag">v4.13.4</span>
       <button class="panel__toggle" type="button" aria-expanded="true" aria-controls="body-online" aria-label="收起在线版">
@@ -95,7 +93,6 @@
   <!-- 03 帮助 -->
   <article class="panel" data-card="help" role="region" aria-label="帮助" style="--w:430px">
     <header class="panel__head" tabindex="0">
-      <span class="panel__num">03</span>
       <h2 class="panel__title">帮助</h2>
       <span class="panel__tag">版本 · 文档</span>
       <button class="panel__toggle" type="button" aria-expanded="true" aria-controls="body-help" aria-label="收起帮助">
@@ -127,7 +124,6 @@
   <!-- 04 关于 -->
   <article class="panel" data-card="about" role="region" aria-label="关于" style="--w:430px">
     <header class="panel__head" tabindex="0">
-      <span class="panel__num">04</span>
       <h2 class="panel__title">关于</h2>
       <span class="panel__tag">致谢</span>
       <button class="panel__toggle" type="button" aria-expanded="true" aria-controls="body-about" aria-label="收起关于">
@@ -162,7 +158,6 @@
 
 <!-- 悬浮控件 -->
 <div class="hud">
-  <div class="brand"><b>SGC</b><span>4.13.4</span></div>
   <div class="tools">
     <button type="button" data-act="expand" aria-label="展开全部">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M12 8.5v7M8.5 12h7"/></svg>
@@ -176,6 +171,6 @@
   </div>
 </div>
 
-<script src="/sgc/canvas.js?v=14"></script>
+<script src="/sgc/canvas.js?v=16"></script>
 </body>
 </html>

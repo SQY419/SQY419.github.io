@@ -205,62 +205,97 @@
         }, 300);
     }
 
-    /* 拖动卡片：只从标题栏抓起 */
+    /* 拖动卡片：标题栏直接拖；正文按住片刻也能拖 */
     panels.forEach(function (p) {
         var head = p.querySelector('.panel__head');
         p._x = 0;
         p._y = 0;
 
-        var drag = null;
+        var drag = null;    // 正在拖
+        var press = null;   // 按下，尚未进入拖动
+        var lastDrag = 0;
+        var HOLD = 260;     // 正文长按多少毫秒后开始拖动
 
-        head.addEventListener('pointerdown', function (e) {
+        function beginDrag(t) {
+            drag = t;
+            t.started = true;
+            p.classList.add('is-dragging');
+            bringToFront(p);
+            if (navigator.vibrate) {
+                try { navigator.vibrate(8); } catch (err) {}
+            }
+        }
+
+        p.addEventListener('pointerdown', function (e) {
             if (e.button !== 0 && e.pointerType === 'mouse') return;
-            if (e.target.closest('button, a')) return;
+            if (e.target.closest('button, a, input, textarea, select, iframe, .frame-holder')) return;
+            if (press || drag) return;   // 多指按下时只认第一根
 
-            drag = {
+            var fromHead = !!e.target.closest('.panel__head');
+            press = {
                 id: e.pointerId,
                 sx: e.clientX,
                 sy: e.clientY,
                 px: p._x,
                 py: p._y,
-                moved: false
+                moved: false,
+                started: false,
+                timer: null
             };
-            head.setPointerCapture(e.pointerId);
-            p.classList.add('is-dragging');
-            bringToFront(p);
+
+            try { p.setPointerCapture(e.pointerId); } catch (err) {}
+
+            /* 鼠标：正文也能直接拖；触屏：按住片刻再拖 */
+            if (fromHead || e.pointerType === 'mouse') {
+                beginDrag(press);
+            } else {
+                press.timer = setTimeout(function () {
+                    if (press && !press.moved) beginDrag(press);
+                }, HOLD);
+            }
         });
 
-        head.addEventListener('pointermove', function (e) {
-            if (!drag || e.pointerId !== drag.id) return;
-            var dx = e.clientX - drag.sx;
-            var dy = e.clientY - drag.sy;
-            if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 3) drag.moved = true;
-            if (!drag.moved) return;
-            p._x = drag.px + dx;
-            p._y = drag.py + dy;
+        p.addEventListener('pointermove', function (e) {
+            var t = drag || press;
+            if (!t || e.pointerId !== t.id) return;
+
+            var dx = e.clientX - t.sx;
+            var dy = e.clientY - t.sy;
+
+            if (!t.started) {
+                /* 还没开始拖，手指先滑开了：取消长按 */
+                if (Math.abs(dx) + Math.abs(dy) > 8) {
+                    if (press && press.timer) clearTimeout(press.timer);
+                    press = null;
+                }
+                return;
+            }
+
+            if (!t.moved && Math.abs(dx) + Math.abs(dy) > 3) t.moved = true;
+            p._x = t.px + dx;
+            p._y = t.py + dy;
             applyPanel(p);
         });
 
-        var lastDrag = 0;
-
-        function endDrag(e) {
-            if (!drag || e.pointerId !== drag.id) return;
-            p.classList.remove('is-dragging');
-            if (drag.moved) lastDrag = Date.now();
+        function endPress(e) {
+            var t = drag || press;
+            if (!t || e.pointerId !== t.id) return;
+            if (press && press.timer) clearTimeout(press.timer);
+            if (t.started) {
+                p.classList.remove('is-dragging');
+                if (t.moved) lastDrag = Date.now();
+            }
+            press = null;
             drag = null;
         }
+
+        p.addEventListener('pointerup', endPress);
+        p.addEventListener('pointercancel', endPress);
 
         /* 用 click 收尾：真实指针和程序化点击都能触发折叠 */
         head.addEventListener('click', function () {
             if (Date.now() - lastDrag < 350) return;
             toggle(p);
-        });
-
-        head.addEventListener('pointerup', endDrag);
-        head.addEventListener('pointercancel', function (e) {
-            if (!drag || e.pointerId !== drag.id) return;
-            p.classList.remove('is-dragging');
-            drag = null;
         });
 
         /* 键盘：方向键微调，回车/空格折叠 */
