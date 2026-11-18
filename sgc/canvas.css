@@ -16,6 +16,9 @@
     --r: 6px;
     --shadow: 0 18px 40px rgba(0, 0, 0, .07), 0 2px 8px rgba(0, 0, 0, .04);
     --hud: rgba(255, 255, 255, .86);
+    /* 全站唯一字体栈：西文 CMU Sans，汉字回落系统黑体，不使用衬线 */
+    --font-ui: 'math', -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans CJK SC",
+        "Microsoft YaHei", "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -31,8 +34,7 @@ html, body {
 
 body {
     /* cmunss = Computer Modern Sans Serif：西文走它，汉字回落到系统黑体 */
-    font-family: 'math', -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans CJK SC",
-        "Microsoft YaHei", "Segoe UI", Helvetica, Arial, sans-serif;
+    font-family: var(--font-ui);
     -webkit-font-smoothing: antialiased;
     touch-action: none;
 }
@@ -104,7 +106,7 @@ body.is-panning #grid { cursor: grabbing; }
 .panel.is-dragging .panel__head { cursor: grabbing; }
 
 .panel__title {
-    font-family: 'math', "Songti SC", serif;
+    font-family: var(--font-ui);
     font-size: 17px;
     font-weight: 400;
     letter-spacing: .01em;
@@ -206,7 +208,7 @@ body.is-panning #grid { cursor: grabbing; }
 }
 
 .hero-title {
-    font-family: 'math', "Songti SC", serif;
+    font-family: var(--font-ui);
     font-size: 46px;
     line-height: 1;
     letter-spacing: .01em;
@@ -214,7 +216,7 @@ body.is-panning #grid { cursor: grabbing; }
 }
 
 .hero-sub {
-    font-family: 'math', "Songti SC", serif;
+    font-family: var(--font-ui);
     font-size: 19px;
     color: var(--ink);
     margin: 0 0 14px;
@@ -323,7 +325,7 @@ body.is-panning #grid { cursor: grabbing; }
 }
 
 .rows .v {
-    font-family: 'math', "Songti SC", serif;
+    font-family: var(--font-ui);
     font-size: 15.5px;
     color: var(--ink);
     transition: color .16s ease;
@@ -466,7 +468,7 @@ body.is-panning #grid { cursor: grabbing; }
 }
 
 .frame-placeholder .big {
-    font-family: 'math', "Songti SC", serif;
+    font-family: var(--font-ui);
     font-size: 20px !important;
     color: var(--ink-2) !important;
 }
