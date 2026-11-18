@@ -4,18 +4,18 @@
    =========================================================== */
 
 :root {
-    --paper: #faf7f0;
-    --paper-2: #fffdf8;
-    --ink: #1a1712;
-    --ink-2: #6b6459;
-    --ink-3: #9a9080;
-    --line: #e3dccd;
-    --line-soft: #efe8da;
+    --paper: #ffffff;
+    --paper-2: #ffffff;
+    --ink: #111111;
+    --ink-2: #585858;
+    --ink-3: #8e8e8e;
+    --line: #e4e4e4;
+    --line-soft: #f0f0f0;
     --accent: #c1442e;
-    --accent-soft: #f7e9e4;
+    --accent-soft: #faeeea;
     --r: 6px;
-    --shadow: 0 18px 40px rgba(70, 52, 20, .10), 0 2px 8px rgba(70, 52, 20, .06);
-    --hud: rgba(250, 247, 240, .82);
+    --shadow: 0 18px 40px rgba(0, 0, 0, .07), 0 2px 8px rgba(0, 0, 0, .04);
+    --hud: rgba(255, 255, 255, .86);
 }
 
 * { box-sizing: border-box; }
@@ -37,17 +37,7 @@ body {
     touch-action: none;
 }
 
-/* 纸面质感：极轻的渐变，避免整屏死白 */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background:
-        radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, .85), rgba(255, 255, 255, 0) 60%),
-        radial-gradient(90% 70% at 100% 100%, rgba(193, 68, 46, .045), rgba(193, 68, 46, 0) 55%);
-    z-index: 0;
-}
+
 
 /* ---------- 坐标系 ---------- */
 #grid {
@@ -95,7 +85,7 @@ body.is-panning #grid { cursor: grabbing; }
     transition: none;
     user-select: none;
     -webkit-user-select: none;
-    box-shadow: 0 26px 60px rgba(70, 52, 20, .18), 0 3px 10px rgba(70, 52, 20, .08);
+    box-shadow: 0 26px 60px rgba(0, 0, 0, .14), 0 3px 10px rgba(0, 0, 0, .06);
     z-index: 900 !important;
 }
 
@@ -432,7 +422,7 @@ body.is-panning #grid { cursor: grabbing; }
 
 .icon-btn .ic { width: 16px; height: 16px; }
 
-.icon-btn:hover { color: var(--ink); border-color: #d3c7ad; background: var(--line-soft); }
+.icon-btn:hover { color: var(--ink); border-color: #cccccc; background: var(--line-soft); }
 .icon-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 #fullscreen-btn .ic-exit { display: none; }
@@ -529,7 +519,7 @@ body.is-panning #grid { cursor: grabbing; }
     transition: background-color .16s ease, color .16s ease;
 }
 
-.tools button:hover { background: rgba(26, 23, 18, .07); color: var(--ink); }
+.tools button:hover { background: rgba(0, 0, 0, .06); color: var(--ink); }
 .tools button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 /* ---------- 小屏 ---------- */

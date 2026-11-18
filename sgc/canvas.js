@@ -41,7 +41,7 @@
 
         /* 次网格线 */
         ctx.lineWidth = 1;
-        ctx.strokeStyle = 'rgba(26,23,18,0.10)';
+        ctx.strokeStyle = 'rgba(0,0,0,0.09)';
         ctx.beginPath();
         var x0 = ((tx % u) + u) % u;
         for (var x = x0; x <= w; x += u) {
@@ -59,7 +59,7 @@
 
         /* 主网格线（每 5 格） */
         var step = u * MAJOR;
-        ctx.strokeStyle = 'rgba(26,23,18,0.17)';
+        ctx.strokeStyle = 'rgba(0,0,0,0.15)';
         ctx.beginPath();
         var mx0 = ((tx % step) + step) % step;
         for (var mx = mx0; mx <= w; mx += step) {
@@ -89,7 +89,7 @@
         /* 坐标轴 */
         var axisX = Math.round(tx) + 0.5;
         var axisY = Math.round(ty) + 0.5;
-        ctx.strokeStyle = 'rgba(26,23,18,0.45)';
+        ctx.strokeStyle = 'rgba(0,0,0,0.38)';
         ctx.lineWidth = 1.2;
         ctx.beginPath();
         ctx.moveTo(0, axisY);
@@ -98,36 +98,11 @@
         ctx.lineTo(axisX, h);
         ctx.stroke();
 
-        /* 轴箭头 */
-        ctx.fillStyle = 'rgba(26,23,18,0.45)';
-        ctx.beginPath();
-        ctx.moveTo(w - 1, axisY);
-        ctx.lineTo(w - 9, axisY - 4);
-        ctx.lineTo(w - 9, axisY + 4);
-        ctx.closePath();
-        ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(axisX, 1);
-        ctx.lineTo(axisX - 4, 9);
-        ctx.lineTo(axisX + 4, 9);
-        ctx.closePath();
-        ctx.fill();
-
-        /* 轴标签 */
-        ctx.font = '13px "math", "Songti SC", serif';
-        ctx.fillStyle = 'rgba(26,23,18,0.5)';
-        ctx.textAlign = 'right';
-        ctx.textBaseline = 'bottom';
-        ctx.fillText('x', w - 14, axisY - 8);
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'top';
-        ctx.fillText('y', axisX + 9, 10);
-
         /* 刻度数字 */
         var labelY = Math.max(16, Math.min(ty + 14, h - 10));
         var labelX = Math.max(10, Math.min(tx + 8, w - 12));
         ctx.font = '10.5px "script", ui-monospace, monospace';
-        ctx.fillStyle = 'rgba(26,23,18,0.38)';
+        ctx.fillStyle = 'rgba(0,0,0,0.34)';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
         for (var lx = mx0; lx <= w; lx += step) {
