@@ -1,0 +1,95 @@
+site_name: SGC 用户说明
+site_description: SGC（SQY Graphic Calculator）用户说明 —— 用 Scratch 探索数学之美。
+site_author: SQY
+site_url: https://sqy419.axolotlpower.com/sgc/docs/
+repo_url: https://github.com/SQY419/SQY419.github.io
+repo_name: SQY419
+edit_uri: ""
+
+docs_dir: docs
+site_dir: ../sgc/docs
+
+theme:
+  name: material
+  language: zh
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
+  font: false
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: 切换到深色
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到浅色
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - 首页: index.md
+  - 快速开始: quickstart.md
+  - 常见问题: faq.md
+  - 基础:
+      - 1 主界面: interface.md
+      - 2 输入: input.md
+      - 3 输入对象操作: objects.md
+      - 4 坐标系: coords.md
+  - 计算:
+      - 5 计算引擎: engine.md
+      - 6 几何: geometry.md
+      - 7 文本: text.md
+      - 8 脚本: script.md
+      - 9 统计: stats.md
+  - 其它:
+      - 10 设置: settings.md
+      - 11 多边形与动画: polygon.md
+      - 12 附录: appendix.md
+      - 13 内部实现: internals.md
+  - 约定与反馈: conventions.md
+  - 打开 SGC: /sgc/
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - javascripts/mathjax/tex-svg.js
+
+extra:
+  generator: false
