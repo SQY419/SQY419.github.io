@@ -1,0 +1,124 @@
+site_name: symSC 文档
+site_description: symSC —— 用 GoboScript 编写、可编译到原版 Scratch 3.0 的符号计算引擎。
+site_author: SQY419
+site_url: https://sqy.axolotlpower.com/symsc/
+repo_url: https://github.com/SQY419/symSC
+repo_name: SQY419/symSC
+edit_uri: ""
+
+docs_dir: docs
+site_dir: ../symsc
+
+theme:
+  name: material
+  language: zh
+  logo: assets/cas-character.svg
+  favicon: assets/cas-character.svg
+  font: false
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换到深色
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到浅色
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - 首页: index.md
+  - 快速开始: getting-started.md
+  - 使用指南:
+      - 命令与表达式: guide/commands.md
+      - 变量与自定义函数: guide/variables.md
+      - 容器与线性代数: guide/containers.md
+      - 示例集: guide/examples.md
+  - 函数参考:
+      - 总览: reference/functions/index.md
+      - 代数与化简:
+          - simplify: reference/functions/simplify.md
+          - expand: reference/functions/expand.md
+          - subst: reference/functions/subst.md
+          - eval: reference/functions/eval.md
+          - approx: reference/functions/approx.md
+      - 微积分:
+          - diff: reference/functions/diff.md
+          - limit: reference/functions/limit.md
+          - series: reference/functions/series.md
+      - 求和与连乘:
+          - sum: reference/functions/sum.md
+          - prod: reference/functions/prod.md
+      - 数论:
+          - gcd: reference/functions/gcd.md
+          - lcm: reference/functions/lcm.md
+      - 容器:
+          - length: reference/functions/length.md
+          - makelist: reference/functions/makelist.md
+          - dot: reference/functions/dot.md
+          - cross: reference/functions/cross.md
+          - transpose: reference/functions/transpose.md
+          - det: reference/functions/det.md
+          - unitV: reference/functions/unitv.md
+          - abs: reference/functions/abs.md
+      - 基础数学:
+          - sqrt: reference/functions/sqrt.md
+          - sin / cos / tan: reference/functions/trig.md
+          - exp / ln / log: reference/functions/exp-log.md
+      - 系统:
+          - help: reference/functions/help.md
+          - purge: reference/functions/purge.md
+  - 实现:
+      - 内核设计: design.md
+      - 性能实测: performance.md
+  - 其它:
+      - 已知限制: limits.md
+      - 构建: build.md
+      - 借物表: credits.md
+  - 返回 SGC: /sgc/
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+extra:
+  generator: false
