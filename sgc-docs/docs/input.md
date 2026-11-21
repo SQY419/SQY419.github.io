@@ -100,7 +100,7 @@ sin(xx+yy)          ✘ 被当成二元显函数 z=sin(xx+yy)
 含 `z` 就是三维隐函数（不等式）。SGC 不支持 `1<x<2` 这种写法，可用 `if(1<x,x)<2` 代替。
 
 !!! warning "marching squares 的局限"
-    SGC 用 marching squares，像 `(x-y)(x+y)^2=0`、`(x-1)^2=0` 这种包含切面的隐函数
+    SGC 用 [marching squares](internals/marching-squares.md)，像 `(x-y)(x+y)^2=0`、`(x-1)^2=0` 这种包含切面的隐函数
     可能画不准。
 
 ### 参数方程、极坐标

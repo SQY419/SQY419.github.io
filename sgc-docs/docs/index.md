@@ -43,7 +43,7 @@ SGC 始于 2022，在 Scratch 3 以及支持 Scratch 3 的平台上运行。它�
 - [主界面](interface.md) · [输入](input.md) · [输入对象操作](objects.md) · [坐标系](coords.md)
 - [计算引擎](engine.md) · [几何](geometry.md) · [文本](text.md) · [统计](stats.md)
 - [脚本](script/index.md)：概览 / 语法 / 列表与字符串 / 系统操作 / 图形库 / 动画与声音 / 完整示例
-- [设置](settings.md) · [多边形与动画](polygon.md) · [附录](appendix.md) · [内部实现](internals.md)
+- [设置](settings.md) · [多边形与动画](polygon.md) · [附录](appendix.md) · [内部实现](internals/index.md)
 - [反馈与致谢](credits.md)
 
 遇到问题，先看[常见问题](faq.md)；想反馈，见[反馈与致谢](credits.md)。

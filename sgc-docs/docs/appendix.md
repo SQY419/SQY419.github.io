@@ -46,7 +46,7 @@ xx+yy+zz-4xyz=0
 | $x\csc x+y\csc y=xy\csc(xy)$ |
 | $y=\dfrac{\ln(x-1)}{x-2}$ |
 
-SGC 的隐函数走区块加载与 marching squares，精度够时细节通常比 Desmos 更完整，
+SGC 的隐函数走区块加载与 [marching squares](internals/marching-squares.md)，精度够时细节通常比 Desmos 更完整，
 但切面型的隐函数仍可能丢失。
 
 ## 版本与获取

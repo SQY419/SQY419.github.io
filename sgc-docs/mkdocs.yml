@@ -70,7 +70,16 @@ nav:
       - 设置: settings.md
       - 多边形与动画: polygon.md
       - 附录: appendix.md
-      - 内部实现: internals.md
+  - 内部实现:
+      - 概览: internals/index.md
+      - 数据类型与误差: internals/floats.md
+      - 三角函数精度: internals/trig.md
+      - 数值导数: internals/derivative.md
+      - 作图与断点判断: internals/plotting.md
+      - Marching Squares: internals/marching-squares.md
+      - 数值积分: internals/integration.md
+      - 方程求根: internals/solver.md
+      - 特殊函数: internals/special-functions.md
   - 反馈与致谢: credits.md
   - 打开 SGC: /sgc/
 
