@@ -132,6 +132,5 @@
 .ui-note {
   font-size: 0.7rem;
   letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--md-default-fg-color--light);
 }

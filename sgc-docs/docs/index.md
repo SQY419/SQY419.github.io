@@ -10,8 +10,7 @@ hide:
 
 <h2>SGC 用户说明</h2>
 
-<p>SGC 是一个跑在 Scratch 里的数学软件：画函数、做几何、跑脚本、渲染公式。<br>
-本说明依据《稽何计算器用户说明》第 18 次修订整理。</p>
+<p>SGC 是一个跑在 Scratch 里的数学软件：画函数、几何、跑脚本、渲染公式。</p>
 </div>
 
 <div class="grid" markdown>
