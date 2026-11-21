@@ -26,7 +26,14 @@
 
 [data-md-color-scheme="default"] {
   --md-default-bg-color: #ffffff;
-  --md-typeset-a-color: #1f6feb;
+  /* 链接统一走 Scratch 黄系，避免蓝色与黄色混在一起 */
+  --md-typeset-a-color: #a15c00;
+  --md-typeset-a-color--hover: #7a4500;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-typeset-a-color: #ffc24d;
+  --md-typeset-a-color--hover: #ffd88a;
 }
 
 /* ── 页头 ───────────────────────────────────────────── */
@@ -35,11 +42,23 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-/* logo 是「∂ + 猫头」的横向组合，稍微放大一点更清楚 */
+/* logo 是「∂ + 猫头」的紧凑横向组合，无底色 */
+.md-header__button.md-logo {
+  padding: 0.2rem 0.2rem;
+}
 .md-header__button.md-logo img,
 .md-header__button.md-logo svg {
-  height: 2rem;
+  height: 2.1rem;
   width: auto;
+}
+
+/* 侧栏选中项也跟随黄色系，不要出现蓝色 */
+.md-nav__link--active,
+.md-nav__link:active {
+  color: var(--md-typeset-a-color);
+}
+.md-nav__item .md-nav__link--active:hover {
+  color: var(--md-typeset-a-color--hover, var(--md-typeset-a-color));
 }
 
 .md-header__title {

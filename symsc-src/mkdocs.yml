@@ -94,7 +94,6 @@ nav:
       - 构建: build.md
       - 借物表: credits.md
       - 写作指南: contributing/writing.md
-  - 返回 SGC: /sgc/
 
 markdown_extensions:
   - admonition
