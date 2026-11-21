@@ -29,13 +29,12 @@ SGC 始于 2022，在 Scratch 3 以及支持 Scratch 3 的平台上运行。它�
 
 !!! tip "速度"
     在 TurboWarp / HTML 环境下，运行速度与 Desmos、GeoGebra 接近；
-    参数与精度都可以自己调，必要时能画得比 Desmos 更细。
+    参数与精度都可以自己调，能画得比 Desmos 更好。
 
 ## 入口
 
 - 在线使用：[sqy419.axolotlpower.com/sgc](https://sqy419.axolotlpower.com/sgc/)
-- 下载与版本：[下载页](https://sqy419.axolotlpower.com/download/)
-- 旧版本归档：V4 / V3 / V2 / V1.0.5
+- 下载：[下载页](https://sqy419.axolotlpower.com/download/)
 
 ## 目录
 

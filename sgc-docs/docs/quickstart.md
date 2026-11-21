@@ -17,6 +17,12 @@ sin(x)
 
 按 `enter`（或虚拟键盘上的箭头）才会解析并绘制——**SGC 没有输入预览**，不按 enter 是不会出图的。
 
+<figure markdown>
+  ![输入 sin(x) 后按 enter，图形区出现曲线](assets/screenshots/ui-sin.png){ width="460" }
+  <figcaption>输入 sin(x) 后按 enter，图形区出现曲线</figcaption>
+</figure>
+
+
 ## 调参
 
 ```text

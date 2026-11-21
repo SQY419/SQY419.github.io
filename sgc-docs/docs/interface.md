@@ -10,6 +10,12 @@
 
 拖动输入区右侧的黄色分隔条可以改宽度；左下角的键盘图标打开虚拟键盘。
 
+<figure markdown>
+  ![主界面：最左是模式区，左侧输入区，右侧图形区](assets/screenshots/ui-main.png){ width="460" }
+  <figcaption>主界面：最左是模式区，左侧输入区，右侧图形区</figcaption>
+</figure>
+
+
 ## 菜单栏
 
 | 菜单项 | 作用 |
@@ -22,6 +28,12 @@
 | 关于 | 版本信息 |
 | 高级功能 | 动画模式、脚本终端 |
 | 素材集市 | 打开素材库 |
+
+<figure markdown>
+  ![菜单栏：文件、检测、清屏、切换模式、设置、关于、素材集市、高级功能](assets/screenshots/ui-menu.png){ width="460" }
+  <figcaption>菜单栏：文件、检测、清屏、切换模式、设置、关于、素材集市、高级功能</figcaption>
+</figure>
+
 
 设置 json 的结构如下（`SGCjson` 为 `v0.2`）：
 
@@ -54,6 +66,12 @@
 - `enter` 把内容写入输入区并绘制；错误的表达式也会被写入，空白内容不会。
 - Shift + 左右键：跳到当前表达式开头 / 结尾。
 
+<figure markdown>
+  ![虚拟键盘：123 数字与符号、f(x) 函数、abc 字母](assets/screenshots/ui-keyboard.png){ width="460" }
+  <figcaption>虚拟键盘：123 数字与符号、f(x) 函数、abc 字母</figcaption>
+</figure>
+
+
 !!! note "原版 Scratch"
     原版 Scratch 3 不支持 backspace，删除键用 `\` 代替，长按可快速删除。
 
@@ -61,3 +79,8 @@
 
 素材库分几何、函数、隐式、抽象、脚本等几类。脚本类素材需要运行脚本才能看到效果：
 点开示例（如「80E 正 257 边形（脚本演示作图步续）」）→ 确定 → 菜单 → 高级功能 → 脚本 → 运行。
+
+<figure markdown>
+  ![素材库](assets/screenshots/ui-assets.png){ width="460" }
+  <figcaption>素材库：几何、函数、隐式、抽象、脚本等分类</figcaption>
+</figure>

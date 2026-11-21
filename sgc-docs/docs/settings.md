@@ -2,6 +2,12 @@
 
 设置分 5 个板块。
 
+<figure markdown>
+  ![设置面板：全局 / 坐标系与网格 / 绘图 / 性能 / 实验](assets/screenshots/ui-settings.png){ width="460" }
+  <figcaption>设置面板：全局 / 坐标系与网格 / 绘图 / 性能 / 实验</figcaption>
+</figure>
+
+
 ## 全局
 
 - **字号**：最大 36。18 / 24 / 36 三种常用规格。

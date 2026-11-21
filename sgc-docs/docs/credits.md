@@ -4,16 +4,21 @@
 
 遇到问题请尽量附上这些信息，方便定位：
 
-- SGC 版本号（设置或关于页可查）；
-- 出问题的表达式原文，最好能直接复制；
-- 当时的精度设置（函数精度 / 隐式精度）；
+- SGC 版本号；
+- 出问题的表达式原文；
+- 当时的设置；
 - 一张截图；
 - 是否能稳定复现。
 
 反馈渠道：
 
-- SGC 首页：[sqy419.axolotlpower.com/sgc](https://sqy419.axolotlpower.com/sgc/)
 - 仓库：[SQY419/SQY419.github.io](https://github.com/SQY419/SQY419.github.io)
+
+<figure markdown>
+  ![关于页：版本号、致谢与版权信息](assets/screenshots/ui-about.png){ width="420" }
+  <figcaption>关于页：版本号、致谢与版权信息</figcaption>
+</figure>
+
 
 SGC v4 基于 Scratch 构造，受平台限制一定还有不少缺陷，遇到问题请直接和 SQY 反馈。
 
@@ -33,5 +38,4 @@ SGC v4 基于 Scratch 构造，受平台限制一定还有不少缺陷，遇到�
 
 ## 关于后续版本
 
-SGC v5 的 JavaScript 版本正在制作中。SGC 始于 2022，能在 Scratch 以及支持 Scratch 3
-的平台上运行；4.5 以上的版本可以直接在 SGC 内获取更新。
+SGC v5 的 JavaScript 版本正在制作中。
