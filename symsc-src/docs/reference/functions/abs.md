@@ -31,4 +31,4 @@ abs(1 + sqrt(2))
 
 ## 相关
 
-[`unitV`](unitv.md) · [`sqrt`](sqrt.md)
+[`unitV`](unitv.md)

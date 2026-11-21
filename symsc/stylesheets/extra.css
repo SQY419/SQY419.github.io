@@ -1,8 +1,27 @@
-/* 与 sqy419 主页保持一致的观感：纯白、无衬线、克制的圆角 */
+/* 与 sqy419 主页保持一致的观感：纯白、无衬线、克制的圆角
+   主题色使用 Scratch 黄 (#FFAB19)，页头文字用深色保证对比度 */
 :root {
   --md-text-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC",
     "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", Arial, sans-serif;
   --md-code-font: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --scratch-yellow: #ffab19;
+  --scratch-yellow-dark: #e09400;
+}
+
+/* ── 主题色：Scratch 黄 ─────────────────────────────── */
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color: #ffab19;
+  --md-primary-fg-color--light: #ffc24d;
+  --md-primary-fg-color--dark: #e09400;
+  --md-primary-bg-color: #14100a;
+  --md-primary-bg-color--light: rgba(20, 16, 10, 0.66);
+}
+
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color: #b26b00;
+  --md-accent-fg-color--transparent: rgba(178, 107, 0, 0.1);
+  --md-accent-bg-color: #ffffff;
+  --md-accent-bg-color--light: rgba(255, 255, 255, 0.7);
 }
 
 [data-md-color-scheme="default"] {
@@ -10,17 +29,44 @@
   --md-typeset-a-color: #1f6feb;
 }
 
+/* ── 页头 ───────────────────────────────────────────── */
 .md-header {
   box-shadow: none;
-  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
+/* logo 是「∂ + 猫头」的横向组合，稍微放大一点更清楚 */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 2rem;
+  width: auto;
+}
+
+.md-header__title {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* 黄底上的搜索框：用半透明白，避免糊成一片 */
+.md-search__form {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+.md-search__form:hover {
+  background-color: #ffffff;
+}
+
+/* ── 正文 ───────────────────────────────────────────── */
 .md-typeset h1,
 .md-typeset h2 {
   letter-spacing: -0.01em;
 }
 
-/* 首页的 hero 区域 */
+.md-typeset h2 {
+  border-bottom: 2px solid var(--scratch-yellow);
+  padding-bottom: 0.2rem;
+}
+
+/* 首页 hero */
 .hero {
   padding: 1.2rem 0 0.4rem;
 }
@@ -59,8 +105,8 @@
 }
 .grid a.card:hover {
   transform: translateY(-2px);
-  border-color: var(--md-default-fg-color--lighter);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border-color: var(--scratch-yellow);
+  box-shadow: 0 8px 24px rgba(255, 171, 25, 0.18);
 }
 .grid a.card strong {
   display: block;
@@ -76,7 +122,16 @@
   font-size: 0.72rem;
 }
 
-/* 顶部标题与主页一致，不加粗 */
-.md-header__title {
-  font-weight: 600;
+/* 提示框标题的左侧色条也统一成 Scratch 黄 */
+.md-typeset .admonition.note,
+.md-typeset details.note {
+  border-color: var(--scratch-yellow);
+}
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary {
+  background-color: rgba(255, 171, 25, 0.12);
+}
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before {
+  background-color: var(--scratch-yellow-dark);
 }

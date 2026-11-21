@@ -12,8 +12,8 @@ site_dir: ../symsc
 theme:
   name: material
   language: zh
-  logo: assets/cas-character.svg
-  favicon: assets/cas-character.svg
+  logo: assets/logo.svg
+  favicon: assets/scratch-cat-head.svg
   font: false
   features:
     - navigation.sections
@@ -28,15 +28,15 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: black
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: 切换到深色
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: black
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: 切换到浅色
