@@ -2252,9 +2252,8 @@
 <ul>
 <li>表达式在解析时就经过规范构造器，<code>0+x</code>、<code>1*x</code>、<code>x^1</code> 不会出现在树里。</li>
 <li>同类项按基的 <code>sig</code> 合并，系数用精确有理数相加，系数为 0 的项直接丢弃。</li>
-<li><code>sin(u)^2 + cos(u)^2</code> 有专门的 Pythagorean pass，参数 <code>sig</code> 相同才合并。</li>
 <li>规则引擎只在 <code>sig</code> 变化时继续下一轮，最多 8 轮。</li>
-<li><strong>不做分配律</strong>，<code>(x+1)*(x-1)</code> 保持乘积；要展开请用 <a href="../expand/"><code>expand</code></a>。</li>
+<li><strong>不做分配律</strong>，<code>(x+1)*(x-1)</code> 保持乘积；要展开用 <a href="../expand/"><code>expand</code></a>。</li>
 </ul>
 <h2 id="_3">相关<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><a href="../expand/"><code>expand</code></a> · <a href="../subst/"><code>subst</code></a> · <a href="../approx/"><code>approx</code></a></p>

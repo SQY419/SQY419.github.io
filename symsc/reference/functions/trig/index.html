@@ -2273,8 +2273,8 @@
 <h2 id="_2">行为细节<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
 <li>只对可精确表示的特殊角做根式化简，<code>sin(1)</code> 保持 <code>sin(1)</code>。</li>
-<li><code>sin(x+y)^2 + cos(y+x)^2</code> 会在化简时合成 <code>1</code>（Pythagorean pass）。</li>
 <li>反三角 <code>asin</code> / <code>acos</code> / <code>atan</code> 参与解析，但符号化简能力有限。</li>
+<li>化简会使用诱导公式等。</li>
 </ul>
 <h2 id="_3">求导<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>diff(sin(x^2))

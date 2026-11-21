@@ -4,13 +4,12 @@
 
 symSC 是一个 Scratch 3.0 工程，没有第三方扩展依赖。
 
-1. 从仓库取 `cas-fixed.sb3`（仓库里另附的可运行版本），或自己用 GoboScript 编译出 `cas.sb3`；
+1. 从仓库取 `cas.sb3`，或自行用 GoboScript 编译；
 2. 在 [TurboWarp](https://turbowarp.org/) 或 Scratch 3.0 里打开工程；
-3. 点绿旗，终端出现提示符后直接输入表达式。
+3. 点绿旗开始使用。
 
 !!! tip "推荐 TurboWarp"
-    原生 Scratch 的 warp 线程每次最多执行 500ms，TurboWarp 的 `nowarp` 积木没有这个限制。
-    `expand((x+1)^20)` 这类大计算在 TurboWarp 里更稳。
+    Turbowarp 的性能远超 Scratch 3.0，通常来说，Turbowarp 计算的速度会在原版 Scratch 的十倍以上。
 
 ## 第一条命令
 
@@ -37,8 +36,6 @@ simplify(2*x + 3*x - x)
 | --- | --- |
 | ++c++ | 清屏 |
 | ++h++ | 显示帮助 |
-| 拖动终端文本 | 滚动查看历史 |
-| — | 最多保留 5000 行 |
 
 `help()` 查看总览，`help(simplify)` 查看单个函数的签名与说明。
 

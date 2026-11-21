@@ -9,4 +9,4 @@
 ## 相关链接
 
 - 仓库：[SQY419/symSC](https://github.com/SQY419/symSC)
-- 旧版：[symSc](https://github.com/SQY419/Beta-Math/tree/main/symSC)（有数学排版输出）
+- 旧版：[symSc](https://github.com/SQY419/Beta-Math/tree/main/symSC)

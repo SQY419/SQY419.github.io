@@ -2234,16 +2234,16 @@
 <h1 id="series">series<a class="headerlink" href="#series" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>series(expr, x=a, n)
 </code></pre></div>
-<p>在展开点附近做渐进展开，保留 <code>n</code> 阶。</p>
+<p>在展开点<code>a</code>附近做展开，保留 <code>n</code> 阶。</p>
+<p>无穷原点使用渐进展开；有限点使用 Taylor 级数。</p>
 <h2 id="_1">示例<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>series(1/(e^(-x)+1), x=oo, 5)
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>&gt; -e^(-x) - e^(-3*x) - e^(-5*x) + e^(-2*x) + e^(-4*x) + 1
 </code></pre></div>
 <h2 id="_2">行为细节<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li>展开点写在第二个参数里，<code>x=oo</code> 表示无穷远点展开（多用于渐近分析）。</li>
+<li>展开点写在第二个参数里，<code>x=oo</code> 表示无穷远点展开。</li>
 <li>与 <a href="../limit/"><code>limit</code></a> 共用无穷远的 leading-term 机制。</li>
-<li><code>n</code> 是保留的阶数，阶数越高项数越多，也越慢。</li>
 </ul>
 <h2 id="_3">相关<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><a href="../limit/"><code>limit</code></a> · <a href="../expand/"><code>expand</code></a></p>

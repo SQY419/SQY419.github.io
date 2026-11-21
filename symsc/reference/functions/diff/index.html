@@ -2277,57 +2277,11 @@
 <a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>&gt; 2*x
 </code></pre></div>
 <h2 id="_2">求导规则<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>节点</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>数字 / 常量</td>
-<td><code>0</code></td>
-</tr>
-<tr>
-<td>变量</td>
-<td>匹配求导变量时为 <code>1</code>，否则 <code>0</code></td>
-</tr>
-<tr>
-<td><code>Add</code></td>
-<td>逐项相加</td>
-</tr>
-<tr>
-<td><code>Mul</code></td>
-<td>乘积法则</td>
-</tr>
-<tr>
-<td><code>Pow(base, n)</code></td>
-<td><code>n * base^(n-1) * base'</code></td>
-</tr>
-<tr>
-<td><code>PowE(base, exp)</code></td>
-<td>指数含变量时 <code>base^exp * (exp' * ln(base) + exp * base'/base)</code></td>
-</tr>
-<tr>
-<td><code>sin</code> / <code>cos</code> / <code>tan</code></td>
-<td><code>cos</code> / <code>-sin</code> / <code>1/cos^2</code>（链式法则）</td>
-</tr>
-<tr>
-<td><code>exp</code> / <code>ln</code> / <code>log</code></td>
-<td><code>exp</code> / <code>1/u</code> / <code>1/(u*ln(10))</code></td>
-</tr>
-<tr>
-<td><code>sqrt</code></td>
-<td><code>1/(2*sqrt(u))</code></td>
-</tr>
-</tbody>
-</table>
+<p>遵循数学规则，没啥说的。可查询自动微分法。</p>
 <h2 id="_3">行为细节<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
 <li>后序遍历，导数按节点 ID 缓存，共享子树不会重复计算。</li>
-<li><code>PowE</code> 有两种情况：指数是数字常量时按幂函数求导（例如 <code>x^2.5</code>），指数含变量时走 <code>base^exp</code> 公式（例如 <code>5^x</code>、<code>x^x</code>）。</li>
-<li>求导结果同样经过规范构造器，会自动合并同类项。</li>
+<li>求导结果同样经过规范构造器，自动简化。</li>
 </ul>
 <h2 id="_4">相关<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p><a href="../limit/"><code>limit</code></a> · <a href="../simplify/"><code>simplify</code></a></p>

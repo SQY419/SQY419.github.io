@@ -2244,10 +2244,14 @@
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>abs(abs(x))
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>&gt; abs(x)
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>abs(1 + sqrt(2))
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>&gt; 1 + sqrt(2)
 </code></pre></div>
 <h2 id="_2">行为细节<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li>对符号表达式保留 <code>abs(...)</code>，并会化简嵌套：<code>abs(abs(x)) -&gt; abs(x)</code>。</li>
+<li>对符号表达式保留 <code>abs(...)</code>。</li>
+<li>利用简单的符号能力判断里面的东西的正负。</li>
 <li>对容器逐元素映射时遵循「一元标量函数」规则。</li>
 <li>求导时 <code>abs</code> 按链式法则处理，分段点不做特殊讨论。</li>
 </ul>
