@@ -3,6 +3,7 @@
 - [GoboScript](https://github.com/aspizu/goboscript) —— 把 `.gs` 编译成 Scratch 3.0 工程
 - **Source Code Pro**，Adobe，SIL Open Font License 1.1（许可全文见仓库 `FONT-LICENSE.txt`）
 - [TurboWarp](https://turbowarp.org/) / Scratch 3.0 runtime
+- **Scratch cat**，Scratch Foundation / MIT Media Lab，CC BY-SA 2.0（logo 里的猫头取自 Scratch 官方 costume 资源）
 
 字体以 SIL OFL 1.1 授权，本仓库整体也采用该许可。
 
