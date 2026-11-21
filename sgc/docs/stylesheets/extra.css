@@ -1,27 +1,63 @@
-/* SGC 文档：白底、无衬线、细边框，和 sqy419 主页保持一致 */
+/* SGC 文档：白底 + Scratch 黄，字体与主页保持一致 */
 :root {
   --md-text-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC",
     "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", Arial, sans-serif;
   --md-code-font: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  --sgc-accent: #e8a33d;
+  --sgc-yellow: #ffab19;
+  --sgc-yellow-dark: #e09400;
+}
+
+/* ── 主题色：Scratch 黄 ─────────────────────────────── */
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color: #ffab19;
+  --md-primary-fg-color--light: #ffc24d;
+  --md-primary-fg-color--dark: #e09400;
+  --md-primary-bg-color: #14100a;
+  --md-primary-bg-color--light: rgba(20, 16, 10, 0.66);
+}
+
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color: #b26b00;
+  --md-accent-fg-color--transparent: rgba(178, 107, 0, 0.1);
+  --md-accent-bg-color: #ffffff;
+  --md-accent-bg-color--light: rgba(255, 255, 255, 0.7);
 }
 
 [data-md-color-scheme="default"] {
   --md-default-bg-color: #ffffff;
-  --md-typeset-a-color: #b26a00;
+  --md-typeset-a-color: #a15c00;
 }
 
+[data-md-color-scheme="slate"] {
+  --md-typeset-a-color: #ffc24d;
+}
+
+/* ── 页头 ───────────────────────────────────────────── */
 .md-header {
   box-shadow: none;
-  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 .md-header__title {
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.01em;
 }
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 2rem;
+  width: auto;
+}
 
+/* 黄底上的搜索框用半透明白 */
+.md-search__form {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+.md-search__form:hover {
+  background-color: #ffffff;
+}
+
+/* ── 正文 ───────────────────────────────────────────── */
 .md-typeset h2 {
-  border-bottom: 2px solid var(--md-default-fg-color--lightest);
+  border-bottom: 2px solid var(--sgc-yellow);
   padding-bottom: 0.2rem;
 }
 
@@ -29,7 +65,27 @@
   font-size: 0.72rem;
 }
 
-/* 首页 hero */
+/* 侧栏选中项跟随黄色系 */
+.md-nav__link--active,
+.md-nav__link:active {
+  color: var(--md-typeset-a-color);
+}
+
+/* note 提示框统一黄色 */
+.md-typeset .admonition.note,
+.md-typeset details.note {
+  border-color: var(--sgc-yellow);
+}
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary {
+  background-color: rgba(255, 171, 25, 0.14);
+}
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before {
+  background-color: var(--sgc-yellow-dark);
+}
+
+/* ── 首页 ───────────────────────────────────────────── */
 .hero {
   padding: 1rem 0 0.2rem;
 }
@@ -43,7 +99,6 @@
   color: var(--md-default-fg-color--light);
 }
 
-/* 卡片 */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -61,8 +116,8 @@
 }
 .grid a.card:hover {
   transform: translateY(-2px);
-  border-color: var(--sgc-accent);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+  border-color: var(--sgc-yellow);
+  box-shadow: 0 8px 22px rgba(255, 171, 25, 0.18);
 }
 .grid a.card strong {
   display: block;
@@ -74,8 +129,9 @@
   color: var(--md-default-fg-color--light);
 }
 
-/* 键盘/界面截图说明用的小字 */
 .ui-note {
   font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--md-default-fg-color--light);
 }

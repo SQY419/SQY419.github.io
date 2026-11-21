@@ -27,15 +27,15 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: black
-      accent: deep orange
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: 切换到深色
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: black
-      accent: deep orange
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: 切换到浅色
@@ -46,6 +46,7 @@ extra_css:
 nav:
   - 首页: index.md
   - 快速开始: quickstart.md
+  - 约定: conventions.md
   - 常见问题: faq.md
   - 基础:
       - 主界面: interface.md
@@ -70,7 +71,7 @@ nav:
       - 多边形与动画: polygon.md
       - 附录: appendix.md
       - 内部实现: internals.md
-  - 约定与反馈: conventions.md
+  - 反馈与致谢: credits.md
   - 打开 SGC: /sgc/
 
 markdown_extensions:

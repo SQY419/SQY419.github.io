@@ -39,26 +39,13 @@ SGC 始于 2022，在 Scratch 3 以及支持 Scratch 3 的平台上运行。它�
 
 ## 目录
 
-1. [主界面](interface.md)
-2. [输入](input.md)
-3. [输入对象操作](objects.md)
-4. [坐标系](coords.md)
-5. [计算引擎](engine.md)
-6. [几何](geometry.md)
-7. [文本](text.md)
-[脚本](script/index.md)
-9. [统计](stats.md)
-10. [设置](settings.md)
-11. [多边形、逐帧动画与批注](polygon.md)
-12. [附录](appendix.md)
-13. [关于内部实现的一些说明](internals.md)
+- [约定](conventions.md)
+- [快速开始](quickstart.md)
+- [常见问题](faq.md)
+- [主界面](interface.md) · [输入](input.md) · [输入对象操作](objects.md) · [坐标系](coords.md)
+- [计算引擎](engine.md) · [几何](geometry.md) · [文本](text.md) · [统计](stats.md)
+- [脚本](script/index.md)：概览 / 语法 / 列表与字符串 / 系统操作 / 图形库 / 动画与声音 / 完整示例
+- [设置](settings.md) · [多边形与动画](polygon.md) · [附录](appendix.md) · [内部实现](internals.md)
+- [反馈与致谢](credits.md)
 
-## 致谢
-
-- turbowarp.org、GitHub Pages、gtd232（美西螈力量）
-- Obdopqo：四万字超大画笔字库与示例字库、多边形填充与点击判断
-- Alpha Math、Origin 图形计算器：同类作品，交流互鉴
-- “6”的科学计算器：公式渲染器、幂的计算、傅里叶变换音乐生成器
-- 其他为 SGC 做出贡献的开发者
-
-使用了 CMU Sans Serif、CMU Serif、JetBrains Mono 等字体，以及 -Rex- 的 SFE 字符注入器。
+遇到问题，先看[常见问题](faq.md)；想反馈，见[反馈与致谢](credits.md)。
