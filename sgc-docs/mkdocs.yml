@@ -48,21 +48,28 @@ nav:
   - 快速开始: quickstart.md
   - 常见问题: faq.md
   - 基础:
-      - 1 主界面: interface.md
-      - 2 输入: input.md
-      - 3 输入对象操作: objects.md
-      - 4 坐标系: coords.md
+      - 主界面: interface.md
+      - 输入: input.md
+      - 输入对象操作: objects.md
+      - 坐标系: coords.md
   - 计算:
-      - 5 计算引擎: engine.md
-      - 6 几何: geometry.md
-      - 7 文本: text.md
-      - 8 脚本: script.md
-      - 9 统计: stats.md
+      - 计算引擎: engine.md
+      - 几何: geometry.md
+      - 文本: text.md
+      - 统计: stats.md
+  - 脚本:
+      - 概览: script/index.md
+      - 语法与流程: script/syntax.md
+      - 列表与字符串: script/lists-strings.md
+      - 系统操作: script/system.md
+      - 图形库: script/graphics.md
+      - 动画与声音: script/animation-sound.md
+      - 完整示例: script/examples.md
   - 其它:
-      - 10 设置: settings.md
-      - 11 多边形与动画: polygon.md
-      - 12 附录: appendix.md
-      - 13 内部实现: internals.md
+      - 设置: settings.md
+      - 多边形与动画: polygon.md
+      - 附录: appendix.md
+      - 内部实现: internals.md
   - 约定与反馈: conventions.md
   - 打开 SGC: /sgc/
 

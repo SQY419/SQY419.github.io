@@ -17,7 +17,7 @@ hide:
 <div class="grid" markdown>
 [**快速开始**<span>五分钟画出第一条曲线</span>](quickstart.md){ .card }
 [**计算引擎**<span>运算符、函数表、高级运算符</span>](engine.md){ .card }
-[**脚本**<span>SGC Script II 与图形库</span>](script.md){ .card }
+[**脚本**<span>SGC Script II 与图形库</span>](script/index.md){ .card }
 [**常见问题**<span>画不出图？先看这里</span>](faq.md){ .card }
 </div>
 
@@ -46,7 +46,7 @@ SGC 始于 2022，在 Scratch 3 以及支持 Scratch 3 的平台上运行。它�
 5. [计算引擎](engine.md)
 6. [几何](geometry.md)
 7. [文本](text.md)
-8. [脚本](script.md)
+[脚本](script/index.md)
 9. [统计](stats.md)
 10. [设置](settings.md)
 11. [多边形、逐帧动画与批注](polygon.md)
