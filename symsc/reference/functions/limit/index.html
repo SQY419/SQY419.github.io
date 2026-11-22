@@ -1154,17 +1154,6 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        嵌套
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         相关
       
     </span>
@@ -2724,17 +2713,6 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        嵌套
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         相关
       
     </span>
@@ -2783,20 +2761,16 @@
 <ul>
 <li><strong>有限点</strong>：洛必达 / 级数；分母趋于 0 而分子非 0 时，用逐次求导确定零点阶数。</li>
 <li><strong>无穷远</strong>：Gruntz 风格的 leading-term 比较。</li>
-<li><strong><code>1^∞</code></strong>：先求 <code>lim f = 1</code>，再用 <code>u = f-1</code> 化到 <code>exp(lim g*u)</code>。</li>
-<li><strong><code>0·∞</code> / 三角</strong>：<code>atan</code> 在 <code>+∞</code> 重写为 <code>pi/2 - 1/x</code>；有限点的 <code>tan</code> 拆成
-  <code>sin/cos</code>，交给已有的 0/0 路径。</li>
+<li><strong><code>1^∞</code></strong>：先求 <span class="arithmatex">\(\lim f = 1\)</span>，再用 <span class="arithmatex">\(u = f-1\)</span> 化到 <span class="arithmatex">\(\exp(\lim g\cdot u)\)</span>。</li>
+<li><strong><code>0·∞</code> / 三角</strong>：<code>atan</code> 在 <code>+∞</code> 重写为 <code>pi/2 - 1/x</code>；有限点的 <code>tan</code> 拆成 <code>sin/cos</code>，交给已有的 0/0 路径。</li>
 <li><strong>分式</strong>：极限前先 <code>expand</code> / 合并分式，<code>1/ln(1+x) - 1/x</code> 合并后用洛必达。</li>
 </ul>
 <h2 id="_3">输出与报错<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
-<li>结果用 <code>e^L</code> 形式输出，避免 <code>exp(2)</code> 与 <code>e^2</code> 不一致。</li>
-<li>偶数阶极点返回 <code>±oo</code>；奇数阶报「两侧不同」。</li>
-<li>完整 Gruntz mrv（<code>exp</code> / <code>log</code> 混合）尚未实现。</li>
+<li>偶数阶极点返回 <code>±oo</code>；奇数阶报两侧不同。</li>
+<li>完整 Gruntz mrv 尚未实现。</li>
 </ul>
-<h2 id="_4">嵌套<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p><code>limit</code> 可以出现在其它命令里，例如 <code>simplify(limit(1/x, x, oo))</code>。</p>
-<h2 id="_5">相关<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h2 id="_4">相关<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p><a href="../series/"><code>series</code></a> · <a href="../diff/"><code>diff</code></a></p>
 
 
