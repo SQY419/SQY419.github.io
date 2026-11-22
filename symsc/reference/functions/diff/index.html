@@ -2775,7 +2775,7 @@
 <ul>
 <li>后序遍历，导数按节点 ID 缓存，共享子树不会重复计算。</li>
 <li>高阶导数最多 <strong>1024 阶</strong>；<code>n = 0</code> 返回原式。</li>
-<li>对 <code>P(x)*e^x</code> 的高阶导用 Leibniz 公式 <code>e^x * Σ C(n,k) P^(k)(x)</code>，
+<li>对 $$ P(x)*e^x $$ 的高阶导用 Leibniz 公式 $$ e^x \sum \binom{n,k} P^{(k)}(x) $$，
   避免逐步求导耗尽节点表，例如下面式子：
   <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>diff(x^2*e^x, x, 256) = (x^2 + 512*x + 65280)*e^x
 </code></pre></div></li>
