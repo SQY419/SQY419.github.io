@@ -41,6 +41,9 @@ theme:
         icon: material/weather-sunny
         name: 切换到浅色
 
+hooks:
+  - hooks/auto_nav.py
+
 extra_css:
   - stylesheets/extra.css
 

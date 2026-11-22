@@ -16,6 +16,21 @@ https://sqy.axolotlpower.com/symsc/
 | `docs/stylesheets/extra.css` | 字体、卡片、表格样式 |
 | `../symsc/` | 构建产物，**不要手改**，随源码一起提交 |
 
+## 自动构建（推荐）
+
+在 GitHub 网页上改完 `symsc-src/**` 里的任何文件（包括新建 `.md`）并提交到 `main`，
+`.github/workflows/docs.yml` 会自动：
+
+1. `pip install mkdocs-material==9.8.2`
+2. `mkdocs build -f symsc-src/mkdocs.yml --strict`（输出到 `symsc/`）
+3. 有变化就提交 `docs: 自动构建 <时间>` 回到 `main`，GitHub Pages 随即重建
+
+所以**不需要在本地装环境，也不用改 `symsc/`**。
+
+新建的 Markdown 即使没写进 `nav` 也会被 `hooks/auto_nav.py` 收到「未归类」下，
+不会因为 `--strict` 的「页面不在导航中」警告而构建失败；想放置到指定位置，
+还是建议在 `mkdocs.yml` 的 `nav:` 里加一行。
+
 ## 本地预览 / 构建
 
 ```bash
