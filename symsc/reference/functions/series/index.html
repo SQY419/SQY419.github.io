@@ -2718,7 +2718,7 @@
 <h1 id="series">series<a class="headerlink" href="#series" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>series(expr, x=a, n)
 </code></pre></div>
-<p>在展开点 <code>a</code> 附近展开，保留 <code>n</code> 阶（<code>0..64</code>）。</p>
+<p>在展开点 <code>a</code> 附近展开，保留 <code>n</code> 阶，最高64阶。</p>
 <h2 id="_1">示例<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>series(1/(e^(-x)+1), x=oo, 5)
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>&gt; -e^(-x) - e^(-3*x) - e^(-5*x) + e^(-2*x) + e^(-4*x) + 1
@@ -2727,12 +2727,8 @@
 </code></pre></div>
 <h2 id="_2">行为细节<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>有限点</strong>：Taylor 级数；阶乘用十进制字符串计算并在系数里约分，
-  20 阶以上的大分母可以精确显示。</li>
+<li><strong>有限点</strong>：Taylor 级数。</li>
 <li><strong>无穷远</strong>：渐进展开，分别处理 <code>e^(-x)</code> 型重写和 <code>x → 1/t</code> 代换。</li>
-<li>高层算法在 <code>lang/series.sl</code>（DSL），AST 重写留在 <code>lib/series.gs</code>。</li>
-<li><code>e^0</code> 会被直接消成 <code>1</code>，结果里不会出现 <code>e^0</code> 因子。</li>
-<li>阶数超出范围会提示 <code>0..64</code>。</li>
 </ul>
 <h2 id="_3">相关<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><a href="../limit/"><code>limit</code></a> · <a href="../diff/"><code>diff</code></a> · <a href="../expand/"><code>expand</code></a></p>
