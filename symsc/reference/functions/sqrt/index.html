@@ -2718,8 +2718,8 @@
 <h1 id="sqrt">sqrt<a class="headerlink" href="#sqrt" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sqrt(x)
 </code></pre></div>
-<p>精确平方根：能开出有理数就开出，否则提取平方因子写成 <code>系数 * sqrt(剩余)</code>；
-遇到 <code>sqrt(A + B*sqrt(D))</code> 会尝试去嵌套。</p>
+<p>平方根。</p>
+<p>能开出有理数就开出，否则提取平方因子写成 <code>系数 * sqrt(剩余)</code>；遇到 <code>sqrt(A + B*sqrt(D))</code> 会尝试去嵌套。</p>
 <h2 id="_1">示例<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sqrt(8)
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>&gt; 2*sqrt(2)
@@ -2739,7 +2739,7 @@
 <a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>sqrt(x)^4
 <a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>&gt; x^2
 </code></pre></div>
-<p>去嵌套（规则 8）：</p>
+<p>去嵌套：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sqrt(4-2*sqrt(3)) -&gt; sqrt(3) - 1
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sqrt(2-sqrt(3))   -&gt; -1/2*sqrt(2) + 1/2*sqrt(6)
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>sqrt(7+4*sqrt(3)) -&gt; sqrt(3) + 2
@@ -2749,9 +2749,8 @@
 <ul>
 <li>分子、分母分别提取最大平方因子：<code>sqrt(n/d) = (k/m) * sqrt((n/k²)/(d/m²))</code>。</li>
 <li>数字超过 <code>MAX_SQRT = 1,000,000</code> 时跳过化简，原样保留 <code>sqrt(...)</code>。</li>
-<li>去嵌套：从 <code>Add</code> 拆出 <code>A</code> 与 <code>B*sqrt(D)</code>，要求 <code>A² - B²D</code> 是非负完全平方，
-  再构造 <code>sqrt(u) ± sqrt(v)</code>；<code>B&lt;0</code> 时交换两项保证取正根。</li>
-<li><code>sqrt(u)^2 → u</code> 由规则引擎处理，因此 <code>sqrt(8)*sqrt(2) → 4</code>。</li>
+<li>去嵌套：拆出 <code>A</code> 与 <code>B*sqrt(D)</code>，要求 <code>A² - B²D</code> 是非负完全平方，
+  再构造 <code>sqrt(u) ± sqrt(v)</code>；<code>B&lt;0</code> 时交换两项保证取正根，只支持拆这一种嵌套。</li>
 <li>对容器逐元素映射：<code>sqrt([1,4,9]) -&gt; [1, 2, 3]</code>。</li>
 </ul>
 <h2 id="_3">相关<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
