@@ -2718,8 +2718,8 @@
 <h1 id="isprime">isprime<a class="headerlink" href="#isprime" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>isprime(n)
 </code></pre></div>
-<p>判断素性。算法在 <code>lang/number.sl</code>：小素数试除 + Miller-Rabin（2/3/5/7 等基），
-并用 Pollard-Rho 做复合性见证。</p>
+<p>判断素性。</p>
+<p>小素数试除 + Miller-Rabin（2/3/5/7 等基），并用 Pollard-Rho 做复合性见证。</p>
 <h2 id="_1">示例<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>isprime(97)
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>&gt; True
@@ -2729,7 +2729,7 @@
 </code></pre></div>
 <h2 id="_2">行为细节<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li>操作数限制 <strong>15 位以内</strong>，保证 Scratch VM 的响应速度。</li>
+<li>操作数限制 <strong>15 位以内</strong>。</li>
 <li>负数 / 非整数报错。</li>
 <li>只有 <code>True</code> / <code>False</code> 两种返回，不做符号化。</li>
 </ul>
