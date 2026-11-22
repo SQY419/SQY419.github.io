@@ -57,17 +57,26 @@ nav:
       - 代数与化简:
           - simplify: reference/functions/simplify.md
           - expand: reference/functions/expand.md
+          - factor: reference/functions/factor.md
           - subst: reference/functions/subst.md
           - eval: reference/functions/eval.md
           - approx: reference/functions/approx.md
+      - 方程与方程组:
+          - solve: reference/functions/solve.md
+          - lsolve: reference/functions/lsolve.md
       - 微积分:
           - diff: reference/functions/diff.md
+          - integrate: reference/functions/integrate.md
           - limit: reference/functions/limit.md
           - series: reference/functions/series.md
       - 求和与连乘:
           - sum: reference/functions/sum.md
           - prod: reference/functions/prod.md
       - 数论:
+          - isprime: reference/functions/isprime.md
+          - ifactor: reference/functions/ifactor.md
+          - perm / comb: reference/functions/perm-comb.md
+          - powmod: reference/functions/powmod.md
           - gcd: reference/functions/gcd.md
           - lcm: reference/functions/lcm.md
       - 容器:
@@ -83,11 +92,18 @@ nav:
           - sqrt: reference/functions/sqrt.md
           - sin / cos / tan: reference/functions/trig.md
           - exp / ln / log: reference/functions/exp-log.md
+          - mod / %: reference/functions/mod.md
       - 系统:
           - help: reference/functions/help.md
           - purge: reference/functions/purge.md
+          - hold: reference/functions/hold.md
   - 实现:
       - 内核设计: design.md
+      - 求解与因式分解: design/solve-factor.md
+      - 微积分: design/calculus.md
+      - 求和与级数: design/sum-series.md
+      - 词法与数值细节: design/lexing-numbers.md
+      - 运行时与测试: design/runtime.md
       - 性能实测: performance.md
   - 其它:
       - 已知限制: limits.md

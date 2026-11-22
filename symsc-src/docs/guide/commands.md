@@ -21,17 +21,57 @@
 ## 函数式命令
 
 ```text
-simplify(expr)          expand(expr)
-diff(expr[, var])       subst(expr, var=expr)
-eval(expr, var=value)   approx(expr)
-gcd(a, b)               lcm(a, b)
-series(expr, x=a, n)    limit(expr, x, a)
+simplify(expr)              expand(expr)          factor(expr)
+solve(eq, var)              solve({eqs}, {vars})
+diff(expr[, var[, n]])      integrate(expr[, var])
+subst(expr, var=expr)       eval(expr, var=value)  approx(expr)
+limit(expr, x, a)           series(expr, x=a, n)
+sum(expr, var, a, b)        prod(expr, var, a, b)
+gcd(a, b)                   lcm(a, b)
+lsolve(augmented_matrix)
+isprime(n)                  ifactor(n)
+perm(n, k)                  comb(n, k)              powmod(a, b, m)
+mod(a, b)                   hold(expr)
 ```
+
+命令可以嵌套，内层先求值。
 
 每个命令的详细说明见 [函数参考](../reference/functions/index.md)。
 
 !!! tip "`limit` 的无穷远"
     `limit(expr, x, a)` 里 `a` 可以是 `oo` / `infinity`，此时走渐进展开式比较。
+
+## 隐式乘法
+
+两个 token 挨着写会自动补乘号：
+
+```text
+3x            -> 3*x
+2pi           -> 2*pi
+2(x+1)        -> 2*(x + 1)
+(2+x)(3+x)    -> (x + 2)*(x + 3)
+sin(x)cos(x)  -> sin(x)*cos(x)
+```
+
+`x(y)` 仍按函数调用解析，不会补乘号。
+
+## `%` 与 `mod`
+
+`%` 的优先级和 `*`、`/` 相同，`mod(a,b)` 等价：
+
+```text
+10%3            -> 1
+mod(10,3)       -> 1
+10%3+1          -> 2
+mod(-10,3)      -> 2
+```
+
+符号情形也会化简：`x%x -> 0`。
+
+## 三角倒数
+
+`csc` / `sec` / `cot` 在解析时直接重写成 `1/sin`、`1/cos`、`cos/sin`，
+因此求导、近似、打印都能直接用。
 
 ## 化简是默认行为
 
