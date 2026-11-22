@@ -4,8 +4,9 @@
 isprime(n)
 ```
 
-判断素性。算法在 `lang/number.sl`：小素数试除 + Miller-Rabin（2/3/5/7 等基），
-并用 Pollard-Rho 做复合性见证。
+判断素性。
+
+小素数试除 + Miller-Rabin（2/3/5/7 等基），并用 Pollard-Rho 做复合性见证。
 
 ## 示例
 
@@ -19,7 +20,7 @@ isprime(100)
 
 ## 行为细节
 
-- 操作数限制 **15 位以内**，保证 Scratch VM 的响应速度。
+- 操作数限制 **15 位以内**。
 - 负数 / 非整数报错。
 - 只有 `True` / `False` 两种返回，不做符号化。
 
