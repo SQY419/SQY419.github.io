@@ -32,20 +32,7 @@ sin([0,pi/2])
 ## 行为细节
 
 - 只对可精确表示的特殊角做根式化简，`sin(1)` 保持 `sin(1)`。
-- **整数倍 π 的 sin / tan 精确为 0**（`sin(pi)`、`sin(3*pi)`、`tan(n*pi)`）。
-- `csc` / `sec` / `cot` 在解析时就重写成 `1/sin`、`1/cos`、`cos/sin`，
-  不新增 AST 类型，因此 `diff`、`approx`、打印器都能复用。
-- `sin(x+y)^2 + cos(y+x)^2` 会在化简时合成 `1`。
 - 反三角 `asin` / `acos` / `atan` 参与解析，符号化简能力有限。
-
-## 求导
-
-```text
-diff(sin(x^2))
-> 2*cos(x^2)*x
-```
-
-`sin' = cos`，`cos' = -sin`，`tan' = 1/cos^2`。
 
 ## 相关
 
