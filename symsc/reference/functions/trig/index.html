@@ -1951,17 +1951,6 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        求导
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         相关
       
     </span>
@@ -2702,17 +2691,6 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        求导
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         相关
       
     </span>
@@ -2761,18 +2739,9 @@
 <h2 id="_2">行为细节<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
 <li>只对可精确表示的特殊角做根式化简，<code>sin(1)</code> 保持 <code>sin(1)</code>。</li>
-<li><strong>整数倍 π 的 sin / tan 精确为 0</strong>（<code>sin(pi)</code>、<code>sin(3*pi)</code>、<code>tan(n*pi)</code>）。</li>
-<li><code>csc</code> / <code>sec</code> / <code>cot</code> 在解析时就重写成 <code>1/sin</code>、<code>1/cos</code>、<code>cos/sin</code>，
-  不新增 AST 类型，因此 <code>diff</code>、<code>approx</code>、打印器都能复用。</li>
-<li><code>sin(x+y)^2 + cos(y+x)^2</code> 会在化简时合成 <code>1</code>。</li>
 <li>反三角 <code>asin</code> / <code>acos</code> / <code>atan</code> 参与解析，符号化简能力有限。</li>
 </ul>
-<h2 id="_3">求导<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>diff(sin(x^2))
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>&gt; 2*cos(x^2)*x
-</code></pre></div>
-<p><code>sin' = cos</code>，<code>cos' = -sin</code>，<code>tan' = 1/cos^2</code>。</p>
-<h2 id="_4">相关<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="_3">相关<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><a href="../exp-log/"><code>exp / ln / log</code></a> · <a href="../simplify/"><code>simplify</code></a> · <a href="../limit/"><code>limit</code></a></p>
 
 
