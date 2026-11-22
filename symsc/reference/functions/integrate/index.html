@@ -2740,7 +2740,7 @@
 <h1 id="integrate">integrate<a class="headerlink" href="#integrate" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>integrate(expr[, var])
 </code></pre></div>
-<p>不定积分，省略变量时对 <code>x</code> 积分。算法在 <code>lang/integrate.sl</code>，原生层只提供线性分解与函数构造。</p>
+<p>不定积分，省略变量时对 <code>x</code> 积分。</p>
 <h2 id="_1">示例<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>integrate(x^2, x)
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>&gt; 1/3*x^3
@@ -2768,14 +2768,13 @@
 </code></pre></div>
 <h2 id="_2">覆盖范围<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>线性性</strong>：<code>∫(f+g) = ∫f + ∫g</code>，常数倍提出。</li>
-<li><strong>幂函数</strong>：<code>x^n → x^(n+1)/(n+1)</code>，<code>n = -1</code> 时为 <code>ln(abs(x))</code>；
-  分数指数与 <code>x*sqrt(x)</code>、<code>sqrt(x)/x</code> 这类单项式会先统一成 <code>x^(pn/pd)</code>。</li>
-<li><strong>符号指数</strong>：指数不含积分变量时也可积，<code>integrate(x^a,x)</code>。</li>
-<li><strong>常数底指数</strong>：<code>a^(b*x+c) → a^(b*x+c) / (b*ln(a))</code>。</li>
-<li><strong>线性换元</strong>：<code>u = a*x+b</code> 统一除以 <code>a</code>，覆盖 <code>(a*x+b)^n</code>、<code>sin/cos/tan/exp/ln</code>、<code>sqrt</code>。</li>
-<li><strong>基本表</strong>：<code>sin</code>、<code>cos</code>、<code>tan</code>、<code>exp</code>、<code>ln</code>、<code>1/(1+x^2) → atan(x)</code>。</li>
-<li><strong>对数换元</strong>：<code>∫ g'(x)·ln(g(x)) dx = g·ln g - g</code>。</li>
+<li><strong>线性性</strong>：<span class="arithmatex">\(\int(f+g) = \int f + \int g\)</span>，常数倍提出。</li>
+<li><strong>幂函数</strong>：<span class="arithmatex">\(x^n → \frac{x^{n+1}}{n+1}\)</span>，<span class="arithmatex">\(n = -1\)</span> 时为 <span class="arithmatex">\(\ln(\left| x \right|)\)</span>；
+  分数指数与 <code>x*sqrt(x)</code>、<code>sqrt(x)/x</code> 这类单项式会先统一成 <span class="arithmatex">\(x^{\frac{pn}{pd}}\)</span>。</li>
+<li><strong>指数函数</strong>：<code>integrate(x^a,x)</code>等。</li>
+<li><strong>线性换元</strong></li>
+<li><strong>基本表</strong></li>
+<li><strong>对数换元</strong>：$\int g'(x)\cdot \ln(g(x)) dx = g\cdot \ln g - g`。</li>
 <li><strong>有理函数部分分式</strong>：假分式先做长除法，分母用 <code>factor</code> 分解，
   系数用高斯-约当消元求，逐项积分（一次因子给对数/幂，二次因子给反正切或对数比值）。</li>
 <li><strong>多项式乘积</strong>：先 <code>expand</code> 再逐项积分。</li>
@@ -2783,8 +2782,8 @@
 <h2 id="_3">暂不支持<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
 <li>定积分</li>
-<li>分部积分（通用）</li>
-<li><code>x^x</code> 一类无初等原函数的表达式</li>
+<li>广义分部积分</li>
+<li>无初等原函数的表达式</li>
 <li>更一般的三角恒等变形与根式换元</li>
 </ul>
 <p>积不出来时不会报错，而是把原命令文本返回。</p>
