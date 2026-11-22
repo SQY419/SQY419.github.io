@@ -1251,17 +1251,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        三条加速路径
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         行为细节
       
     </span>
@@ -1270,7 +1259,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         相关
@@ -2691,17 +2680,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        三条加速路径
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         行为细节
       
     </span>
@@ -2710,7 +2688,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         相关
@@ -2756,28 +2734,19 @@
 <a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>sum(2^x, x, 0, n)
 <a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
 <a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>sum(x*2^x, x, 0, n)
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>&gt; -(n+1)2^(n+1)+n*2^(n+2)+2
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>&gt; -(n+1)*2^(n+1)+n*2^(n+2)+2
 </code></pre></div>
-<h2 id="_2">三条加速路径<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>符号闭式</strong>：通项是多项式时用 Faulhaber / Bernoulli 公式，
-   <code>sum(x^2,x,1,100000)</code> 不再逐项算。数值上下界走原生大整数路径，
-   <code>100000^6</code> 这类中间量不会溢出。</li>
-<li><strong>几何级数</strong>：<code>c*r^x</code> 项用 <code>c*(r^(e+1)-r^b)/(r-1)</code>；
-   <code>P(x)*r^x</code>（<code>deg P ≤ 2</code>）有显式公式。</li>
-<li><strong>快速求值</strong>：有理函数通项直接按整数 <code>k</code> 精确求值，跳过 <code>subst</code> / 规则化简；
-   <code>sum(x, x, b, e)</code> 走等差数列 <code>(b+e)(e-b+1)/2</code>，O(1)。</li>
-</ol>
 <p>有理数求和用<strong>分母 LCM</strong> 合并，避免分母乘积膨胀；约分放到最后。</p>
-<h2 id="_3">行为细节<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_2">行为细节<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li>区间上下界必须是整数（或纯符号）；非多项式通项在符号上下界下报
-  「符号求和只支持多项式」。</li>
-<li>数值上下界会按大小交换，保持「10 到 0 也求和 1..10」的语义。</li>
+<li>支持<strong>符号闭式</strong>，通项是多项式时用 Faulhaber / Bernoulli 公式，<code>sum(x^2,x,1,100000)</code> 不会逐项算。数值上下界走原生大整数路径。</li>
+<li>支持<strong>几何级数</strong>，<span class="arithmatex">\(c*r^x\)</span> 项用 <span class="arithmatex">\(\frac{c(r^{e+1}-r^b)}{r-1}\)</span>；<span class="arithmatex">\(P(x) r^x, \deg P \leq 2\)</span>有显式公式。</li>
+<li>区间上下界必须是整数或纯符号。</li>
+<li>数值上下界会按大小交换，确保大的在后面。</li>
 <li>负上下界目前退回普通数值循环，超过 10000 项报范围过大。</li>
 <li>容器形式支持嵌套列表，逐层相加。</li>
 </ul>
-<h2 id="_4">相关<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="_3">相关<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><a href="../prod/"><code>prod</code></a> · <a href="../makelist/"><code>makelist</code></a></p>
 
 
