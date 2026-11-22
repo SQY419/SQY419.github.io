@@ -2772,12 +2772,9 @@
 <li><strong>幂函数</strong>：<span class="arithmatex">\(x^n → \frac{x^{n+1}}{n+1}\)</span>，<span class="arithmatex">\(n = -1\)</span> 时为 <span class="arithmatex">\(\ln(\left| x \right|)\)</span>；
   分数指数与 <code>x*sqrt(x)</code>、<code>sqrt(x)/x</code> 这类单项式会先统一成 <span class="arithmatex">\(x^{\frac{pn}{pd}}\)</span>。</li>
 <li><strong>指数函数</strong>：<code>integrate(x^a,x)</code>等。</li>
-<li><strong>线性换元</strong></li>
-<li><strong>基本表</strong></li>
-<li><strong>对数换元</strong>：$\int g'(x)\cdot \ln(g(x)) dx = g\cdot \ln g - g`。</li>
-<li><strong>有理函数部分分式</strong>：假分式先做长除法，分母用 <code>factor</code> 分解，
-  系数用高斯-约当消元求，逐项积分（一次因子给对数/幂，二次因子给反正切或对数比值）。</li>
-<li><strong>多项式乘积</strong>：先 <code>expand</code> 再逐项积分。</li>
+<li><strong>线性换元</strong>，<strong>基本积分表</strong></li>
+<li><strong>对数换元</strong>：<span class="arithmatex">\(\int g'(x)\cdot \ln(g(x)) dx = g\cdot \ln g - g\)</span>。</li>
+<li><strong>有理函数部分分式</strong>：假分式先做长除法，分母用 <code>factor</code> 分解，系数用高斯-约当消元求，逐项积分。</li>
 </ul>
 <h2 id="_3">暂不支持<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2786,7 +2783,7 @@
 <li>无初等原函数的表达式</li>
 <li>更一般的三角恒等变形与根式换元</li>
 </ul>
-<p>积不出来时不会报错，而是把原命令文本返回。</p>
+<p>积不出来时不会报错，而是返回被积函数。</p>
 <h2 id="_4">相关<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p><a href="../diff/"><code>diff</code></a> · <a href="../factor/"><code>factor</code></a> · <a href="../expand/"><code>expand</code></a></p>
 
