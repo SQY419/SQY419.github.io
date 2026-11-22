@@ -2770,60 +2770,15 @@
 <a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>&gt; 2432902008176640000
 </code></pre></div>
 <h2 id="_2">求导规则<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>节点</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>数字 / 常量</td>
-<td><code>0</code></td>
-</tr>
-<tr>
-<td>变量</td>
-<td>匹配求导变量时为 <code>1</code>，否则 <code>0</code></td>
-</tr>
-<tr>
-<td><code>Add</code></td>
-<td>逐项相加</td>
-</tr>
-<tr>
-<td><code>Mul</code></td>
-<td>乘积法则</td>
-</tr>
-<tr>
-<td><code>Pow(base, n)</code></td>
-<td><code>n * base^(n-1) * base'</code></td>
-</tr>
-<tr>
-<td><code>PowE(base, exp)</code></td>
-<td>指数含变量时 <code>base^exp * (exp' * ln(base) + exp * base'/base)</code></td>
-</tr>
-<tr>
-<td><code>sin</code> / <code>cos</code> / <code>tan</code></td>
-<td><code>cos</code> / <code>-sin</code> / <code>1/cos^2</code>（链式法则）</td>
-</tr>
-<tr>
-<td><code>exp</code> / <code>ln</code> / <code>log</code></td>
-<td><code>exp</code> / <code>1/u</code> / <code>1/(u*ln(10))</code></td>
-</tr>
-<tr>
-<td><code>sqrt</code></td>
-<td><code>1/(2*sqrt(u))</code></td>
-</tr>
-</tbody>
-</table>
+<p>自动微分法。</p>
 <h2 id="_3">行为细节<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
 <li>后序遍历，导数按节点 ID 缓存，共享子树不会重复计算。</li>
 <li>高阶导数最多 <strong>1024 阶</strong>；<code>n = 0</code> 返回原式。</li>
 <li>对 <code>P(x)*e^x</code> 的高阶导用 Leibniz 公式 <code>e^x * Σ C(n,k) P^(k)(x)</code>，
-  避免逐步求导耗尽节点表：<code>diff(x^2*e^x, x, 256) = (x^2 + 512*x + 65280)*e^x</code>。</li>
-<li>单项式 <code>x^m</code>（m ≥ 0）的 n 阶导走快捷路径，系数用十进制大整数算下降阶乘，
-  因此 <code>diff(x^20, x, 20)</code> 不会溢出。负幂（<code>1/x</code>）回退到普通求导。</li>
+  避免逐步求导耗尽节点表，例如下面式子：
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>diff(x^2*e^x, x, 256) = (x^2 + 512*x + 65280)*e^x
+</code></pre></div></li>
 <li>求导结果同样经过规范构造器，自动合并同类项。</li>
 </ul>
 <h2 id="_4">相关<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
