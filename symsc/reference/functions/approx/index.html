@@ -2844,9 +2844,8 @@
 </code></pre></div>
 <h2 id="_2">行为细节<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li>大浮点数用「尾数 + 十进制指数」两个 double 表示；超出 double 范围的幂回退到
+<li>大浮点数用 尾数 + 十进制指数 两个 double 表示；超出 double 范围的幂回退到
   <code>log(base)*exponent</code> 路径，因此 <code>e^10000</code> 不会变成 <code>Infinity</code>。</li>
-<li>常量底数 <code>e</code> / <code>pi</code> / 数字的 <code>K.Pow</code> 都支持，不只 <code>K.PowE</code>。</li>
 <li>容器会逐元素近似。</li>
 </ul>
 <h2 id="_3">相关<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
