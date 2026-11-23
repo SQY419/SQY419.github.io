@@ -12,13 +12,13 @@
         <meta name="author" content="SQY419">
       
       
-        <link rel="canonical" href="https://sqy.axolotlpower.com/symsc/design/solve-factor/">
+        <link rel="canonical" href="https://sqy.axolotlpower.com/symsc/implementation/number-theory/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../sum-series/">
       
       
-        <link rel="next" href="../calculus/">
+        <link rel="next" href="../container/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>求解与因式分解 - symSC 文档</title>
+        <title>数论 - symSC 文档</title>
       
     
     
@@ -122,7 +122,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              求解与因式分解
+              数论
             
           </span>
         </div>
@@ -2153,6 +2153,14 @@
     
       
         
+          
+        
+      
+        
+      
+        
+      
+        
       
         
       
@@ -2182,8 +2190,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -2197,8 +2206,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
@@ -2212,20 +2227,22 @@
           <ul class="md-nav__list" data-md-scrollfix>
             
               
+            
+              
                 
   
   
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../algebra/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    内核设计
+    代数与化简
   
 
     
@@ -2243,44 +2260,17 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    求解与因式分解
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../solve/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    求解与因式分解
+    方程与方程组
   
 
     
@@ -2289,70 +2279,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#solve" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        solve 的分层
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#factor" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        factor
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        因式分解求解
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#lsolve" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        lsolve
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2400,7 +2326,154 @@
   <span class="md-ellipsis">
     
   
-    求和与级数
+    求和与连乘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数论
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数论基础
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hold-20-ifactor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hold、软失败与 20 位 ifactor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误差处理与 diff 扩展
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sgcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        回归测试：SGCC 手动步进
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../container/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    容器
   
 
     
@@ -2421,14 +2494,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../lexing-numbers/" class="md-nav__link">
+      <a href="../basic-math/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    词法与数值细节
+    基础数学
   
 
     
@@ -2449,14 +2522,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../runtime/" class="md-nav__link">
+      <a href="../system/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    运行时与测试
+    系统
   
 
     
@@ -2713,32 +2786,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#solve" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        solve 的分层
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#factor" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        factor
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        因式分解求解
+        数论基础
       
     </span>
   </a>
@@ -2746,10 +2797,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lsolve" class="md-nav__link">
+  <a href="#hold-20-ifactor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        lsolve
+        hold、软失败与 20 位 ifactor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误差处理与 diff 扩展
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sgcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        回归测试：SGCC 手动步进
       
     </span>
   </a>
@@ -2773,57 +2846,35 @@
 
 
 
-<h1 id="_1">求解与因式分解<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h2 id="solve">solve 的分层<a class="headerlink" href="#solve" title="Permanent link">&para;</a></h2>
-<p><code>solve</code> 采用「原生准备数据 + DSL 求解」，避免把方程文本特判写进积木：</p>
-<ol>
-<li><strong>解析与分发</strong>（<code>lib/api.gs</code>）</li>
-<li><code>find_top_eq</code> 在最外层找第一个 <code>=</code>（跳过 <code>==</code> / <code>&lt;=</code> / <code>&gt;=</code> / <code>!=</code>），把 <code>lhs=rhs</code> 变成残差。</li>
-<li><code>solve_parse_equations</code> 支持单方程与 <code>{eq1, eq2, ...}</code>；<code>split_args</code> 按 <code>()</code>/<code>[]</code>/<code>{}</code> 三种括号配对，所以 <code>{x+y=1,x-y=2}</code> 不会被逗号拆错。</li>
-<li><code>solve_parse_var_list</code> 支持 <code>x</code> 或 <code>{x,y,...}</code>；省略变量时用 <code>collect_vars_ast</code> 按字母序推断。</li>
-<li><strong>原生数据层</strong>（<code>lib/solve.gs</code>）</li>
-<li>复用 <code>lib/poly.gs</code>：<code>poly_from_ast</code> 把残差展开成稀疏多项式，再按目标变量取系数。</li>
-<li>单方程的系数 AST 交给 DSL；一次方程组把系数矩阵与右端项放进 <code>solve_mat</code> / <code>solve_rhs</code>。</li>
-<li>提供列表构造 <code>ctb_begin/add/end</code> 与 <code>solve_simp</code> 供 DSL 调用。</li>
-<li><strong>DSL 算法</strong>（<code>lang/solve.sl</code>）</li>
-<li>一次：<code>x = -b/a</code>。</li>
-<li>二次：首项系数为负时整体取反，<code>D = b²-4ac</code>；<code>D&lt;0 → {}</code>，<code>D=0</code> 单根，
-     否则 <code>(-b ± sqrt(D))/(2a)</code>，负号在前。</li>
-<li>一次方程组：带主元交换的高斯消元，检查矛盾行与秩，再回代。</li>
-<li><strong>输出</strong>：<code>K.List</code> 节点。无解 <code>{}</code>；单方程 <code>{r1, r2}</code>；方程组 <code>{x值, y值, ...}</code>。
-   多组解时约定为嵌套列表，当前一次方程组只会产生 0/1 组。</li>
-</ol>
-<h2 id="factor">factor<a class="headerlink" href="#factor" title="Permanent link">&para;</a></h2>
-<p>直接移植 <code>polyfactor1.sb3</code>，用 GoboScript 重写（<code>lib/factor.gs</code>），不经过 DSL / VM：</p>
-<ol>
-<li><strong>转换</strong>：<code>fac_from_ast</code> 复用多项式后端转成稠密一元多项式；
-   <code>fac_content</code> / <code>fac_primitive</code> 拆出有理内容，得到首项为正的整系数本原多项式。</li>
-<li><strong>表示</strong>：<code>pf_coeffs</code> / <code>pf_cur</code> / <code>pf_div</code> 按<strong>高次到常数</strong>存储。</li>
-<li><strong>提取</strong>：先反复除以 <code>x</code>，再用有理根定理找一次因子，整数精确除法验证并更新商。</li>
-<li><strong>Kronecker</strong>：剩余次数 &gt; 3 时，在 <code>sft..sft+d0</code> 上求值，选使 <code>Σ|f(sft+i)|</code>
-   最小的平移，枚举因子组合，用 Lagrange / Newton 插值还原候选因子再做整数除法；
-   组合上限 300000。</li>
-<li><strong>组装</strong>：因子写入 <code>pf_fcoeffs</code>，<code>factor_run</code> 还原 AST 并用 <code>mk_mul</code> 相乘，
-   重复因子合并为幂，内容作为数值因子放最前。</li>
-</ol>
-<p>范围是一元、有理系数。整数运算避免了 DSL 版本多项式除法的溢出，<code>x^10-1</code> 能完整拆分。</p>
-<h2 id="_2">因式分解求解<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>一元方程先走 <code>factor</code> 的因子列表，再逐个因子求解：</p>
+<h1 id="_1">数论<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>对应函数：<code>isprime</code>、<code>ifactor</code>、<code>perm</code>/<code>comb</code>、<code>powmod</code>、<code>gcd</code>、<code>lcm</code>。</p>
+<h2 id="_2">数论基础<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><code>lang/number.sl</code> + <code>lib/number.gs</code>：</p>
 <ul>
-<li>一次因子 → 线性根；</li>
-<li>二次因子 → 求根公式；</li>
-<li>不可约的 <code>a*x^n + b</code> → <code>x^n = -b/a</code> 的实根，奇数 n 一个、偶数 n 两个，
-  用 <code>K.PowE</code> 保存 <code>x^(1/n)</code>，输出如 <code>2^(1/3)</code>、<code>3^(1/6)</code>；</li>
-<li>其他高次因子 → 「solve 暂不支持该高次方程」。</li>
+<li><code>lib/number.gs</code> 只负责字符串算术、节点转换与格式化；循环在 DSL。</li>
+<li><code>isprime</code>/<code>ifactor</code>/<code>powmod</code> 的操作数限制 15 位以内；<code>perm</code>/<code>comb</code> 结果可任意大。</li>
+<li><code>ifactor(0)</code> 返回 <code>0</code>。</li>
 </ul>
-<p>结果按数值排序并去重（<code>(x-1)^2</code> 只给 <code>{1}</code>）。</p>
-<h2 id="lsolve">lsolve<a class="headerlink" href="#lsolve" title="Permanent link">&para;</a></h2>
-<p><code>lsolve([[a11, ..., b1], ...])</code> 接受<strong>增广矩阵</strong>，最后一列是右端项：</p>
+<h2 id="hold-20-ifactor">hold、软失败与 20 位 ifactor<a class="headerlink" href="#hold-20-ifactor" title="Permanent link">&para;</a></h2>
 <ul>
-<li>唯一解 → <code>{x1, x2, ...}</code>；无解 → <code>{}</code>；无穷多解 → 报错。</li>
+<li>不把「暂时积不出来」显示成错误。</li>
+<li><code>ifactor(2^64+1)</code>：15 位以上先做 30 万以内小因子试除。<code>nt_trial_factor</code> 按 7 位分块、30 轮步进（跳过 2/3/5 的倍数）算余数，找到 <code>274177</code> 后递归分解余项。</li>
+<li>20 位以上或找不到小因子时返回明确错误，不进入极慢的 Big Pollard-Rho。</li>
 </ul>
-<p><code>lib/lsolve.gs</code> 用行主元高斯-约当消元、主元归一化、回代；任意行数/变量数，
-系数是符号表达式时走同一套 <code>mk_*</code> / <code>solve_simp</code>。</p>
+<h2 id="diff">误差处理与 diff 扩展<a class="headerlink" href="#diff" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>Unknown + container</code>，命中就跳过化简、直接打印已解析的 AST，因此 <code>foo([2/3])</code> 原样输出。</li>
+<li><code>diff</code> 参数扩展为 1..3 个：<code>diff(f,x,n)</code>、<code>diff(f,x=a)</code>、<code>diff(f,x=a,n)</code>；阶数上限 1024。</li>
+<li>对 <code>P(x)*e^x</code> 的高阶导用 Leibniz 公式，避免 256 次逐步求导耗尽节点表。</li>
+</ul>
+<h2 id="sgcc">回归测试：SGCC 手动步进<a class="headerlink" href="#sgcc" title="Permanent link">&para;</a></h2>
+<p><code>tests/run_vm_worker.js</code> 按 <code>SGCC-测试方法.md</code> 改为：</p>
+<ul>
+<li>不再等 60 Hz 实时轮询；</li>
+<li>每个 worker 直接写入 <code>cases</code>，跑到 <code>finished</code> 非空即停；</li>
+<li>超时按步数（默认 2,000,000 步）而不是墙钟。</li>
+</ul>
+<p>745 条回归不再被每帧等待拖慢，语义检查不变。</p>
 
 
 
@@ -2859,7 +2910,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="上一页: 内核设计">
+          <a href="../sum-series/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 求和与连乘">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2869,20 +2920,20 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                内核设计
+                求和与连乘
               </div>
             </div>
           </a>
         
         
           
-          <a href="../calculus/" class="md-footer__link md-footer__link--next" aria-label="下一页: 微积分">
+          <a href="../container/" class="md-footer__link md-footer__link--next" aria-label="下一页: 容器">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                微积分
+                容器
               </div>
             </div>
             <div class="md-footer__button md-icon">

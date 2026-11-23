@@ -12,13 +12,13 @@
         <meta name="author" content="SQY419">
       
       
-        <link rel="canonical" href="https://sqy.axolotlpower.com/symsc/design/">
+        <link rel="canonical" href="https://sqy.axolotlpower.com/symsc/implementation/">
       
       
         <link rel="prev" href="../reference/functions/hold/">
       
       
-        <link rel="next" href="solve-factor/">
+        <link rel="next" href="algebra/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>内核设计 - symSC 文档</title>
+        <title>总览 - symSC 文档</title>
       
     
     
@@ -122,7 +122,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              内核设计
+              总览
             
           </span>
         </div>
@@ -2153,6 +2153,14 @@
     
       
         
+          
+        
+      
+        
+      
+        
+      
+        
       
         
       
@@ -2182,8 +2190,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
   
   
   <span class="md-ellipsis">
@@ -2197,8 +2206,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link md-nav__link--active" for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
@@ -2212,47 +2227,22 @@
           <ul class="md-nav__list" data-md-scrollfix>
             
               
+            
+              
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    内核设计
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="algebra/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    内核设计
+    代数与化简
   
 
     
@@ -2261,181 +2251,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. 运行约束
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-arena" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. 节点 arena
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2. 节点 arena">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sig" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sig 是什么
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. 规范形式与智能构造器
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. 规范形式与智能构造器">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mk_num" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mk_num
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sqrt" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sqrt 的数字化简
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mk_add" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mk_add
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mk_mul" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mk_mul
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mk_pow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mk_pow
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. 解析
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. 打印
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. 求导
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        代码地图
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2448,14 +2263,14 @@
   
   
     <li class="md-nav__item">
-      <a href="solve-factor/" class="md-nav__link">
+      <a href="solve/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    求解与因式分解
+    方程与方程组
   
 
     
@@ -2511,7 +2326,7 @@
   <span class="md-ellipsis">
     
   
-    求和与级数
+    求和与连乘
   
 
     
@@ -2532,14 +2347,14 @@
   
   
     <li class="md-nav__item">
-      <a href="lexing-numbers/" class="md-nav__link">
+      <a href="number-theory/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    词法与数值细节
+    数论
   
 
     
@@ -2560,14 +2375,70 @@
   
   
     <li class="md-nav__item">
-      <a href="runtime/" class="md-nav__link">
+      <a href="container/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    运行时与测试
+    容器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="basic-math/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基础数学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系统
   
 
     
@@ -2817,169 +2688,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. 运行约束
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-arena" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. 节点 arena
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2. 节点 arena">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sig" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sig 是什么
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. 规范形式与智能构造器
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. 规范形式与智能构造器">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mk_num" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mk_num
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sqrt" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sqrt 的数字化简
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mk_add" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mk_add
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mk_mul" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mk_mul
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mk_pow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mk_pow
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. 解析
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. 打印
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. 求导
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        代码地图
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -2995,197 +2703,21 @@
 
 
 
-<h1 id="_1">内核设计<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p>目标不是做一个完整的 CAS（那不可能），而是在 Scratch 的执行模型里做到<strong>可扩展</strong>的符号计算。</p>
+<h1 id="_1">实现总览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>symSC 的实现按功能分支分组，每个分组对应 <code>参考：函数</code> 中的特定函数集合。下文详述各分组的算法、实现细节与优化。</p>
+<ul>
+<li><a href="algebra/">代数与化简</a></li>
+<li><a href="solve/">方程与方程组</a></li>
+<li><a href="calculus/">微积分</a></li>
+<li><a href="sum-series/">求和与连乘</a></li>
+<li><a href="number-theory/">数论</a></li>
+<li><a href="container/">容器</a></li>
+<li><a href="basic-math/">基础数学</a></li>
+<li><a href="system/">系统</a></li>
+</ul>
 <blockquote>
-<p>本文是 <a href="https://github.com/SQY419/symSC/blob/main/DESIGN.md">DESIGN.md</a> 的摘要，完整细节以仓库原文为准。</p>
+<p>本文是简化的实现文档，完整设计以 <a href="https://github.com/SQY419/symSC/blob/main/DESIGN.md">DESIGN.md</a> 为准。</p>
 </blockquote>
-<h2 id="1">1. 运行约束<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
-<p>Scratch / GoboScript 的关键限制：</p>
-<ul>
-<li>没有指针/对象，列表是唯一的动态容器。</li>
-<li>自定义积木的局部变量在递归时行为未定义。</li>
-<li>没有 <code>break</code> / <code>continue</code> / <code>for</code>，只有 <code>repeat</code> / <code>until</code> / <code>forever</code>。</li>
-<li>字符串只能逐字符处理；列表下标从 1 开始。</li>
-<li>TurboWarp 的 <code>nowarp</code> 积木没有 500ms 限制；原生 Scratch 的 warp 线程每次最多跑 500ms。</li>
-</ul>
-<p>由此得到四条铁律：</p>
-<ol>
-<li><strong>不使用递归</strong>。解析、树遍历、打印全部用显式栈 / 工作列表。</li>
-<li><strong>每个节点用整数 ID 表示</strong>，ID 就是列表下标，<code>0</code> 表示 null / 错误。</li>
-<li><strong>每个命令开始时重置 arena</strong>，避免跨命令的垃圾与碎片。</li>
-<li><strong>所有 <code>local</code> 只出现在 proc / func 内</strong>（这是 gobo 的 bug）。</li>
-</ol>
-<h2 id="2-arena">2. 节点 arena<a class="headerlink" href="#2-arena" title="Permanent link">&para;</a></h2>
-<p><code>lib/arena.gs</code> 用一个 struct list：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>struct Node {
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    kind, a, b, num, den, txt, sig, deg
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>}
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>list Node nodes;
-</code></pre></div>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>kind</code></td>
-<td><code>K.Num</code>、<code>K.Var</code>、<code>K.Add</code>、<code>K.Mul</code>、<code>K.Pow</code>、<code>K.PowE</code>、<code>K.Sin</code> … <code>K.E</code>、<code>K.Float</code></td>
-</tr>
-<tr>
-<td><code>a</code> / <code>b</code></td>
-<td>子节点 ID；一元函数只用 <code>a</code></td>
-</tr>
-<tr>
-<td><code>num</code> / <code>den</code></td>
-<td>有理数字面量；<code>Pow</code> 的 <code>num</code> 表示整数指数；<code>PowE</code> 用 <code>b</code> 指向指数</td>
-</tr>
-<tr>
-<td><code>txt</code></td>
-<td>变量名</td>
-</tr>
-<tr>
-<td><code>sig</code></td>
-<td>规范签名，用于结构相等、排序、同类项合并</td>
-</tr>
-<tr>
-<td><code>deg</code></td>
-<td>总次数，用于加法项排序</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>列表第 1 项是 dummy，真实节点从 ID 2 开始；<code>node_count</code> 指向最后一个真实节点。</li>
-<li>达到 <code>MAX_NODES</code> 时设置 <code>err</code> 并返回 0。</li>
-<li><strong>不存 Sub / Div / Neg</strong>：<code>a - b</code> → <code>Add(a, Neg(b))</code>，<code>a / b</code> → <code>Mul(a, Pow(b, -1))</code>，<code>Neg(x)</code> → <code>Mul(-1, x)</code>。</li>
-<li>整数指数用 <code>Pow</code>；有理数或含变量的指数用 <code>PowE</code>，这样既能精确合并/展开整数幂，又支持 <code>5^x</code>、<code>x^x</code>、<code>x^2.5</code>。</li>
-</ul>
-<h3 id="sig">sig 是什么<a class="headerlink" href="#sig" title="Permanent link">&para;</a></h3>
-<p><code>sig</code> 是节点的规范字符串：<code>N:num/den</code>、<code>V:name</code>、<code>A[term1;term2;...]</code>、<code>M[factor1;...]</code>、<code>P(base,exp)</code>、<code>F&lt;kind&gt;(child)</code>、<code>PI</code>、<code>E</code>。</p>
-<p><code>sig</code> 相等即可判定两个规范化子表达式相同。注意只有 <code>mk_add</code> / <code>mk_mul</code> 返回的<strong>根节点</strong> sig 是完整扁平签名；二叉链内部的中间节点 sig 为空。</p>
-<h2 id="3">3. 规范形式与智能构造器<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
-<p>所有表达式在解析时就直接经过 <code>mk_add</code> / <code>mk_mul</code> / <code>mk_pow</code>，树里不存在未化简的 <code>0+x</code>、<code>1*x</code>、<code>x^1</code>。</p>
-<h3 id="mk_num">mk_num<a class="headerlink" href="#mk_num" title="Permanent link">&para;</a></h3>
-<p>约分、分母为正、检查 <code>2^53</code> 安全范围；<code>0</code> 统一成 <code>0/1</code>；溢出时设置 <code>err</code>，不静默转 float。</p>
-<h3 id="sqrt">sqrt 的数字化简<a class="headerlink" href="#sqrt" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>sqrt(0) → 0</code>，<code>sqrt(1) → 1</code>。</li>
-<li>分子、分母分别提取最大平方因子，得到 <code>sqrt(n/d) = (k/m) * sqrt((n/k²)/(d/m²))</code>。</li>
-<li>剩余根式为 1 时直接返回有理数。</li>
-<li>数字超过 <code>MAX_SQRT = 1,000,000</code> 跳过化简。</li>
-<li><code>build_product</code> 会把 <code>pow_node</code> 返回的数字因子折回系数，避免出现 <code>2*2</code>。</li>
-</ul>
-<h3 id="mk_add">mk_add<a class="headerlink" href="#mk_add" title="Permanent link">&para;</a></h3>
-<ol>
-<li>用显式栈扁平化两侧的 <code>Add</code>。</li>
-<li>每项拆成 <code>系数 × 基</code>：数字项基为 0；<code>Mul</code> 的数字因子乘进系数。</li>
-<li>按基的 <code>sig</code> 合并同类项，精确有理数相加，系数 0 丢弃。</li>
-<li><strong>Pythagorean pass</strong>：<code>sin(u)^2</code> 与 <code>cos(u)^2</code> 参数 <code>sig</code> 相同且系数相同则合并成常数。</li>
-<li>按「次数降序 → 项类型 rank → sig」排序后重建二叉 <code>Add</code> 链；根节点写扁平 <code>A[...]</code> sig。</li>
-</ol>
-<p><code>term_order_rank</code> 让变量/变量幂排在乘积项前、常数最后，输出更像 <code>x - 2*y + 1</code>。</p>
-<h3 id="mk_mul">mk_mul<a class="headerlink" href="#mk_mul" title="Permanent link">&para;</a></h3>
-<ol>
-<li>扁平化；数字因子乘进系数；<code>Pow</code> 拆成底数^指数，<code>PowE</code> 作为不透明因子。</li>
-<li>按底数 <code>sig</code> 合并同底数、指数相加；指数 0 丢弃。</li>
-<li>重建系数 + 各因子 <code>pow_node</code>，根节点写扁平 <code>M[...]</code> sig。</li>
-<li><strong>不自动分配律</strong>，<code>(x+1)*(x-1)</code> 保持乘积。</li>
-</ol>
-<h3 id="mk_pow">mk_pow<a class="headerlink" href="#mk_pow" title="Permanent link">&para;</a></h3>
-<p>指数 0 → 1，指数 1 → 底数；数字底数走精确有理数幂；<code>Mul</code> 底数分配为各因子幂（<code>(2*x)^2</code> → <code>4*x^2</code>）；指数绝对值超过 <code>MAX_EXP</code> 报错。</p>
-<h2 id="4">4. 解析<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
-<p><code>lib/lex.gs</code> 逐字符扫描：数字精确转有理数（整数部分 + 小数部分 / 10^k），标识符用 <code>norm_ident</code> 转小写。</p>
-<p><code>lib/parse.gs</code> 用 shunting-yard，全部显式：</p>
-<table>
-<thead>
-<tr>
-<th>运算符</th>
-<th style="text-align: right;">优先级</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>+</code> <code>-</code></td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr>
-<td><code>*</code> <code>/</code></td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr>
-<td>一元负号</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr>
-<td><code>^</code></td>
-<td style="text-align: right;">5</td>
-</tr>
-<tr>
-<td>函数标记</td>
-<td style="text-align: right;">6</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><code>^</code> 右结合；一元负号低于 <code>^</code>，所以 <code>-x^2 = -(x^2)</code>。</li>
-<li>解析过程中直接调用智能构造器，拿到的已经是规范树。</li>
-<li>未知函数、缺括号、逗号错误等设置 <code>err</code> 并停止。</li>
-</ul>
-<h2 id="5">5. 打印<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
-<p><code>lib/print.gs</code> 用任务栈（节点任务 / 文本任务）迭代打印：</p>
-<ul>
-<li>优先级：Add 1，Mul 2，Pow/PowE 3，原子 4；父优先级更高时加括号。</li>
-<li>加法/乘法先扁平化：负项打印成 <code>-</code>，输出 <code>x - 2*y</code> 而不是 <code>x + -2*y</code>；系数 1 省略。</li>
-<li>负指数打印成分数：<code>x^-1</code> → <code>1/x</code>，<code>x^-2</code> → <code>1/x^2</code>。</li>
-<li>输出先写入 <code>pr_parts</code>，最后 join 一次；超过 <code>MAX_OUTPUT</code> 截断。</li>
-</ul>
-<h2 id="6">6. 求导<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
-<p><code>lib/diff.gs</code> 用后序显式栈，<code>df_done</code> / <code>df_val</code> 按节点 ID 缓存导数，避免共享子树重复计算。</p>
-<ul>
-<li>数字/常量 → 0；变量匹配求导变量 → 1，否则 0。</li>
-<li><code>Add</code> → 两边相加；<code>Mul</code> → 乘积法则。</li>
-<li><code>Pow(base, n)</code> → <code>n * base^(n-1) * base'</code>。</li>
-<li><code>PowE(base, exp)</code>：指数是数字常量时走幂函数公式（<code>x^2.5</code> → <code>5/2*x^(3/2)</code>）；指数含变量时 <code>base^exp * (exp' * ln(base) + exp * base'/base)</code>。</li>
-<li>函数走链式法则：<code>sin' = cos</code>、<code>cos' = -sin</code>、<code>tan' = 1/cos^2</code>、<code>exp' = exp</code>、<code>ln' = 1/u</code>、<code>log' = 1/(u*ln(10))</code>、<code>sqrt' = 1/(2*sqrt(u))</code>。</li>
-</ul>
-<h2 id="_2">代码地图<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>文件</th>
-<th>内容</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>lib/arena.gs</code></td>
-<td>节点 arena</td>
-</tr>
-<tr>
-<td><code>lib/lex.gs</code> / <code>lib/parse.gs</code></td>
-<td>词法与 shunting-yard 解析</td>
-</tr>
-<tr>
-<td><code>lib/print.gs</code></td>
-<td>线性输出</td>
-</tr>
-<tr>
-<td><code>lib/rules.gs</code></td>
-<td>规则引擎</td>
-</tr>
-<tr>
-<td><code>lib/diff.gs</code></td>
-<td>求导</td>
-</tr>
-<tr>
-<td><code>tests/build.sh</code></td>
-<td>调用 GoboScript 编译器</td>
-</tr>
-</tbody>
-</table>
 
 
 
@@ -3238,13 +2770,13 @@
         
         
           
-          <a href="solve-factor/" class="md-footer__link md-footer__link--next" aria-label="下一页: 求解与因式分解">
+          <a href="algebra/" class="md-footer__link md-footer__link--next" aria-label="下一页: 代数与化简">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                求解与因式分解
+                代数与化简
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -124,10 +124,10 @@ simplify(2*x + 3*x - x)
 写相对的 `.md` 路径，构建时会自动转成正确 URL：
 
 ```markdown
-见 [函数参考](../reference/functions/index.md) 和 [内核设计](../design.md)。
+见 [函数参考](../reference/functions/index.md) 和 [实现](../implementation/index.md)。
 ```
 
-见 [函数参考](../reference/functions/index.md) 和 [内核设计](../design.md)。
+见 [函数参考](../reference/functions/index.md) 和 [实现](../implementation/index.md)。
 
 构建用 `--strict`，链接写错会直接失败，不会静默上线。
 

@@ -1,0 +1,82 @@
+# 微积分
+
+对应函数：`diff`、`integrate`、`limit`、`series`。
+
+## 简易符号积分
+
+`integrate(expr[, var])` 的算法在 `lang/integrate.sl`，原生层 `lib/integrate.gs` 只提供线性分解与函数构造：
+
+- 线性性；幂函数 `x^n → x^(n+1)/(n+1)`，`n=-1 → ln(abs(x))`；
+- 线性换元 `u = a*x+b` 统一除以 `a`，覆盖幂、`sin/cos/tan/exp/ln`、`sqrt`；
+- 基本表：`sin`、`cos`、`tan`、`exp`、`ln`、`1/(1+x^2) → atan(x)`；
+- 多项式乘积先 `expand` 再逐项积分。
+
+## 极限增强
+
+- **极点**：分母趋 0 而分子非 0 时，逐次求导确定零点阶数；偶数阶给 `±oo`，奇数阶报「两侧不同」。`(x^2-x+1)/(x-1)^2 → oo`。
+- **1^∞**：先求 `lim f = 1`，再用 `u = f-1` 化到 `exp(lim g*u)`；`(1+2/x)^x`、`((2x+3)/(2x+1))^(x+1)`、`((a^x+b^x+c^x)/3)^(1/x)` 走这条路径。
+- **分式合并**：极限前先 `expand`/`combine_fractions`/规则化简，`1/ln(1+x)-1/x` 合并后洛必达得 `1/2`。
+- 结果统一用 `e^L` 输出。
+- `limit` 可嵌套：`nested_command_node` 新增 `limit` 分支，复用 `limit_build_node`。
+
+## 对数换元
+
+- 识别 `∫ g'(x)·ln(g(x)) dx = g ln g - g`；
+- 例如 `∫ ln(ln x)/x dx = ln x·ln ln x - ln x`；
+- 仍在 `lang/integrate.sl`，原生层只提供 `diff`/`div`/`combine` 辅助。
+
+## 有理函数积分
+
+### 第一层：单个线性因子幂
+
+- `∫ (A*x+B)/(a*x+b)^n dx`
+- 拆成 `(A/a)/(a*x+b)^(n-1) + (B - A*b/a)/(a*x+b)^n` 再用幂函数积分；
+- 覆盖 `x/(1-x)^3`、`x/(2x+1)^3`、`x/(1-x)`。
+
+### `1/(1±x³)` 标准族
+
+`1/(1+x³)` 直接给标准分解：`1/3 ln|x+1| - 1/6 ln(x²-x+1) + 1/√3 atan((2x-1)/√3)`；`1/(1-x³)` 对应对称形式。
+
+### 互异线性因子部分分式
+
+分母分解为互异一次因子时，按 `A_i = P(r_i)/Q'(r_i)` 求系数再逐项积分，支持 `1/(x^2-1)`、`x/(x^2-1)` 等。
+
+## 通用部分分式
+
+`integ_rational_partial` 把有理函数积分补全到「分母可分解为一次/二次有理因子」：
+
+1. **展平分式**：沿乘积树把 `(x*(x+1))^-1`、`(1/x)^2`、负整数幂拆成分子/分母；
+2. **假分式**：一元多项式长除法，商逐项积分，余式进入部分分式；
+3. **分母分解**：复用 `lib/factor.gs`，因子归一化成首一多项式并按 `nd_sig` 合并重根，总次数必须等于分母次数；
+4. **系数**：每个 `f_i^k` 列未知量（一次一个、二次两个），以 `Q/f_i^k` 为基构造线性方程组，带行交换的高斯-约当消元；
+5. **逐项积分**：
+   - `A/(x-r)^k`：`k=1` 对数，`k>1` 幂函数；
+   - `(Bx+C)/(x^2+bx+c)^k`：先拆出 `(B/2)f'`，剩余用递推 `I_k = (2x+b)/((k-1)D f^{k-1}) + 2(2k-3)/((k-1)D) I_{k-1}`，`D = 4c-b^2`；`D>0` 用反正切，`D<0` 用对数比值。
+
+`1/(2*x+3)` 这类线性幂仍走旧规则输出 `1/2*ln(abs(2*x + 3))`。
+
+## 符号指数与常数底指数
+
+- `integrate(x^a,x)`：`K.PowE` 分支里，若指数不含积分变量且底数就是积分变量，直接给 `x^(a+1)/(a+1)`；`a=-1` 仍返回 `ln(abs(x))`。
+- 底数不含积分变量、指数是线性函数时：`integral a^(b*x+c) dx = a^(b*x+c) / (b*ln(a))`。
+  因此 `integrate(2^x,x) = 2^x/ln(2)`，`integrate(e^x,x) = e^x`。
+
+## 求导
+
+`lib/diff.gs` 用后序显式栈，`df_done`/`df_val` 按节点 ID 缓存导数，避免共享子树重复计算。
+
+- 数字/常量 → 0；变量匹配求导变量 → 1，否则 0。
+- `Add` → 两边相加；`Mul` → 乘积法则。
+- `Pow(base, n)` → `n * base^(n-1) * base'`。
+- `PowE(base, exp)`：指数是数字常量时走幂函数公式（`x^2.5` → `5/2*x^(3/2)`）；指数含变量时 `base^exp * (exp' * ln(base) + exp * base'/base)`。
+- 函数走链式法则：`sin' = cos`、`cos' = -sin`、`tan' = 1/cos^2`、`exp' = exp`、`ln' = 1/u`、`log' = 1/(u*ln(10))`、`sqrt' = 1/(2*sqrt(u))`。
+
+## series
+
+`series` 的高层算法在 `lang/series.sl`，通过 `vm_series` 运行：
+
+- `taylor`：有限点 Taylor 循环，调用 native `series_diff`/`series_at`；
+- `series_at_inf`：无穷远展开，分别处理 `e^(-x)` 型重写与 `x → 1/t` 代换；
+- 结构重写 `series_exp_rewrite`/`series_has_exp`/`series_eval_value` 仍在 `lib/series.gs`，因为它们需要 AST 节点映射表。
+
+series 相关过程从 710 块降到 591 块。

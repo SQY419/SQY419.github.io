@@ -103,12 +103,15 @@ nav:
           - purge: reference/functions/purge.md
           - hold: reference/functions/hold.md
   - 实现:
-      - 内核设计: design.md
-      - 求解与因式分解: design/solve-factor.md
-      - 微积分: design/calculus.md
-      - 求和与级数: design/sum-series.md
-      - 词法与数值细节: design/lexing-numbers.md
-      - 运行时与测试: design/runtime.md
+      - 总览: implementation/index.md
+      - 代数与化简: implementation/algebra.md
+      - 方程与方程组: implementation/solve.md
+      - 微积分: implementation/calculus.md
+      - 求和与连乘: implementation/sum-series.md
+      - 数论: implementation/number-theory.md
+      - 容器: implementation/container.md
+      - 基础数学: implementation/basic-math.md
+      - 系统: implementation/system.md
       - 性能实测: performance.md
   - 其它:
       - 已知限制: limits.md

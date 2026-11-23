@@ -12,13 +12,13 @@
         <meta name="author" content="SQY419">
       
       
-        <link rel="canonical" href="https://sqy.axolotlpower.com/symsc/design/calculus/">
+        <link rel="canonical" href="https://sqy.axolotlpower.com/symsc/implementation/solve/">
       
       
-        <link rel="prev" href="../solve-factor/">
+        <link rel="prev" href="../algebra/">
       
       
-        <link rel="next" href="../sum-series/">
+        <link rel="next" href="../calculus/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>微积分 - symSC 文档</title>
+        <title>方程与方程组 - symSC 文档</title>
       
     
     
@@ -122,7 +122,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              微积分
+              方程与方程组
             
           </span>
         </div>
@@ -2153,6 +2153,14 @@
     
       
         
+          
+        
+      
+        
+      
+        
+      
+        
       
         
       
@@ -2182,8 +2190,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -2197,8 +2206,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
@@ -2212,32 +2227,6 @@
           <ul class="md-nav__list" data-md-scrollfix>
             
               
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    内核设计
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -2246,14 +2235,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../solve-factor/" class="md-nav__link">
+      <a href="../algebra/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    求解与因式分解
+    代数与化简
   
 
     
@@ -2290,7 +2279,7 @@
   <span class="md-ellipsis">
     
   
-    微积分
+    方程与方程组
   
 
     
@@ -2308,7 +2297,7 @@
   <span class="md-ellipsis">
     
   
-    微积分
+    方程与方程组
   
 
     
@@ -2334,10 +2323,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#solve" class="md-nav__link">
     <span class="md-ellipsis">
       
-        简易符号积分
+        solve 的分层
       
     </span>
   </a>
@@ -2345,93 +2334,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#lsolve" class="md-nav__link">
     <span class="md-ellipsis">
       
-        极限增强
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        对数换元
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        有理函数积分（第一层）
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="有理函数积分（第一层）">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-11x3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1 1/(1±x³) 标准族
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2 互异线性因子部分分式
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        通用部分分式
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        符号指数
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        常数底指数
+        lsolve
       
     </span>
   </a>
@@ -2454,6 +2360,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    微积分
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sum-series/" class="md-nav__link">
         
   
@@ -2461,7 +2395,7 @@
   <span class="md-ellipsis">
     
   
-    求和与级数
+    求和与连乘
   
 
     
@@ -2482,14 +2416,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../lexing-numbers/" class="md-nav__link">
+      <a href="../number-theory/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    词法与数值细节
+    数论
   
 
     
@@ -2510,14 +2444,70 @@
   
   
     <li class="md-nav__item">
-      <a href="../runtime/" class="md-nav__link">
+      <a href="../container/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    运行时与测试
+    容器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../basic-math/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基础数学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系统
   
 
     
@@ -2774,10 +2764,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#solve" class="md-nav__link">
     <span class="md-ellipsis">
       
-        简易符号积分
+        solve 的分层
       
     </span>
   </a>
@@ -2785,93 +2775,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#lsolve" class="md-nav__link">
     <span class="md-ellipsis">
       
-        极限增强
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        对数换元
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        有理函数积分（第一层）
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="有理函数积分（第一层）">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-11x3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1 1/(1±x³) 标准族
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2 互异线性因子部分分式
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        通用部分分式
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        符号指数
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        常数底指数
+        lsolve
       
     </span>
   </a>
@@ -2895,70 +2802,43 @@
 
 
 
-<h1 id="_1">微积分实现<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h2 id="_2">简易符号积分<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p><code>integrate(expr[, var])</code> 的算法在 <code>lang/integrate.sl</code>，原生层 <code>lib/integrate.gs</code> 只提供线性分解与函数构造：</p>
-<ul>
-<li>线性性；幂函数 <code>x^n → x^(n+1)/(n+1)</code>，<code>n=-1 → ln(abs(x))</code>；</li>
-<li>线性换元 <code>u = a*x+b</code> 统一除以 <code>a</code>，覆盖幂、<code>sin/cos/tan/exp/ln</code>、<code>sqrt</code>；</li>
-<li>基本表：<code>sin</code>、<code>cos</code>、<code>tan</code>、<code>exp</code>、<code>ln</code>、<code>1/(1+x^2) → atan(x)</code>；</li>
-<li>多项式乘积先 <code>expand</code> 再逐项积分。</li>
-</ul>
-<h2 id="_3">极限增强<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>极点</strong>：分母趋 0 而分子非 0 时，逐次求导确定零点阶数；偶数阶给 <code>±oo</code>，
-  奇数阶报「两侧不同」。<code>(x^2-x+1)/(x-1)^2 → oo</code>。</li>
-<li><strong>1^∞</strong>：先求 <code>lim f = 1</code>，再用 <code>u = f-1</code> 化到 <code>exp(lim g*u)</code>；
-  <code>(1+2/x)^x</code>、<code>((2x+3)/(2x+1))^(x+1)</code>、<code>((a^x+b^x+c^x)/3)^(1/x)</code> 走这条路径。</li>
-<li><strong>分式合并</strong>：极限前先 <code>expand</code> / <code>combine_fractions</code> / 规则化简，
-  <code>1/ln(1+x)-1/x</code> 合并后洛必达得 <code>1/2</code>。</li>
-<li>结果统一用 <code>e^L</code> 输出。</li>
-<li><code>limit</code> 可嵌套：<code>nested_command_node</code> 新增 <code>limit</code> 分支，复用 <code>limit_build_node</code>。</li>
-</ul>
-<h2 id="_4">对数换元<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<ul>
-<li>识别 <code>∫ g'(x)·ln(g(x)) dx = g ln g - g</code>；</li>
-<li>例如 <code>∫ ln(ln x)/x dx = ln x·ln ln x - ln x</code>；</li>
-<li>仍在 <code>lang/integrate.sl</code>，原生层只提供 <code>diff</code> / <code>div</code> / <code>combine</code> 辅助。</li>
-</ul>
-<h2 id="_5">有理函数积分（第一层）<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p>先实现分母为<strong>单个线性因子幂</strong>的情形：</p>
-<ul>
-<li><code>∫ (A*x+B)/(a*x+b)^n dx</code></li>
-<li>拆成 <code>(A/a)/(a*x+b)^(n-1) + (B - A*b/a)/(a*x+b)^n</code> 再用幂函数积分；</li>
-<li>覆盖 <code>x/(1-x)^3</code>、<code>x/(2x+1)^3</code>、<code>x/(1-x)</code>。</li>
-</ul>
-<h3 id="1-11x3">1 <code>1/(1±x³)</code> 标准族<a class="headerlink" href="#1-11x3" title="Permanent link">&para;</a></h3>
-<p><code>1/(1+x³)</code> 直接给标准分解：
-<code>1/3 ln|x+1| - 1/6 ln(x²-x+1) + 1/√3 atan((2x-1)/√3)</code>；<code>1/(1-x³)</code> 对应对称形式。
-这是针对三次和式/差式的标准规则，而不是通用部分分式。</p>
-<h3 id="2">2 互异线性因子部分分式<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
-<p>分母分解为互异一次因子时，按 <code>A_i = P(r_i)/Q'(r_i)</code> 求系数再逐项积分，
-支持 <code>1/(x^2-1)</code>、<code>x/(x^2-1)</code> 等。</p>
-<h2 id="_6">通用部分分式<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
-<p><code>integ_rational_partial</code> 把有理函数积分补全到「分母可分解为一次/二次有理因子」：</p>
+<h1 id="_1">方程与方程组<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>对应函数：<code>solve</code>、<code>lsolve</code>。</p>
+<h2 id="solve">solve 的分层<a class="headerlink" href="#solve" title="Permanent link">&para;</a></h2>
+<p><code>solve</code> 采用「原生准备数据 + DSL 求解」，避免把方程文本特判写进积木。</p>
 <ol>
-<li><strong>展平分式</strong>：沿乘积树把 <code>(x*(x+1))^-1</code>、<code>(1/x)^2</code>、负整数幂拆成分子/分母；</li>
-<li><strong>假分式</strong>：一元多项式长除法，商逐项积分，余式进入部分分式；</li>
-<li><strong>分母分解</strong>：复用 <code>lib/factor.gs</code>，因子归一化成首一多项式并按 <code>nd_sig</code> 合并重根，
-   总次数必须等于分母次数；</li>
-<li><strong>系数</strong>：每个 <code>f_i^k</code> 列未知量（一次一个、二次两个），以 <code>Q/f_i^k</code> 为基构造线性方程组，
-   带行交换的高斯-约当消元；</li>
-<li><strong>逐项积分</strong>：</li>
-<li><code>A/(x-r)^k</code>：<code>k=1</code> 对数，<code>k&gt;1</code> 幂函数；</li>
-<li><code>(Bx+C)/(x^2+bx+c)^k</code>：先拆出 <code>(B/2)f'</code>，剩余用递推
-     <code>I_k = (2x+b)/((k-1)D f^{k-1}) + 2(2k-3)/((k-1)D) I_{k-1}</code>，<code>D = 4c-b^2</code>；
-     <code>D&gt;0</code> 用反正切，<code>D&lt;0</code> 用对数比值。</li>
+<li><strong>解析与分发</strong>（<code>lib/api.gs</code>）</li>
+<li><code>find_top_eq</code> 在最外层找第一个 <code>=</code>（跳过 <code>==</code>/<code>&lt;=</code>/<code>&gt;=</code>/<code>!=</code>），把 <code>lhs=rhs</code> 变成残差。</li>
+<li><code>solve_parse_equations</code> 支持单方程与 <code>{eq1, eq2, ...}</code>；<code>split_args</code> 按 <code>()</code>/<code>[]</code>/<code>{}</code> 三种括号配对，所以 <code>{x+y=1,x-y=2}</code> 不会被逗号拆错。</li>
+<li>
+<p><code>solve_parse_var_list</code> 支持 <code>x</code> 或 <code>{x,y,...}</code>；省略变量时用 <code>collect_vars_ast</code> 按字母序推断。</p>
+</li>
+<li>
+<p><strong>原生数据层</strong>（<code>lib/solve.gs</code>）</p>
+</li>
+<li>复用 <code>lib/poly.gs</code>：<code>poly_from_ast</code> 把残差展开成稀疏多项式，再按目标变量取系数。</li>
+<li>单方程的系数 AST 交给 DSL；一次方程组把系数矩阵与右端项放进 <code>solve_mat</code>/<code>solve_rhs</code>。</li>
+<li>
+<p>提供列表构造 <code>ctb_begin/add/end</code> 与 <code>solve_simp</code> 供 DSL 调用。</p>
+</li>
+<li>
+<p><strong>DSL 算法</strong>（<code>lang/solve.sl</code>）</p>
+</li>
+<li>一次：<code>x = -b/a</code>。</li>
+<li>二次：首项系数为负时整体取反，<code>D = b²-4ac</code>；<code>D&lt;0 → {}</code>，<code>D=0</code> 单根，否则 <code>(-b ± sqrt(D))/(2a)</code>，负号在前。</li>
+<li>
+<p>一次方程组：带主元交换的高斯消元，检查矛盾行与秩，再回代。</p>
+</li>
+<li>
+<p><strong>输出</strong>：<code>K.List</code> 节点。无解 <code>{}</code>；单方程 <code>{r1, r2}</code>；方程组 <code>{x值, y值, ...}</code>。多组解时约定为嵌套列表，当前一次方程组只会产生 0/1 组。</p>
+</li>
 </ol>
-<p><code>1/(2*x+3)</code> 这类线性幂</p>
-<h2 id="_7">符号指数<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
-<p><code>integrate(x^a,x)</code>：<code>K.PowE</code> 分支里，若指数不含积分变量且底数就是积分变量，
-直接给 <code>x^(a+1)/(a+1)</code>；<code>a=-1</code> 仍返回 <code>ln(abs(x))</code>。</p>
-<h2 id="_8">常数底指数<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
-<p>底数不含积分变量、指数是线性函数时：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>integral a^(b*x+c) dx = a^(b*x+c) / (b*ln(a))
-</code></pre></div>
-<p>因此 <code>integrate(2^x,x) = 2^x/ln(2)</code>，<code>integrate(e^x,x) = e^x</code>。</p>
+<h2 id="lsolve">lsolve<a class="headerlink" href="#lsolve" title="Permanent link">&para;</a></h2>
+<p><code>lsolve([[a11, ..., b1], ...])</code> 接受<strong>增广矩阵</strong>，最后一列是右端项。</p>
+<ul>
+<li>唯一解 → <code>{x1, x2, ...}</code>；无解 → <code>{}</code>；无穷多解 → 报错。</li>
+</ul>
+<p><code>lib/lsolve.gs</code> 用行主元高斯-约当消元、主元归一化、回代；任意行数/变量数，系数是符号表达式时走同一套 <code>mk_*</code>/<code>solve_simp</code>。</p>
 
 
 
@@ -2994,7 +2874,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../solve-factor/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 求解与因式分解">
+          <a href="../algebra/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 代数与化简">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3004,20 +2884,20 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                求解与因式分解
+                代数与化简
               </div>
             </div>
           </a>
         
         
           
-          <a href="../sum-series/" class="md-footer__link md-footer__link--next" aria-label="下一页: 求和与级数">
+          <a href="../calculus/" class="md-footer__link md-footer__link--next" aria-label="下一页: 微积分">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                求和与级数
+                微积分
               </div>
             </div>
             <div class="md-footer__button md-icon">

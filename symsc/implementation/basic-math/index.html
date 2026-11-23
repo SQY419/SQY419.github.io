@@ -12,13 +12,13 @@
         <meta name="author" content="SQY419">
       
       
-        <link rel="canonical" href="https://sqy.axolotlpower.com/symsc/design/runtime/">
+        <link rel="canonical" href="https://sqy.axolotlpower.com/symsc/implementation/basic-math/">
       
       
-        <link rel="prev" href="../lexing-numbers/">
+        <link rel="prev" href="../container/">
       
       
-        <link rel="next" href="../../performance/">
+        <link rel="next" href="../system/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>运行时与测试 - symSC 文档</title>
+        <title>基础数学 - symSC 文档</title>
       
     
     
@@ -122,7 +122,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              运行时与测试
+              基础数学
             
           </span>
         </div>
@@ -2153,6 +2153,14 @@
     
       
         
+          
+        
+      
+        
+      
+        
+      
+        
       
         
       
@@ -2182,8 +2190,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -2197,8 +2206,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
@@ -2212,20 +2227,22 @@
           <ul class="md-nav__list" data-md-scrollfix>
             
               
+            
+              
                 
   
   
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../algebra/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    内核设计
+    代数与化简
   
 
     
@@ -2246,14 +2263,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../solve-factor/" class="md-nav__link">
+      <a href="../solve/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    求解与因式分解
+    方程与方程组
   
 
     
@@ -2309,7 +2326,7 @@
   <span class="md-ellipsis">
     
   
-    求和与级数
+    求和与连乘
   
 
     
@@ -2330,14 +2347,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../lexing-numbers/" class="md-nav__link">
+      <a href="../number-theory/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    词法与数值细节
+    数论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../container/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    容器
   
 
     
@@ -2374,7 +2419,7 @@
   <span class="md-ellipsis">
     
   
-    运行时与测试
+    基础数学
   
 
     
@@ -2392,7 +2437,7 @@
   <span class="md-ellipsis">
     
   
-    运行时与测试
+    基础数学
   
 
     
@@ -2421,7 +2466,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        积木数量
+        平方根
       
     </span>
   </a>
@@ -2432,7 +2477,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        数论
+        三角函数
       
     </span>
   </a>
@@ -2440,10 +2485,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#hold-20-ifactor" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        hold、软失败与 20 位 ifactor
+        指数与对数
       
     </span>
   </a>
@@ -2451,10 +2496,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#diff" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        未定义函数容器参数与 diff 扩展
+        取模
       
     </span>
   </a>
@@ -2462,10 +2507,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sgcc" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        回归测试：SGCC 手动步进
+        其他
       
     </span>
   </a>
@@ -2476,6 +2521,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2727,7 +2800,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        积木数量
+        平方根
       
     </span>
   </a>
@@ -2738,7 +2811,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        数论
+        三角函数
       
     </span>
   </a>
@@ -2746,10 +2819,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#hold-20-ifactor" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        hold、软失败与 20 位 ifactor
+        指数与对数
       
     </span>
   </a>
@@ -2757,10 +2830,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#diff" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        未定义函数容器参数与 diff 扩展
+        取模
       
     </span>
   </a>
@@ -2768,10 +2841,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sgcc" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        回归测试：SGCC 手动步进
+        其他
       
     </span>
   </a>
@@ -2795,42 +2868,40 @@
 
 
 
-<h1 id="_1">运行时与测试<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h2 id="_2">积木数量<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>32298 / 32444；加入 series DSL 与两个极限规则后为 32809 / 32955 块，相对最初减少 631 块（约 -1.9%）。</p>
-<p>主要削减：</p>
-<p><code>bi_pow_str</code> 直接使用数值指数，去掉字符串解析循环。
-  全部有理式统一由 <code>integ_rational_partial</code> 处理。
-  同步清理 <code>tools/dslc.py</code> 的 NATIVES 表与 <code>lib/vm.gs</code> 分派分支。
-- 死代码由编译器自动剥离：没有调用者的函数不会进入 sb3。</p>
-<ol>
-<li>把高层算法搬回 <code>.sl</code>：DSL 只有字节码列表，不占 Scratch 积木；</li>
-<li>做功能裁剪/多产物（核心代数 / +微积分 / 完整版）；</li>
-<li>拆分巨型分派器（<code>vm_native</code> 779 块、<code>mk_func</code> 522、<code>mk_add</code> 506、<code>pr_handle</code> 409）；</li>
-<li>合并 <code>pr_*</code> / <code>mk_*</code> / 多项式模块之间的重复逻辑。</li>
-</ol>
-<p>统计：<code>python3 tools/blocks.py symSC.sb3 --top 20</code>。</p>
-<h2 id="_3">数论<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p><code>lang/number.sl</code> + <code>lib/number.gs</code>：</p>
-<p><code>lib/number.gs</code> 只负责字符串算术、节点转换与格式化；循环在 DSL。
-<code>isprime</code> / <code>ifactor</code> / <code>powmod</code> 的操作数限制 15 位以内；<code>perm</code> / <code>comb</code> 结果可任意大。
-<code>ifactor(0)</code> 返回 <code>0</code>。</p>
-<h2 id="hold-20-ifactor">hold、软失败与 20 位 ifactor<a class="headerlink" href="#hold-20-ifactor" title="Permanent link">&para;</a></h2>
-<p>不把「暂时积不出来」显示成错误。
-- <code>ifactor(2^64+1)</code>：15 位以上先做 30 万以内小因子试除。<code>nt_trial_factor</code> 按 7 位分块、
-  30 轮步进（跳过 2/3/5 的倍数）算余数，找到 <code>274177</code> 后递归分解余项。
-  20 位以上或找不到小因子时返回明确错误，不进入极慢的 Big Pollard-Rho。</p>
-<h2 id="diff">未定义函数容器参数与 diff 扩展<a class="headerlink" href="#diff" title="Permanent link">&para;</a></h2>
-<p><code>Unknown + container</code>，命中就跳过化简、直接打印已解析的 AST，因此 <code>foo([2/3])</code> 原样输出。
-- <code>diff</code> 参数扩展为 1..3 个：<code>diff(f,x,n)</code>、<code>diff(f,x=a)</code>、<code>diff(f,x=a,n)</code>；
-  阶数上限 1024。
-- 对 <code>P(x)*e^x</code> 的高阶导用 Leibniz 公式，避免 256 次逐步求导耗尽节点表。</p>
-<h2 id="sgcc">回归测试：SGCC 手动步进<a class="headerlink" href="#sgcc" title="Permanent link">&para;</a></h2>
-<p><code>tests/run_vm_worker.js</code> 按 <code>SGCC-测试方法.md</code> 改为：</p>
-<p>不再等 60 Hz 实时轮询；
-- 每个 worker 直接写入 <code>cases</code>，跑到 <code>finished</code> 非空即停；
-- 超时按步数（默认 2,000,000 步）而不是墙钟。</p>
-<p>745 条回归不再被每帧等待拖慢，语义检查不变。</p>
+<h1 id="_1">基础数学<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>对应函数：<code>sqrt</code>、<code>sin/cos/tan</code>、<code>exp/ln/log</code>、<code>mod/%</code>。</p>
+<h2 id="_2">平方根<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>sqrt(0) → 0</code>，<code>sqrt(1) → 1</code>。</li>
+<li>分子、分母分别提取最大平方因子，得到 <code>sqrt(n/d) = (k/m) * sqrt((n/k²)/(d/m²))</code>。</li>
+<li>剩余根式为 1 时直接返回有理数。</li>
+<li>数字超过 <code>MAX_SQRT = 1,000,000</code> 跳过化简。</li>
+<li><code>build_product</code> 会把 <code>pow_node</code> 返回的数字因子折回系数，避免出现 <code>2*2</code>。</li>
+</ul>
+<h2 id="_3">三角函数<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>sin</code>、<code>cos</code>、<code>tan</code> 的算法通过 DSL 和原生层实现。</li>
+<li>特殊零点：<code>sin(pi)</code>/<code>tan(pi)</code> 等，<code>tg_special</code> 优化；<code>tan(n*pi)</code> 归约到 <code>nn == d</code>。</li>
+<li>求导：<code>sin' = cos</code>、<code>cos' = -sin</code>、<code>tan' = 1/cos^2</code>。</li>
+<li>链式法则集成在 <code>diff</code> 中。</li>
+</ul>
+<h2 id="_4">指数与对数<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>exp</code>、<code>ln</code>、<code>log</code> 基于 DSL 与原生层。</li>
+<li><code>e^0</code>/<code>pi^0</code> 直接返回 <code>1</code>。</li>
+<li><code>exp</code> 的指数绝对值过大时会转换为 BigFloat 或返回 <code>Infinity</code>。</li>
+<li>求导：<code>exp' = exp</code>、<code>ln' = 1/u</code>、<code>log' = 1/(u*ln(10))</code>。</li>
+</ul>
+<h2 id="_5">取模<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>mod</code> / <code>%</code> 为整数运算是取余数，支持负数。</li>
+<li>在解析和打印环节有特殊处理，保证结果一致。</li>
+</ul>
+<h2 id="_6">其他<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>csc</code>/<code>sec</code>/<code>cot</code> 在解析时重写为 <code>1/sin</code>、<code>1/cos</code>、<code>cos/sin</code>，不新增 AST 类型。</li>
+<li>积分器补上 <code>K.PowE</code> 的分数指数：<code>x^(pn/pd)</code> 调 <code>i_pow</code>；<code>sqrt(1/x)</code>、<code>(1/x)^(1/2)</code> 先把内外层指数相乘再积分。</li>
+</ul>
 
 
 
@@ -2866,7 +2937,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../lexing-numbers/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 词法与数值细节">
+          <a href="../container/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 容器">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2876,20 +2947,20 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                词法与数值细节
+                容器
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../performance/" class="md-footer__link md-footer__link--next" aria-label="下一页: 性能实测">
+          <a href="../system/" class="md-footer__link md-footer__link--next" aria-label="下一页: 系统">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                性能实测
+                系统
               </div>
             </div>
             <div class="md-footer__button md-icon">
