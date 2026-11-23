@@ -2362,10 +2362,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#23-sum-prod" class="md-nav__link">
+  <a href="#sum-prod" class="md-nav__link">
     <span class="md-ellipsis">
       
-        23. sum / prod 性能
+        sum / prod 性能
       
     </span>
   </a>
@@ -2373,10 +2373,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#24" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        24. 符号求和
+        符号求和
       
     </span>
   </a>
@@ -2384,10 +2384,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#28" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        28. 指数 / 几何求和
+        指数 / 几何求和
       
     </span>
   </a>
@@ -2395,10 +2395,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#34-series-dsl" class="md-nav__link">
+  <a href="#series-dsl" class="md-nav__link">
     <span class="md-ellipsis">
       
-        34. series 搬入 DSL
+        series 搬入 DSL
       
     </span>
   </a>
@@ -2713,10 +2713,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#23-sum-prod" class="md-nav__link">
+  <a href="#sum-prod" class="md-nav__link">
     <span class="md-ellipsis">
       
-        23. sum / prod 性能
+        sum / prod 性能
       
     </span>
   </a>
@@ -2724,10 +2724,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#24" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        24. 符号求和
+        符号求和
       
     </span>
   </a>
@@ -2735,10 +2735,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#28" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        28. 指数 / 几何求和
+        指数 / 几何求和
       
     </span>
   </a>
@@ -2746,10 +2746,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#34-series-dsl" class="md-nav__link">
+  <a href="#series-dsl" class="md-nav__link">
     <span class="md-ellipsis">
       
-        34. series 搬入 DSL
+        series 搬入 DSL
       
     </span>
   </a>
@@ -2774,7 +2774,7 @@
 
 
 <h1 id="_1">求和与级数<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h2 id="23-sum-prod">23. sum / prod 性能<a class="headerlink" href="#23-sum-prod" title="Permanent link">&para;</a></h2>
+<h2 id="sum-prod">sum / prod 性能<a class="headerlink" href="#sum-prod" title="Permanent link">&para;</a></h2>
 <p>区间版本做了三层优化：</p>
 <ol>
 <li><strong>快速项求值</strong>：通项是有理函数（<code>Num</code> / <code>Var</code> / <code>Add</code> / <code>Mul</code> / 整数指数 <code>Pow</code>）时，
@@ -2785,7 +2785,7 @@
    求和用<strong>分母 LCM</strong> 合并，避免分母乘积膨胀，约分统一放到最后（<code>br_finalize</code>）。</li>
 </ol>
 <p>效果：<code>sum(1/x^2,x,1,25)</code> 从约 13 秒降到约 1.8 秒（同一 scratch-vm 环境），595/595 回归通过。</p>
-<h2 id="24">24. 符号求和<a class="headerlink" href="#24" title="Permanent link">&para;</a></h2>
+<h2 id="_2">符号求和<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>DSL</strong>（<code>lang/sum.sl</code>）：把通项看成关于求和变量的多项式，用 Faulhaber 公式
    组合 <code>sum_{k=1}^{n} k^p</code>，得到 <code>sum_{x=b}^{e} f(x) = S(e) - S(b-1)</code>。</li>
@@ -2801,7 +2801,7 @@
 </ol>
 <p>数值整数上下界不逐项循环：<code>symsum_try</code> 先走原生大整数 Faulhaber，幂超过安全整数时用
 十进制大整数累加，<code>100000^6</code> 不会溢出。负上下界退回普通数值循环，超过 10000 项报范围过大。</p>
-<h2 id="28">28. 指数 / 几何求和<a class="headerlink" href="#28" title="Permanent link">&para;</a></h2>
+<h2 id="_3">指数 / 几何求和<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><code>sum</code> 的 DSL 先按加法拆项：</p>
 <ul>
 <li>多项式项走 Faulhaber / Bernoulli；</li>
@@ -2812,7 +2812,7 @@
 <p>支持 <code>sum(2^x,x,a,b)</code>、<code>sum(2^x,x,0,n)</code>、<code>sum(3*2^x,x,0,5)</code>、<code>sum(2^x+x^2,x,1,n)</code>、<code>sum(a^x,x,0,n)</code>。</p>
 <p>进一步支持 <code>P(x)*r^x</code>（<code>deg P ≤ 2</code>）：<code>sum_{k=0}^{n} r^k</code>、<code>k r^k</code>、<code>k^2 r^k</code> 用显式公式，
 例如 <code>sum(x*2^x,x,0,n) = -(n+1)2^(n+1)+n*2^(n+2)+2</code>。数值大区间退回精确数值循环。</p>
-<h2 id="34-series-dsl">34. series 搬入 DSL<a class="headerlink" href="#34-series-dsl" title="Permanent link">&para;</a></h2>
+<h2 id="series-dsl">series 搬入 DSL<a class="headerlink" href="#series-dsl" title="Permanent link">&para;</a></h2>
 <p><code>series</code> 的高层算法在 <code>lang/series.sl</code>，通过 <code>vm_series</code> 运行：</p>
 <ul>
 <li><code>taylor</code>：有限点 Taylor 循环，调用 native <code>series_diff</code> / <code>series_at</code>；</li>

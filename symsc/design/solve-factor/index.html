@@ -2306,10 +2306,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#21-solve" class="md-nav__link">
+  <a href="#solve" class="md-nav__link">
     <span class="md-ellipsis">
       
-        21. solve 的分层
+        solve 的分层
       
     </span>
   </a>
@@ -2317,10 +2317,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#22-factor" class="md-nav__link">
+  <a href="#factor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        22. factor
+        factor
       
     </span>
   </a>
@@ -2328,10 +2328,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#25" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        25. 因式分解求解
+        因式分解求解
       
     </span>
   </a>
@@ -2339,10 +2339,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#31-lsolve" class="md-nav__link">
+  <a href="#lsolve" class="md-nav__link">
     <span class="md-ellipsis">
       
-        31. lsolve
+        lsolve
       
     </span>
   </a>
@@ -2713,10 +2713,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#21-solve" class="md-nav__link">
+  <a href="#solve" class="md-nav__link">
     <span class="md-ellipsis">
       
-        21. solve 的分层
+        solve 的分层
       
     </span>
   </a>
@@ -2724,10 +2724,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#22-factor" class="md-nav__link">
+  <a href="#factor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        22. factor
+        factor
       
     </span>
   </a>
@@ -2735,10 +2735,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#25" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        25. 因式分解求解
+        因式分解求解
       
     </span>
   </a>
@@ -2746,10 +2746,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#31-lsolve" class="md-nav__link">
+  <a href="#lsolve" class="md-nav__link">
     <span class="md-ellipsis">
       
-        31. lsolve
+        lsolve
       
     </span>
   </a>
@@ -2774,7 +2774,7 @@
 
 
 <h1 id="_1">求解与因式分解<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h2 id="21-solve">21. solve 的分层<a class="headerlink" href="#21-solve" title="Permanent link">&para;</a></h2>
+<h2 id="solve">solve 的分层<a class="headerlink" href="#solve" title="Permanent link">&para;</a></h2>
 <p><code>solve</code> 采用「原生准备数据 + DSL 求解」，避免把方程文本特判写进积木：</p>
 <ol>
 <li><strong>解析与分发</strong>（<code>lib/api.gs</code>）</li>
@@ -2793,7 +2793,7 @@
 <li><strong>输出</strong>：<code>K.List</code> 节点。无解 <code>{}</code>；单方程 <code>{r1, r2}</code>；方程组 <code>{x值, y值, ...}</code>。
    多组解时约定为嵌套列表，当前一次方程组只会产生 0/1 组。</li>
 </ol>
-<h2 id="22-factor">22. factor<a class="headerlink" href="#22-factor" title="Permanent link">&para;</a></h2>
+<h2 id="factor">factor<a class="headerlink" href="#factor" title="Permanent link">&para;</a></h2>
 <p>直接移植 <code>polyfactor1.sb3</code>，用 GoboScript 重写（<code>lib/factor.gs</code>），不经过 DSL / VM：</p>
 <ol>
 <li><strong>转换</strong>：<code>fac_from_ast</code> 复用多项式后端转成稠密一元多项式；
@@ -2807,7 +2807,7 @@
    重复因子合并为幂，内容作为数值因子放最前。</li>
 </ol>
 <p>范围是一元、有理系数。整数运算避免了 DSL 版本多项式除法的溢出，<code>x^10-1</code> 能完整拆分。</p>
-<h2 id="25">25. 因式分解求解<a class="headerlink" href="#25" title="Permanent link">&para;</a></h2>
+<h2 id="_2">因式分解求解<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>一元方程先走 <code>factor</code> 的因子列表，再逐个因子求解：</p>
 <ul>
 <li>一次因子 → 线性根；</li>
@@ -2817,7 +2817,7 @@
 <li>其他高次因子 → 「solve 暂不支持该高次方程」。</li>
 </ul>
 <p>结果按数值排序并去重（<code>(x-1)^2</code> 只给 <code>{1}</code>）。</p>
-<h2 id="31-lsolve">31. lsolve<a class="headerlink" href="#31-lsolve" title="Permanent link">&para;</a></h2>
+<h2 id="lsolve">lsolve<a class="headerlink" href="#lsolve" title="Permanent link">&para;</a></h2>
 <p><code>lsolve([[a11, ..., b1], ...])</code> 接受<strong>增广矩阵</strong>，最后一列是右端项：</p>
 <ul>
 <li>唯一解 → <code>{x1, x2, ...}</code>；无解 → <code>{}</code>；无穷多解 → 报错。</li>
