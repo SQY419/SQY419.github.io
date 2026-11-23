@@ -53,5 +53,4 @@
 - 结构重写 `series_exp_rewrite` / `series_has_exp` / `series_eval_value` 仍在 `lib/series.gs`，
   因为它们需要 AST 节点映射表。
 
-旧 native `series_build` / `series_inf` / `series_dispatch` 已删除，`api.gs` 改调 `vm_series`。
 series 相关过程从 710 块降到 591 块。
