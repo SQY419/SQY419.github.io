@@ -1,0 +1,20 @@
+{#-
+  只做一件事：补上结尾斜杠。
+  站点资源（assets/…）都是相对路径，访问 /symsc（少一个斜杠）时浏览器会去请求
+  /assets/…，在不会自动 301 的主机（例如 Vercel 的 /symsc 反代）上就会变成无样式白页。
+  这里在 <head> 里立刻跳一次，动静最小。
+-#}
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  <script>
+    (function () {
+      var p = window.location.pathname;
+      // 目录型地址（不含扩展名）缺少结尾斜杠时补上
+      if (p.charAt(p.length - 1) !== "/" && !/\.[a-z0-9]+$/i.test(p)) {
+        window.location.replace(p + "/" + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+{% endblock %}

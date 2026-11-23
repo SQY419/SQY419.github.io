@@ -51,6 +51,17 @@
 
     
     
+  
+  <script>
+    (function () {
+      var p = window.location.pathname;
+      // 目录型地址（不含扩展名）缺少结尾斜杠时补上
+      if (p.charAt(p.length - 1) !== "/" && !/\.[a-z0-9]+$/i.test(p)) {
+        window.location.replace(p + "/" + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+
   </head>
   
   

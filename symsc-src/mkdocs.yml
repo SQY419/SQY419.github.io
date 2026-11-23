@@ -11,6 +11,7 @@ site_dir: ../symsc
 
 theme:
   name: material
+  custom_dir: overrides
   language: zh
   logo: assets/logo.svg
   favicon: assets/scratch-cat-head.svg
