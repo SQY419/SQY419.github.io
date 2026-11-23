@@ -130,3 +130,15 @@ simplify(2*x + 3*x - x)
 见 [函数参考](../reference/functions/index.md) 和 [内核设计](../design.md)。
 
 构建用 `--strict`，链接写错会直接失败，不会静默上线。
+
+## 在线版计算器
+
+`symSC.html` 是打包好的单文件应用，作为普通静态文件放在 `docs/symSC.html`（不是 `.md`），
+构建时原样复制成 `symsc/symSC.html`。它不属于 Markdown 页面，不用写进 `nav`。
+
+更新版本时用同名文件覆盖再提交即可——页头按钮、首页按钮和侧栏入口都指向这同一个地址，
+不需要改链接：
+
+```text
+docs/symSC.html  →  /symsc/symSC.html
+```

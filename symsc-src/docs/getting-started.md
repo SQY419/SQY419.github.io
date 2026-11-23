@@ -11,6 +11,14 @@ symSC 是一个 Scratch 3.0 工程，没有第三方扩展依赖。
 !!! tip "推荐 TurboWarp"
     Turbowarp 的性能远超 Scratch 3.0，通常来说，Turbowarp 计算的速度会在原版 Scratch 的十倍以上。
 
+## 不想装环境？
+
+打开 [symSC 在线版](symSC.html)，用浏览器直接算，不用装 Scratch：
+
+[▶ 打开在线版](symSC.html){ .md-button .md-button--primary target="_blank" rel="noopener" }
+
+单文件 HTML，离线也能用；页头右上角的「在线版」按钮也是同一个入口。
+
 ## 第一条命令
 
 在终端里输入，回车执行：

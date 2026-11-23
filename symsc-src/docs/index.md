@@ -15,6 +15,7 @@ hide:
 无第三方扩展依赖。</p>
 </div>
 
+[▶ 打开在线版](symSC.html){ .md-button .md-button--primary target="_blank" rel="noopener" }
 
 ## 它能做什么
 
