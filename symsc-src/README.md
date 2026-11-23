@@ -15,7 +15,7 @@ https://sqy.axolotlpower.com/symsc/
 | `docs/reference/functions/` | 每个内建函数一页 |
 | `docs/stylesheets/extra.css` | 字体、卡片、表格样式 |
 | `docs/symSC.html` | 在线版单文件计算器，构建后发布到 `/symsc/symSC.html` |
-| `docs/javascripts/online-button.js` | 页头「在线版」按钮（运行时插入，不依赖模板） |
+| `docs/javascripts/nav-links.js` | 侧栏站外链接在新标签页打开 |
 | `../symsc/` | 构建产物，**不要手改**，随源码一起提交 |
 
 ## 自动构建（推荐）
@@ -42,7 +42,6 @@ https://sqy.axolotlpower.com/symsc/
 https://sqy.axolotlpower.com/symsc/symSC.html
 ```
 
-页头右上角的「▶ 在线版」按钮（`docs/javascripts/online-button.js` 运行时注入）、
 首页和「快速开始」页的按钮、侧栏的「在线版 ↗」都指向它。**换版本不用改任何链接**：
 
 1. 用新的 `symSC.html` 覆盖 `symsc-src/docs/symSC.html`，文件名保持不变；

@@ -17,7 +17,7 @@ symSC 是一个 Scratch 3.0 工程，没有第三方扩展依赖。
 
 [▶ 打开在线版](symSC.html){ .md-button .md-button--primary target="_blank" rel="noopener" }
 
-单文件 HTML，离线也能用；页头右上角的「在线版」按钮也是同一个入口。
+单文件 HTML，离线也能用。
 
 ## 第一条命令
 
