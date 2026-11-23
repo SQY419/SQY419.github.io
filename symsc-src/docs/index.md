@@ -39,8 +39,8 @@ limit(sqrt(1+x^2)/x, x, oo)
 ```
 
 !!! note "和旧版的区别"
-    现在的实现**没有数学输出，只有线性输出**。
-    旧版 [symSc](https://github.com/SQY419/Beta-Math/tree/main/symSC) 有数学输出，但缺少 Vector 等特性。
+    现在的实现**也有数学输出**。
+    旧版 [symSc](https://github.com/SQY419/Beta-Math/tree/main/symSC) 的模式匹配非常烂。
 
 仓库：[SQY419/symSC](https://github.com/SQY419/symSC)
 

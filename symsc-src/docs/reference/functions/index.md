@@ -26,23 +26,23 @@
 
 | 函数 | 作用 |
 | --- | --- |
-| [`diff`](diff.md) | 求导，支持 1..3 个参数与高阶导 |
-| [`integrate`](integrate.md) | 不定积分，含部分分式 |
-| [`limit`](limit.md) | 极限，支持 `oo`、`1^∞`、极点 |
-| [`series`](series.md) | Taylor / 无穷远展开（0..64 阶） |
+| [`diff`](diff.md) | 求导 |
+| [`integrate`](integrate.md) | 不定积分 |
+| [`limit`](limit.md) | 求极限 |
+| [`series`](series.md) | Taylor / 无穷远展开 |
 
 ## 求和与连乘
 
 | 函数 | 作用 |
 | --- | --- |
-| [`sum`](sum.md) | 区间求和 / 容器求和，支持符号闭式与几何级数 |
+| [`sum`](sum.md) | 区间求和 / 容器求和，支持符号闭式 |
 | [`prod`](prod.md) | 区间连乘 / 容器连乘 |
 
 ## 数论
 
 | 函数 | 作用 |
 | --- | --- |
-| [`isprime`](isprime.md) | 素性判定（Miller-Rabin） |
+| [`isprime`](isprime.md) | 素性判定 |
 | [`ifactor`](ifactor.md) | 整数分解 |
 | [`perm` / `comb`](perm-comb.md) | 排列数 / 组合数 |
 | [`powmod`](powmod.md) | 模幂 |
@@ -58,7 +58,7 @@
 | [`dot`](dot.md) | 点积 |
 | [`cross`](cross.md) | 三维叉积 |
 | [`transpose`](transpose.md) | 转置 |
-| [`det`](det.md) | 行列式（1×1 ~ 3×3） |
+| [`det`](det.md) | 行列式 |
 | [`unitV`](unitv.md) | 单位向量 |
 | [`abs`](abs.md) | 绝对值 / 向量模长 |
 
@@ -66,8 +66,8 @@
 
 | 函数 | 作用 |
 | --- | --- |
-| [`sqrt`](sqrt.md) | 精确根式化简、去嵌套 |
-| [`sin` / `cos` / `tan`](trig.md) | 三角函数，特殊角给根式值；`csc`/`sec`/`cot` 同理 |
+| [`sqrt`](sqrt.md) | 平方根 |
+| [`sin` / `cos` / `tan`](trig.md) | 三角函数；`csc`/`sec`/`cot` 同理 |
 | [`exp` / `ln` / `log`](exp-log.md) | 指数与对数 |
 | [`mod` / `%`](mod.md) | 取余 |
 
@@ -79,6 +79,5 @@
 | [`purge`](purge.md) | 删除变量并返回值 |
 | [`hold`](hold.md) | 原样返回输入文本 |
 
-!!! note "关于精度"
-    所有条目按仓库 README / NOTES / DESIGN 整理；示例里的 `>` 是终端实际输出。
-    没有写输出的条目只是用法示意。以 `help(函数名)` 为准。
+!!! note "关于"
+    示例里的 `>` 是终端实际的线性输出，没有写输出的条目只是用法示意。
