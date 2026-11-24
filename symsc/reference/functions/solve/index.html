@@ -1002,17 +1002,6 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        会走哪些算法
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         错误
       
     </span>
@@ -1021,7 +1010,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         相关
@@ -2824,17 +2813,6 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        会走哪些算法
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         错误
       
     </span>
@@ -2843,7 +2821,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         相关
@@ -2874,8 +2852,8 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>solve(equation, var)
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>solve({eq1, eq2, ...}, {x, y, ...})
 </code></pre></div>
-<p>解方程 / 方程组。方程写成 <code>lhs=rhs</code>（会在最外层找第一个 <code>=</code>，跳过 <code>==</code>、<code>&lt;=</code>、<code>&gt;=</code>、<code>!=</code>），
-内部转成 <code>lhs - rhs</code> 的残差再解。</p>
+<p>解方程（组）。方程写成 <code>lhs=rhs</code>（会在最外层找第一个 <code>=</code>，跳过 <code>==</code>、<code>&lt;=</code>、<code>&gt;=</code>、<code>!=</code>），
+内部转成 <code>lhs - rhs == 0</code> 再解。还不支持解不等式。</p>
 <h2 id="_1">示例<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>solve(x^2 - 5*x + 6 = 0, x)
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>solve({x+y=1, x-y=2}, {x, y})
@@ -2897,30 +2875,19 @@
 </tr>
 <tr>
 <td>单方程</td>
-<td><code>{r1, r2}</code>（平铺）</td>
+<td><code>{r1, r2, ...}</code></td>
 </tr>
 <tr>
 <td>方程组唯一解</td>
-<td><code>{x值, y值, ...}</code></td>
+<td><code>{x, y, ...}</code></td>
 </tr>
 <tr>
 <td>多组解</td>
-<td>嵌套列表，每个子列表按变量顺序（格式已支持，当前一次方程组只会产生 0/1 组）</td>
+<td>嵌套列表，每个子列表按变量顺序</td>
 </tr>
 </tbody>
 </table>
-<h2 id="_3">会走哪些算法<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>先因式分解</strong>（一元方程）：一次因子给线性根；二次因子用求根公式；
-   <code>a*x^n + b</code> 型不可约因子解 <code>x^n = -b/a</code>（奇数 n 一个实根，偶数 n 两个），
-   根写成 <code>K.PowE</code>，例如 <code>2^(1/3)</code>、<code>3^(1/6)</code>。</li>
-<li><strong>否则用多项式系数</strong>：一次方程 <code>x = -b/a</code>；二次方程用判别式
-   <code>D = b^2-4ac</code>，<code>D&lt;0</code> 返回 <code>{}</code>，<code>D=0</code> 单根，否则 <code>(-b ± sqrt(D))/(2a)</code>。</li>
-<li><strong>一次方程组</strong>：带主元交换的高斯消元，行阶梯形后检查矛盾行；
-   秩小于未知数个数时报「有无穷多解」，否则回代。</li>
-</ol>
-<p>结果会按数值排序并去掉重复根，例如 <code>(x-1)^2</code> 只输出 <code>{1}</code>。</p>
-<h2 id="_4">错误<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="_3">错误<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -2929,10 +2896,6 @@
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>非多项式</td>
-<td><code>solve 只支持多项式方程</code></td>
-</tr>
 <tr>
 <td>次数 &gt; 2 且不可因式分解</td>
 <td><code>solve 只支持一次和二次方程</code> / <code>solve 暂不支持该高次方程</code></td>
@@ -2947,7 +2910,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_5">相关<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h2 id="_4">相关<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p><a href="../factor/"><code>factor</code></a> · <a href="../lsolve/"><code>lsolve</code></a></p>
 
 
