@@ -2839,9 +2839,8 @@
 <li><strong>边界</strong>：数值上下界按大小交换；符号上下界按 <span class="arithmatex">\(b \leq e\)</span>。非多项式通项在符号上下界下报 符号求和只支持多项式。</li>
 </ol>
 <h2 id="_3">指数 / 几何求和<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p><code>sum</code> 的 DSL 先按加法拆项，多项式项走 Faulhaber / Bernoulli；<span class="arithmatex">\(c r^x\)</span> 项走几何级数 <span class="arithmatex">\(c \frac{r^{e+1}-r^b}{r-1}\)</span>；<span class="arithmatex">\(r=1\)</span> 退化为 <span class="arithmatex">\(c (e-b+1)\)</span>；数值底数 / 整数上下界用大整数幂。</p>
-<p>支持 <code>sum(2^x,x,a,b)</code>、<code>sum(3*2^x,x,0,5)</code>、<code>sum(2^x+x^2,x,1,n)</code>、<code>sum(a^x,x,0,n)</code>。</p>
-<p>进一步支持 <span class="arithmatex">\(P(x) r^x (\deg P \leq 2)\)</span>：<span class="arithmatex">\(sum_{k=0}^{n} r^k\)</span>、<span class="arithmatex">\(k r^k\)</span>、<span class="arithmatex">\(k^2 r^k\)</span> 用显式公式，例如 <code>sum(x*2^x,x,0,n) = -(n+1)*2^(n+1)+n*2^(n+2)+2</code>。数值大区间退回精确数值循环。</p>
+<p><code>sum</code> 的 DSL 先按加法拆项，多项式项走 Faulhaber / Bernoulli；<span class="arithmatex">\(c r^x\)</span> 项走几何级数 <span class="arithmatex">\(c \frac{r^{e+1}-r^b}{r-1}\)</span>；<span class="arithmatex">\(r=1\)</span> 退化为 <span class="arithmatex">\(c (e-b+1)\)</span>；数值底数、整数上下界用大整数幂。</p>
+<p>支持 <code>sum(2^x,x,a,b)</code>、<code>sum(3*2^x,x,0,5)</code>、<code>sum(2^x+x^2,x,1,n)</code>、<code>sum(a^x,x,0,n)</code>，还支持 <span class="arithmatex">\(P(x) r^x (\deg P \leq 2)\)</span>：<span class="arithmatex">\(\sum_{k=0}^{n} r^k\)</span>、<span class="arithmatex">\(k r^k\)</span>、<span class="arithmatex">\(k^2 r^k\)</span> 用显式公式，例如 <code>sum(x*2^x,x,0,n) = -(n+1)*2^(n+1)+n*2^(n+2)+2</code>。数值大区间退回精确数值循环。</p>
 
 
 
