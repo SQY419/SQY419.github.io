@@ -2494,40 +2494,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        积木数量
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         系统函数
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        测试框架
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        后续路线
       
     </span>
   </a>
@@ -2789,40 +2756,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        积木数量
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         系统函数
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        测试框架
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        后续路线
       
     </span>
   </a>
@@ -2848,32 +2782,12 @@
 
 <h1 id="_1">系统<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>对应函数：<code>help</code>、<code>purge</code>、<code>hold</code>。</p>
-<h2 id="_2">积木数量<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>32298 / 32444；加入 series DSL 与两个极限规则后为 32809 / 32955 块，相对最初减少 631 块（约 -1.9%）。</p>
-<p>主要削减：
-- <code>bi_pow_str</code> 直接使用数值指数，去掉字符串解析循环。
-- 全部有理式统一由 <code>integ_rational_partial</code> 处理。
-- 同步清理 <code>tools/dslc.py</code> 的 NATIVES 表与 <code>lib/vm.gs</code> 分派分支。
-- 死代码由编译器自动剥离：没有调用者的函数不会进入 sb3。</p>
-<h2 id="_3">系统函数<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_2">系统函数<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
 <li><code>help</code>：提供命令帮助，对应帮助列表。</li>
-<li><code>purge</code>：清除缓存，重置计算状态。</li>
-<li><code>hold</code>：控制表达式的求值时机，防止过早计算。</li>
+<li><code>purge</code>：删除变量或者函数的定义。</li>
+<li><code>hold</code>：惰性求值。</li>
 </ul>
-<h2 id="_4">测试框架<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p><code>tests/run_vm_worker.js</code> 改为步进模式，不再轮询 60Hz 实时事件。
-- 每个 worker 直接写入 <code>cases</code>，找到 <code>finished</code> 非空即停。
-- 超时按步数（默认 2,000,000 步）而不是墙钟。</p>
-<p>745 条回归不再被每帧等待拖慢，语义检查不变。</p>
-<h2 id="_5">后续路线<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<ol>
-<li>把高层算法搬回 <code>.sl</code>：DSL 只有字节码列表，不占 Scratch 积木；</li>
-<li>做功能裁剪/多产物（核心代数 / +微积分 / 完整版）；</li>
-<li>拆分巨型分派器（<code>vm_native</code> 779 块、<code>mk_func</code> 522、<code>mk_add</code> 506、<code>pr_handle</code> 409）；</li>
-<li>合并 <code>pr_*</code>/<code>mk_*</code>/多项式模块之间的重复逻辑。</li>
-</ol>
-<p>统计：<code>python3 tools/blocks.py symSC.sb3 --top 20</code>。</p>
 
 
 
