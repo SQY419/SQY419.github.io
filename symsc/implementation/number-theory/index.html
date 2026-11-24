@@ -2418,32 +2418,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#hold-20-ifactor" class="md-nav__link">
+  <a href="#ifactor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        hold、软失败与 20 位 ifactor
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#diff" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        误差处理与 diff 扩展
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sgcc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        回归测试：SGCC 手动步进
+        ifactor
       
     </span>
   </a>
@@ -2797,32 +2775,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#hold-20-ifactor" class="md-nav__link">
+  <a href="#ifactor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        hold、软失败与 20 位 ifactor
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#diff" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        误差处理与 diff 扩展
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sgcc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        回归测试：SGCC 手动步进
+        ifactor
       
     </span>
   </a>
@@ -2849,32 +2805,13 @@
 <h1 id="_1">数论<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>对应函数：<code>isprime</code>、<code>ifactor</code>、<code>perm</code>/<code>comb</code>、<code>powmod</code>、<code>gcd</code>、<code>lcm</code>。</p>
 <h2 id="_2">数论基础<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p><code>lang/number.sl</code> + <code>lib/number.gs</code>：</p>
 <ul>
 <li><code>lib/number.gs</code> 只负责字符串算术、节点转换与格式化；循环在 DSL。</li>
 <li><code>isprime</code>/<code>ifactor</code>/<code>powmod</code> 的操作数限制 15 位以内；<code>perm</code>/<code>comb</code> 结果可任意大。</li>
-<li><code>$\text{ifactor}(0)</code> 返回 <code>0</code>。</li>
 </ul>
-<h2 id="hold-20-ifactor">hold、软失败与 20 位 ifactor<a class="headerlink" href="#hold-20-ifactor" title="Permanent link">&para;</a></h2>
-<ul>
-<li>不把「暂时积不出来」显示成错误。</li>
-<li><code>$\text{ifactor}($2^{64}$+1)</code>：15 位以上先做 30 万以内小因子试除。<code>nt_trial_factor</code> 按 7 位分块、30 轮步进（跳过 2/3/5 的倍数）算余数，找到 <code>274177</code> 后递归分解余项。</li>
-<li>20 位以上或找不到小因子时返回明确错误，不进入极慢的 Big Pollard-Rho。</li>
-</ul>
-<h2 id="diff">误差处理与 diff 扩展<a class="headerlink" href="#diff" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>Unknown + container</code>，命中就跳过化简、直接打印已解析的 AST，因此 <code>foo([2/3])</code> 原样输出。</li>
-<li><code>diff</code> 参数扩展为 1..3 个：<code>diff(f,x,n)</code>、<code>diff(f,x=a)</code>、<code>diff(f,x=a,n)</code>；阶数上限 1024。</li>
-<li>对 <code>P(x)*e^x</code> 的高阶导用 Leibniz 公式，避免 256 次逐步求导耗尽节点表。</li>
-</ul>
-<h2 id="sgcc">回归测试：SGCC 手动步进<a class="headerlink" href="#sgcc" title="Permanent link">&para;</a></h2>
-<p><code>tests/run_vm_worker.js</code> 按 <code>SGCC-测试方法.md</code> 改为：</p>
-<ul>
-<li>不再等 60 Hz 实时轮询；</li>
-<li>每个 worker 直接写入 <code>cases</code>，跑到 <code>finished</code> 非空即停；</li>
-<li>超时按步数（默认 2,000,000 步）而不是墙钟。</li>
-</ul>
-<p>745 条回归不再被每帧等待拖慢，语义检查不变。</p>
+<h2 id="ifactor">ifactor<a class="headerlink" href="#ifactor" title="Permanent link">&para;</a></h2>
+<p>认为 <span class="arithmatex">\(ifactor(0)\)</span> 应当返回 <span class="arithmatex">\(0\)</span>。</p>
+<p>15 位以上先做 30 万以内小因子试除，20 位以上或找不到小因子时返回明确错误。例如 <span class="arithmatex">\(\text{ifactor}(2^{64}+1)\)</span>，<code>nt_trial_factor</code> 按 7 位分块、30 轮步进算余数，找到 <code>274177</code> 后递归分解余项。</p>
 
 
 
