@@ -2869,28 +2869,17 @@
 
 
 <h1 id="_1">基础数学<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p>对应函数：<code>$\sqrt</code>、<code>sin/cos/tan</code>、<code>exp/ln/log</code>、<code>mod/%</code>。</p>
+<p>对应函数：<code>sqrt</code>、<code>sin/cos/tan</code>、<code>exp/ln/log</code>、<code>mod/%</code>。</p>
 <h2 id="_2">平方根<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>$\sqrt(0) → 0</code>，<code>$\sqrt(1) → 1</code>。</li>
-<li>分子、分母分别提取最大平方因子，得到 <code>$\sqrt(n/d) = (k/m) * $\sqrt((n/k²)/(d/m²))</code>。</li>
-<li>剩余根式为 1 时直接返回有理数。</li>
-<li>数字超过 <code>MAX_SQRT = 1,000,000</code> 跳过化简。</li>
-<li><code>build_product</code> 会把 <code>pow_node</code> 返回的数字因子折回系数，避免出现 <code>2*2</code>。</li>
-</ul>
+<p>分子、分母分别提取最大平方因子，得到 <span class="arithmatex">\(\sqrt{n/d} = \frac{k}{m} \sqrt{\frac{n/k^2}{d/m^2}}\)</span>，剩余根式为 1 时直接返回有理数。数字超过 <code>MAX_SQRT = 1000000</code> 跳过化简。</p>
 <h2 id="_3">三角函数<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>sin</code>、<code>cos</code>、<code>tan</code> 的算法通过 DSL 和原生层实现。</li>
-<li>特殊零点：<code>sin(pi)</code>/<code>tan(pi)</code> 等，<code>tg_special</code> 优化；<code>tan(n*pi)</code> 归约到 <code>nn == d</code>。</li>
-<li>求导：<code>sin' = cos</code>、<code>cos' = -sin</code>、<code>tan' = 1/cos^2</code>。</li>
-<li>链式法则集成在 <code>diff</code> 中。</li>
-</ul>
+<p><code>sin</code>、<code>cos</code>、<code>tan</code> 的算法通过 DSL 和原生层实现，特殊角直接给出值。</p>
 <h2 id="_4">指数与对数<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>exp</code>、<code>ln</code>、<code>log</code> 基于 DSL 与原生层。</li>
-<li><code>e^0</code>/<code>pi^0</code> 直接返回 <code>1</code>。</li>
-<li><code>exp</code> 的指数绝对值过大时会转换为 BigFloat 或返回 <code>Infinity</code>。</li>
-<li>求导：<code>exp' = exp</code>、<code>ln' = 1/u</code>、<code>log' = 1/(u*ln(10))</code>。</li>
+<li><code>exp</code>、<code>ln</code>、<code>log</code> 基于 DSL 与原生层，特殊参数直接给出值。模式匹配也有相关规则。例如：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>exp(ln(x))
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>&gt; x
+</code></pre></div></li>
 </ul>
 <h2 id="_5">取模<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2899,8 +2888,7 @@
 </ul>
 <h2 id="_6">其他<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>csc</code>/<code>sec</code>/<code>cot</code> 在解析时重写为 <code>1/sin</code>、<code>1/cos</code>、<code>cos/sin</code>，不新增 AST 类型。</li>
-<li>积分器补上 <code>K.PowE</code> 的分数指数：<code>x^(pn/pd)</code> 调 <code>i_pow</code>；<code>$\sqrt($\frac{1}{x}$)</code>、<code>($\frac{1}{x}$)^(1/2)</code> 先把内外层指数相乘再积分。</li>
+<li><code>csc</code>/<code>sec</code>/<code>cot</code> 在解析时重写为 <code>1/sin</code>、<code>1/cos</code>、<code>cos/sin</code>。</li>
 </ul>
 
 
