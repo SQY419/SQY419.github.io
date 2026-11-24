@@ -16,9 +16,7 @@
 
 ## 指数 / 几何求和
 
-`sum` 的 DSL 先按加法拆项，多项式项走 Faulhaber / Bernoulli；$c r^x$ 项走几何级数 $c \frac{r^{e+1}-r^b}{r-1}$；$r=1$ 退化为 $c (e-b+1)$；数值底数 / 整数上下界用大整数幂。
+`sum` 的 DSL 先按加法拆项，多项式项走 Faulhaber / Bernoulli；$c r^x$ 项走几何级数 $c \frac{r^{e+1}-r^b}{r-1}$；$r=1$ 退化为 $c (e-b+1)$；数值底数、整数上下界用大整数幂。
 
-支持 `sum(2^x,x,a,b)`、`sum(3*2^x,x,0,5)`、`sum(2^x+x^2,x,1,n)`、`sum(a^x,x,0,n)`。
-
-进一步支持 $P(x) r^x (\deg P \leq 2)$：$sum_{k=0}^{n} r^k$、$k r^k$、$k^2 r^k$ 用显式公式，例如 `sum(x*2^x,x,0,n) = -(n+1)*2^(n+1)+n*2^(n+2)+2`。数值大区间退回精确数值循环。
+支持 `sum(2^x,x,a,b)`、`sum(3*2^x,x,0,5)`、`sum(2^x+x^2,x,1,n)`、`sum(a^x,x,0,n)`，还支持 $P(x) r^x (\deg P \leq 2)$：$\sum_{k=0}^{n} r^k$、$k r^k$、$k^2 r^k$ 用显式公式，例如 `sum(x*2^x,x,0,n) = -(n+1)*2^(n+1)+n*2^(n+2)+2`。数值大区间退回精确数值循环。
  
