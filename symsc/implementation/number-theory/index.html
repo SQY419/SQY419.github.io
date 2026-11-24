@@ -2807,11 +2807,12 @@
 <h2 id="_2">数论基础<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
 <li><code>lib/number.gs</code> 只负责字符串算术、节点转换与格式化；循环在 DSL。</li>
-<li><code>isprime</code>/<code>ifactor</code>/<code>powmod</code> 的操作数限制 15 位以内；<code>perm</code>/<code>comb</code> 结果可任意大。</li>
+<li><code>isprime</code>/<code>ifactor</code>/<code>powmod</code> 的操作数限制 15 位以内。</li>
 </ul>
 <h2 id="ifactor">ifactor<a class="headerlink" href="#ifactor" title="Permanent link">&para;</a></h2>
-<p>认为 <span class="arithmatex">\(ifactor(0)\)</span> 应当返回 <span class="arithmatex">\(0\)</span>。</p>
-<p>15 位以上先做 30 万以内小因子试除，20 位以上或找不到小因子时返回明确错误。例如 <span class="arithmatex">\(\text{ifactor}(2^{64}+1)\)</span>，<code>nt_trial_factor</code> 按 7 位分块、30 轮步进算余数，找到 <code>274177</code> 后递归分解余项。</p>
+<p>认为 <span class="arithmatex">\(\text{ifactor}(0)\)</span> 应当返回 <span class="arithmatex">\(0\)</span>。</p>
+<p>15 位以上先做 30 万以内小因子试除，20 位以上或找不到小因子时返回明确错误。</p>
+<p>例如： <span class="arithmatex">\(\text{ifactor}(2^{64}+1)\)</span>，<code>nt_ trial_factor</code> 按 7 位分块、30 轮步进算余数，找到 <span class="arithmatex">\(274177\)</span> 后递归分解余项。</p>
 
 
 
