@@ -2319,17 +2319,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#mk_num" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mk_num
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#sqrt" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2866,17 +2855,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#mk_num" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mk_num
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#sqrt" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2968,26 +2946,15 @@
 </code></pre></div>
 <h3 id="_3">智能构造器<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p>所有节点通过智能构造器创建，确保规范化。</p>
-<h4 id="mk_num">mk_num<a class="headerlink" href="#mk_num" title="Permanent link">&para;</a></h4>
-<p>约分、检查安全范围，0 统一成 <code>0/1</code>，溢出时设置错误。</p>
 <h4 id="sqrt">sqrt 的数字化简<a class="headerlink" href="#sqrt" title="Permanent link">&para;</a></h4>
 <p>分子分母提取最大平方因子。</p>
 <h4 id="mk_add">mk_add<a class="headerlink" href="#mk_add" title="Permanent link">&para;</a></h4>
-<ol>
-<li>扁平化加法树</li>
-<li>合并同类项</li>
-<li>Pythagorean pass 合并 <code>\sin^2+cos²</code></li>
-<li>排序重建二叉加法链</li>
-</ol>
+<p>扁平化加法树，合并同类项，排序重建二叉加法链</p>
 <h4 id="mk_mul">mk_mul<a class="headerlink" href="#mk_mul" title="Permanent link">&para;</a></h4>
-<ol>
-<li>扁平化；数字因子合，同底数幂指数相加</li>
-<li>重建系数 + 因子幂</li>
-</ol>
+<p>扁平化，重建系数 + 因子幂</p>
 <h4 id="mk_pow">mk_pow<a class="headerlink" href="#mk_pow" title="Permanent link">&para;</a></h4>
-<p>指数 0→1，1→底数；分配律处理 <code>$(2x)^2 \to 4x^2$</code>。</p>
+<p>分配律处理 <span class="arithmatex">\((2x)^2 \to 4x^2\)</span>。</p>
 <h2 id="factor">factor<a class="headerlink" href="#factor" title="Permanent link">&para;</a></h2>
-<p>移植 <code>polyfactor1.sb3</code>，用 GoboScript 重写，不经过 DSL/VM。</p>
 <ol>
 <li>转换：<code>fac_from_ast</code> 转稠密一元多项式；<code>fac_content</code>/<code>fac_primitive</code> 提取内容为本原多项式。</li>
 <li>表示：按高次到常数存储。</li>
@@ -2995,7 +2962,7 @@
 <li>Kronecker：高次用求值平移法枚举因子。</li>
 <li>组装：因子合并幂，内容前置。</li>
 </ol>
-<p>范围是一元、有理系数；<code>x^10-1</code> 能完整拆分。</p>
+<p>范围是一元、有理系数；<span class="arithmatex">\(x^{10}-1\)</span> 能完整拆分。</p>
 
 
 
