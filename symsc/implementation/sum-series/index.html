@@ -2830,32 +2830,30 @@
 <p>区间版本做了三层优化：</p>
 <ol>
 <li><strong>快速项求值</strong>：通项是有理函数（<code>Num</code>/<code>Var</code>/<code>Add</code>/<code>Mul</code>/整数指数 <code>Pow</code>）时，用 <code>sum_fast_eval</code> 在整数 <code>k</code> 上直接算精确有理数，跳过 <code>subst_expr</code>/规则化简/<code>exact_fold</code>，失败才回退原路径。</li>
-<li><strong>等差数列捷径</strong>：<code>sum(x, x, b, e)</code> 直接用 <code>(b+e)(e-b+1)/2</code>，O(1)。</li>
+<li><strong>等差数列捷径</strong>：<code>sum(x, x, b, e)</code> 直接用 <code>(b$+$e)(e$-$b$+$1)/2</code>，O(1)。</li>
 <li><strong>有理数累加</strong>：小范围用安全整数 <code>rat_add</code>/<code>rat_mul</code>，溢出后切十进制大整数；求和用<strong>分母 LCM</strong> 合并，避免分母乘积膨胀，约分统一放到最后（<code>br_finalize</code>）。</li>
 </ol>
-<p>效果：<code>sum(1/x^2,x,1,25)</code> 从约 13 秒降到约 1.8 秒（同一 scratch-vm 环境），595/595 回归通过。</p>
+<p>效果：<code>sum(1/$x^2$,x,1,25)</code> 从约 13 秒降到约 1.8 秒（同一 scratch<span class="arithmatex">\(-\)</span>vm 环境），595/595 回归通过。</p>
 <h2 id="_2">符号求和<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>DSL</strong>（<code>lang/sum.sl</code>）：把通项看成关于求和变量的多项式，用 Faulhaber 公式组合 <code>sum_{k=1}^{n} k^p</code>，得到 <code>sum_{x=b}^{e} f(x) = S(e) - S(b-1)</code>。</li>
-<li><strong>原生层</strong>（<code>lib/symsum.gs</code>）：</li>
-<li><code>sym_prep</code> 复用多项式后端，把通项展开成关于 <code>x</code> 的系数；其他变量作为符号系数；</li>
-<li><code>sym_bern_init</code> 用有理数递推生成 Bernoulli 数（到 16 次）；</li>
-<li><code>sym_faul_coef(p,j)</code> 给出 <code>n^(p+1-j)</code> 的系数；</li>
-<li><code>sym_simp</code> 负责展开/化简闭式。</li>
-<li><strong>接入</strong>：<code>sum_range</code> 先调 <code>symsum_try</code>，成功用闭式，失败回落到数值循环。数值多项式区间也走闭式，<code>sum(x^2,x,1,100000)</code> 不再逐项算。</li>
+<li><strong>DSL</strong>（<code>lang/sum.sl</code>）：把通项看成关于求和变量的多项式，用 Faulhaber 公式组合 <code>sum_{k=1}^{n} k^p</code>，得到 <code>sum_{x=b}^{e} f(x) = S(e) $-$ S(b$-$1)</code>。</li>
+<li><strong>原生层</strong>（<code>lib/symsum.gs</code>）：
+   <span class="arithmatex">\(-\)</span> <code>sym_prep</code> 复用多项式后端，把通项展开成关于 <code>x</code> 的系数；其他变量作为符号系数；
+   <span class="arithmatex">\(-\)</span> <code>sym_bern_init</code> 用有理数递推生成 Bernoulli 数（到 16 次）；
+   <span class="arithmatex">\(-\)</span> <code>sym_faul_coef(p,j)</code> 给出 <code>n^(p$+$1$-$j)</code> 的系数；
+   <span class="arithmatex">\(-\)</span> <code>sym_simp</code> 负责展开/化简闭式。</li>
+<li><strong>接入</strong>：<code>sum_range</code> 先调 <code>symsum_try</code>，成功用闭式，失败回落到数值循环。数值多项式区间也走闭式，<code>sum($x^2$,x,1,100000)</code> 不再逐项算。</li>
 <li><strong>边界</strong>：数值上下界按大小交换（保持「10 到 0 也求和 1..10」）；符号上下界按 <code>b &lt;= e</code>。非多项式通项在符号上下界下报「符号求和只支持多项式」。</li>
 </ol>
 <p>数值整数上下界不逐项循环：<code>symsum_try</code> 先走原生大整数 Faulhaber，幂超过安全整数时用十进制大整数累加，<code>100000^6</code> 不会溢出。负上下界退回普通数值循环，超过 10000 项报范围过大。</p>
 <h2 id="_3">指数 / 几何求和<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><code>sum</code> 的 DSL 先按加法拆项：</p>
-<ul>
-<li>多项式项走 Faulhaber / Bernoulli；</li>
-<li><code>c*r^x</code> 项走几何级数 <code>c*(r^(e+1)-r^b)/(r-1)</code>；<code>r=1</code> 退化为 <code>c*(e-b+1)</code>；</li>
-<li>数值底数 / 整数上下界用大整数幂；</li>
-<li>只对含求和变量的表达式做 <code>sym_simp</code>，纯数值结果直接返回，避免大整数被通用分式化简破坏。</li>
-</ul>
-<p>支持 <code>sum(2^x,x,a,b)</code>、<code>sum(2^x,x,0,n)</code>、<code>sum(3*2^x,x,0,5)</code>、<code>sum(2^x+x^2,x,1,n)</code>、<code>sum(a^x,x,0,n)</code>。</p>
-<p>进一步支持 <code>P(x)*r^x</code>（<code>deg P ≤ 2</code>）：<code>sum_{k=0}^{n} r^k</code>、<code>k r^k</code>、<code>k^2 r^k</code> 用显式公式，例如 <code>sum(x*2^x,x,0,n) = -(n+1)2^(n+1)+n*2^(n+2)+2</code>。数值大区间退回精确数值循环。</p>
+<p><span class="arithmatex">\(-\)</span> 多项式项走 Faulhaber / Bernoulli；
+<span class="arithmatex">\(-\)</span> <code>c*r^x</code> 项走几何级数 <code>c*(r^(e$+$1)$-$r^b)/(r$-$1)</code>；<code>r=1</code> 退化为 <code>c*(e$-$b$+$1)</code>；
+<span class="arithmatex">\(-\)</span> 数值底数 / 整数上下界用大整数幂；
+<span class="arithmatex">\(-\)</span> 只对含求和变量的表达式做 <code>sym_simp</code>，纯数值结果直接返回，避免大整数被通用分式化简破坏。</p>
+<p>支持 <code>sum($2^x$,x,a,b)</code>、<code>sum($2^x$,x,0,n)</code>、<code>sum(3*$2^x$,x,0,5)</code>、<code>sum($2^x$$+$$x^2$,x,1,n)</code>、<code>sum(a^x,x,0,n)</code>。</p>
+<p>进一步支持 <code>P(x)*r^x</code>（<code>deg P ≤ 2</code>）：<code>sum_{k=0}^{n} r^k</code>、<code>k r^k</code>、<code>k^2 r^k</code> 用显式公式，例如 <code>sum(x*$2^x$,x,0,n) = $-$(n$+$1)2^(n$+$1)$+$n*2^(n$+$2)$+$2</code>。数值大区间退回精确数值循环。</p>
 
 
 

@@ -2853,12 +2853,12 @@
 <ul>
 <li><code>lib/number.gs</code> 只负责字符串算术、节点转换与格式化；循环在 DSL。</li>
 <li><code>isprime</code>/<code>ifactor</code>/<code>powmod</code> 的操作数限制 15 位以内；<code>perm</code>/<code>comb</code> 结果可任意大。</li>
-<li><code>ifactor(0)</code> 返回 <code>0</code>。</li>
+<li><code>$\text{ifactor}(0)</code> 返回 <code>0</code>。</li>
 </ul>
 <h2 id="hold-20-ifactor">hold、软失败与 20 位 ifactor<a class="headerlink" href="#hold-20-ifactor" title="Permanent link">&para;</a></h2>
 <ul>
 <li>不把「暂时积不出来」显示成错误。</li>
-<li><code>ifactor(2^64+1)</code>：15 位以上先做 30 万以内小因子试除。<code>nt_trial_factor</code> 按 7 位分块、30 轮步进（跳过 2/3/5 的倍数）算余数，找到 <code>274177</code> 后递归分解余项。</li>
+<li><code>$\text{ifactor}($2^{64}$+1)</code>：15 位以上先做 30 万以内小因子试除。<code>nt_trial_factor</code> 按 7 位分块、30 轮步进（跳过 2/3/5 的倍数）算余数，找到 <code>274177</code> 后递归分解余项。</li>
 <li>20 位以上或找不到小因子时返回明确错误，不进入极慢的 Big Pollard-Rho。</li>
 </ul>
 <h2 id="diff">误差处理与 diff 扩展<a class="headerlink" href="#diff" title="Permanent link">&para;</a></h2>

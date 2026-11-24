@@ -2869,11 +2869,11 @@
 
 
 <h1 id="_1">基础数学<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p>对应函数：<code>sqrt</code>、<code>sin/cos/tan</code>、<code>exp/ln/log</code>、<code>mod/%</code>。</p>
+<p>对应函数：<code>$\sqrt</code>、<code>sin/cos/tan</code>、<code>exp/ln/log</code>、<code>mod/%</code>。</p>
 <h2 id="_2">平方根<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>sqrt(0) → 0</code>，<code>sqrt(1) → 1</code>。</li>
-<li>分子、分母分别提取最大平方因子，得到 <code>sqrt(n/d) = (k/m) * sqrt((n/k²)/(d/m²))</code>。</li>
+<li><code>$\sqrt(0) → 0</code>，<code>$\sqrt(1) → 1</code>。</li>
+<li>分子、分母分别提取最大平方因子，得到 <code>$\sqrt(n/d) = (k/m) * $\sqrt((n/k²)/(d/m²))</code>。</li>
 <li>剩余根式为 1 时直接返回有理数。</li>
 <li>数字超过 <code>MAX_SQRT = 1,000,000</code> 跳过化简。</li>
 <li><code>build_product</code> 会把 <code>pow_node</code> 返回的数字因子折回系数，避免出现 <code>2*2</code>。</li>
@@ -2900,7 +2900,7 @@
 <h2 id="_6">其他<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <ul>
 <li><code>csc</code>/<code>sec</code>/<code>cot</code> 在解析时重写为 <code>1/sin</code>、<code>1/cos</code>、<code>cos/sin</code>，不新增 AST 类型。</li>
-<li>积分器补上 <code>K.PowE</code> 的分数指数：<code>x^(pn/pd)</code> 调 <code>i_pow</code>；<code>sqrt(1/x)</code>、<code>(1/x)^(1/2)</code> 先把内外层指数相乘再积分。</li>
+<li>积分器补上 <code>K.PowE</code> 的分数指数：<code>x^(pn/pd)</code> 调 <code>i_pow</code>；<code>$\sqrt($\frac{1}{x}$)</code>、<code>($\frac{1}{x}$)^(1/2)</code> 先把内外层指数相乘再积分。</li>
 </ul>
 
 

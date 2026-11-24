@@ -25,7 +25,7 @@ struct Node {
 #### mk_add
 1. 扁平化加法树
 2. 合并同类项
-3. Pythagorean pass 合并 `sin²+cos²`
+3. Pythagorean pass 合并 `\sin^2+cos²`
 4. 排序重建二叉加法链
 
 #### mk_mul
@@ -33,7 +33,7 @@ struct Node {
 2. 重建系数 + 因子幂
 
 #### mk_pow
-指数 0→1，1→底数；分配律处理 `(2*x)^2→4*x^2`。
+指数 0→1，1→底数；分配律处理 `$(2x)^2 \to 4x^2$`。
 
 ## factor
 
