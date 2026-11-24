@@ -2837,9 +2837,8 @@
 </code></pre></div>
 <h2 id="_2">行为细节<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li>嵌套的 <code>eval</code> 会产生浮点节点（<code>K.Float</code>），它参与普通算术，但不再保持精确有理数。</li>
+<li>嵌套的 <code>eval</code> 会产生浮点数，它参与普通算术，但不再保持精确有理数。</li>
 <li>需要保留符号结构时用 <a href="../subst/"><code>subst</code></a>；需要小数近似时用 <a href="../approx/"><code>approx</code></a>。</li>
-<li>实测 <code>eval(x^2+2*x+1, x=3)</code> 约 3–4 ms，<code>eval((x+1)^10, x=2)</code> 约 3 ms。</li>
 </ul>
 <h2 id="_3">相关<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><a href="../subst/"><code>subst</code></a> · <a href="../approx/"><code>approx</code></a></p>

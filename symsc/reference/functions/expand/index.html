@@ -2829,7 +2829,7 @@
 <h1 id="expand">expand<a class="headerlink" href="#expand" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>expand(expr)
 </code></pre></div>
-<p>展开括号与整数幂。默认的解析/化简只保持乘积结构，需要展开时显式调用。</p>
+<p>展开括号与整数幂。</p>
 <h2 id="_1">示例<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>expand((x+1)^3)
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>&gt; x^3 + 3*x^2 + 3*x + 1
@@ -2842,36 +2842,7 @@
 </code></pre></div>
 <h2 id="_2">行为细节<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li>展开是主要性能成本，规模参考 <a href="../../../performance/">性能实测</a>：</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>输入</th>
-<th style="text-align: right;">耗时（scratch-vm 解释器）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>expand((x+1)^3)</code></td>
-<td style="text-align: right;">8.4–9.4 ms</td>
-</tr>
-<tr>
-<td><code>expand((x+1)^10)</code></td>
-<td style="text-align: right;">约 42 ms</td>
-</tr>
-<tr>
-<td><code>expand((x+y)^10)</code></td>
-<td style="text-align: right;">约 72 ms</td>
-</tr>
-<tr>
-<td><code>expand((x+1)^20)</code></td>
-<td style="text-align: right;">约 146 ms</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>更深的多元展开可能触及节点上限，会以错误提示保护，而不是静默出错。</li>
+<li>更深的多元展开可能触及节点上限，会明确报错。</li>
 </ul>
 <h2 id="_3">相关<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><a href="../simplify/"><code>simplify</code></a> · <a href="../subst/"><code>subst</code></a></p>
