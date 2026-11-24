@@ -2365,7 +2365,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        极限增强
+        极限
       
     </span>
   </a>
@@ -2407,17 +2407,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#11x3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1/(1±x³) 标准族
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2446,17 +2435,6 @@
       
         <li class="md-nav__item">
   <a href="#_9" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        符号指数与常数底指数
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       
         求导
@@ -2883,7 +2861,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        极限增强
+        极限
       
     </span>
   </a>
@@ -2925,17 +2903,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#11x3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1/(1±x³) 标准族
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2964,17 +2931,6 @@
       
         <li class="md-nav__item">
   <a href="#_9" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        符号指数与常数底指数
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       
         求导
@@ -3017,71 +2973,48 @@
 <h2 id="_2">简易符号积分<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p><code>integrate(expr[, var])</code> 的算法在 <code>lang/integrate.sl</code>，原生层 <code>lib/integrate.gs</code> 只提供线性分解与函数构造：</p>
 <ul>
-<li>线性性；幂函数 <code>$x^n$ → $x^{n+1}$/(n+1)</code>，<code>$n=-1$ → $\ln$(abs(x))</code>；</li>
-<li>线性换元 <code>u = a*x+b</code> 统一除以 <code>a</code>，覆盖幂、<code>sin/cos/tan/exp/$\ln$</code>、<code>$\sqrt$</code>；</li>
-<li>基本表：<code>sin</code>、<code>cos</code>、<code>tan</code>、<code>exp</code>、<code>$\ln$</code>、<code>1/(1+x^2) → atan(x)</code>；</li>
+<li>线性拆分；幂函数 <span class="arithmatex">\(x^n \to \frac{x^{n+1}}{n+1}\)</span>，<span class="arithmatex">\(n=-1 → \ln(\left| x \right|)\)</span>；</li>
+<li>线性换元 <span class="arithmatex">\(u = ax+b\)</span> 统一除以 <span class="arithmatex">\(a\)</span>，覆盖幂、<code>sin/cos/tan/exp/ln/sqrt</code>；</li>
+<li>积分表</li>
 <li>多项式乘积先 <code>expand</code> 再逐项积分。</li>
 </ul>
-<h2 id="_3">极限增强<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_3">极限<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>极点</strong>：分母趋 0 而分子非 0 时，逐次求导确定零点阶数；偶数阶给 <code>±oo</code>，奇数阶报「两侧不同」。<code>(x^2-x+1)/(x-1)^2 → oo</code>。</li>
-<li><strong>1^∞</strong>：先求 <code>lim f = 1</code>，再用 <code>u = f-1</code> 化到 <code>exp(lim g*u)</code>；<code>(1+2/x)^x</code>、<code>((2x+3)/(2x+1))^(x+1)</code>、<code>((a^x+b^x+c^x)/3)^($\frac{1}{x}$)</code> 走这条路径。</li>
-<li><strong>分式合并</strong>：极限前先 <code>expand</code>/<code>combine_fractions</code>/规则化简，<code>1/$\ln$(1+x)-$\frac{1}{x}$</code> 合并后洛必达得 <code>$\frac{1}{2}$</code>。</li>
-<li>结果统一用 <code>e^L</code> 输出。</li>
-<li><code>limit</code> 可嵌套：<code>nested_command_node</code> 新增 <code>limit</code> 分支，复用 <code>limit_build_node</code>。</li>
+<li><strong>极点</strong>：分母趋 0 而分子非 0 时，逐次求导确定零点阶数；偶数阶给 <code>±oo</code>，奇数阶报两侧不同。<code>(x^2-x+1)/(x-1)^2 → oo</code>。</li>
+<li><strong>1^∞</strong>：先求 <span class="arithmatex">\(\lim f = 1\)</span>，再用 <span class="arithmatex">\(u = f-1\)</span> 化到 <span class="arithmatex">\(\exp(lim g\cdot u)\)</span>；<span class="arithmatex">\(\left(1+\frac{2}{x}\right)^x\)</span>、<code>\left(\frac{2x+3}{2x+1}\right)^{x+1}</code>、<code>\left(\frac{a^x+b^x+c^x}{3}\right)^{\frac{1}{x}}</code> 走这条路径。</li>
+<li><strong>分式合并</strong>：极限先化简、合并，例如<span class="arithmatex">\(\frac{1}{\ln(1+x)}-\frac{1}{x}\)</span>` 合并后洛必达得 <span class="arithmatex">\(\frac{1}{2}\)</span>。</li>
 </ul>
 <h2 id="_4">对数换元<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ul>
-<li>识别 <code>∫ g'(x)·$\ln$(g(x)) dx = g $\ln$ g - g</code>；</li>
-<li>例如 <code>∫ $\ln$($\ln$ x)/x dx = $\ln$ x·$\ln$ $\ln$ x - $\ln$ x</code>；</li>
-<li>仍在 <code>lang/integrate.sl</code>，原生层只提供 <code>diff</code>/<code>div</code>/<code>combine</code> 辅助。</li>
+<li>识别 <span class="arithmatex">\(\int g'(x) \cdot \ln(g(x)) \mathrm{d}x = g \ln g - g\)</span>，例如 <span class="arithmatex">\(\int \ln(\ln x)/x \mathrm{d}x = \ln x \cdot \ln \ln x - \ln x\)</span>；</li>
 </ul>
 <h2 id="_5">有理函数积分<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <h3 id="_6">第一层：单个线性因子幂<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>∫ (A*x+B)/(a*x+b)^n dx</code></li>
-<li>拆成 <code>(A/a)/(a*x+b)^(n-1) + (B - A*b/a)/(a*x+b)^n</code> 再用幂函数积分；</li>
-<li>覆盖 <code>x/(1-x)^3</code>、<code>x/(2x+1)^3</code>、<code>x/(1-x)</code>。</li>
+<li><span class="arithmatex">\(\int \frac{A*x+B}{a*x+b}^n \mathrm{d}x\)</span> 拆成 <span class="arithmatex">\(\frac{A/a}{(a*x+b)^{n-1}} + \frac{B - A*b/a}{(a*x+b)^n}\)</span> 再用幂函数积分，例如 <span class="arithmatex">\(\frac{x}{(1-x)^3}\)</span>、<span class="arithmatex">\(\frac{x}{(2x+1)^3}\)</span>、<span class="arithmatex">\(\frac{x}{1-x}\)</span>。</li>
 </ul>
-<h3 id="11x3"><code>1/(1±x³)</code> 标准族<a class="headerlink" href="#11x3" title="Permanent link">&para;</a></h3>
-<p><code>1/(1+x³)</code> 直接给标准分解：<code>1/3 $\ln$|x+1| - 1/6 $\ln$(x²-x+1) + 1/√3 atan((2x-1)/√3)</code>；<code>1/(1-x³)</code> 对应对称形式。</p>
 <h3 id="_7">互异线性因子部分分式<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
-<p>分母分解为互异一次因子时，按 <code>A_i = P(r_i)/Q'(r_i)</code> 求系数再逐项积分，支持 <code>1/(x^2-1)</code>、<code>x/(x^2-1)</code> 等。</p>
+<p>分母分解为互异一次因子时，按 <span class="arithmatex">\(A_i = \frac{P(r_i)}{Q'(r_i)}\)</span> 求系数再逐项积分，支持 <span class="arithmatex">\(\frac{1}{x^2-1}\)</span>、<span class="arithmatex">\(\frac{x}{x^2-1}\)</span> 等。</p>
 <h2 id="_8">通用部分分式<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
-<p><code>integ_rational_partial</code> 把有理函数积分补全到「分母可分解为一次/二次有理因子」：</p>
+<p><code>integ_rational_partial</code> 把有理函数积分补全到分母可分解为一次/二次有理因子：</p>
 <ol>
-<li><strong>展平分式</strong>：沿乘积树把 <code>(x*(x+1))^-1</code>、<code>($\frac{1}{x}$)^2</code>、负整数幂拆成分子/分母；</li>
+<li><strong>展平分式</strong>：沿乘积树把 <span class="arithmatex">\((x*(x+1))^{-1}\)</span>、<span class="arithmatex">\(\frac{1}{x^2}\)</span>、负整数幂拆成分子/分母；</li>
 <li><strong>假分式</strong>：一元多项式长除法，商逐项积分，余式进入部分分式；</li>
 <li><strong>分母分解</strong>：复用 <code>lib/factor.gs</code>，因子归一化成首一多项式并按 <code>nd_sig</code> 合并重根，总次数必须等于分母次数；</li>
-<li><strong>系数</strong>：每个 <code>f_i^k</code> 列未知量（一次一个、二次两个），以 <code>Q/f_i^k</code> 为基构造线性方程组，带行交换的高斯-约当消元；</li>
+<li><strong>系数</strong>：每个 <span class="arithmatex">\(f_i^k\)</span> 列未知量（一次一个、二次两个），以 <span class="arithmatex">\(Q/f_i^k\)</span> 为基构造线性方程组，带行交换的高斯-约当消元；</li>
 <li><strong>逐项积分</strong>：</li>
-<li><code>A/(x-r)^k</code>：<code>k=1</code> 对数，<code>k&gt;1</code> 幂函数；</li>
-<li><code>(Bx+C)/(x^2+bx+c)^k</code>：先拆出 <code>(B/2)f'</code>，剩余用递推 <code>I_k = (2x+b)/((k-1)D f^{k-1}) + 2(2k-3)/((k-1)D) I_{k-1}</code>，<code>D = 4c-b^2</code>；<code>D&gt;0</code> 用反正切，<code>D&lt;0</code> 用对数比值。</li>
+<li><span class="arithmatex">\(\frac{A}{(x-r)^k}\)</span>：<span class="arithmatex">\(k=1\)</span> 对数，<span class="arithmatex">\(k&gt;1\)</span> 幂函数；</li>
+<li><span class="arithmatex">\(\frac{Bx+C}{(x^2+bx+c)^k}\)</span>：先拆出 <span class="arithmatex">\(\frac{B}{2}f'\)</span>`，剩余用递推 <span class="arithmatex">\(I_k = \frac{2x+b}{(k-1)D f^{k-1}} + 2 \frac{2k-3}{(k-1)D} I_{k-1}, D = 4c-b^2\)</span>；<span class="arithmatex">\(D&gt;0\)</span> 用反正切，<span class="arithmatex">\(D&lt;0\)</span> 用对数比值。</li>
 </ol>
-<p><code>1/(2*x+3)</code> 这类线性幂仍走旧规则输出 <code>$\frac{1}{2}$*$\ln$(abs(2*x + 3))</code>。</p>
-<h2 id="_9">符号指数与常数底指数<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>integrate(x^a,x)</code>：<code>K.PowE</code> 分支里，若指数不含积分变量且底数就是积分变量，直接给 <code>x^(a+1)/(a+1)</code>；<code>$a=-1$</code> 仍返回 <code>$\ln$(abs(x))</code>。</li>
-<li>底数不含积分变量、指数是线性函数时：<code>integral a^(b*x+c) dx = a^(b*x+c) / (b*$\ln$(a))</code>。
-  因此 <code>integrate(2^x,x) = 2^x/$\ln$(2)</code>，<code>integrate(e^x,x) = e^x</code>。</li>
-</ul>
-<h2 id="_10">求导<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h2 id="_9">求导<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
 <p><code>lib/diff.gs</code> 用后序显式栈，<code>df_done</code>/<code>df_val</code> 按节点 ID 缓存导数，避免共享子树重复计算。</p>
-<ul>
-<li>数字/常量 → 0；变量匹配求导变量 → 1，否则 0。</li>
-<li><code>Add</code> → 两边相加；<code>Mul</code> → 乘积法则。</li>
-<li><code>Pow(base, n)</code> → <code>n * base^(n-1) * base'</code>。</li>
-<li><code>PowE(base, exp)</code>：指数是数字常量时走幂函数公式（<code>x^2.5</code> → <code>5/2*x^(3/2)</code>）；指数含变量时 <code>base^exp * (exp' * $\ln$(base) + exp * base'/base)</code>。</li>
-<li>函数走链式法则：<code>sin' = cos</code>、<code>cos' = -sin</code>、<code>tan' = 1/cos^2</code>、<code>exp' = exp</code>、<code>$\ln$' = 1/u</code>、<code>log' = 1/(u*$\ln$(10))</code>、<code>$\sqrt$' = 1/(2*$\sqrt$(u))</code>。</li>
-</ul>
 <h2 id="series">series<a class="headerlink" href="#series" title="Permanent link">&para;</a></h2>
 <p><code>series</code> 的高层算法在 <code>lang/series.sl</code>，通过 <code>vm_series</code> 运行：</p>
 <ul>
 <li><code>taylor</code>：有限点 Taylor 循环，调用 native <code>series_diff</code>/<code>series_at</code>；</li>
-<li><code>series_at_inf</code>：无穷远展开，分别处理 <code>e^(-x)</code> 型重写与 <code>x → 1/t</code> 代换；</li>
+<li><code>series_at_inf</code>：无穷远展开，分别处理 <span class="arithmatex">\(e^{-x}\)</span> 型重写与 <span class="arithmatex">\(x \to \frac{1}{t}\)</span> 代换；</li>
 <li>结构重写 <code>series_exp_rewrite</code>/<code>series_has_exp</code>/<code>series_eval_value</code> 仍在 <code>lib/series.gs</code>，因为它们需要 AST 节点映射表。</li>
 </ul>
-<p>series 相关过程从 710 块降到 591 块。</p>
 
 
 
