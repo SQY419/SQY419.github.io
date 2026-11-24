@@ -2833,7 +2833,7 @@
 </ol>
 <h2 id="_2">符号求和<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>DSL</strong>（<code>lang/sum.sl</code>）：把通项看成关于求和变量的多项式，用 Faulhaber 公式组合 <code>sum_{k=1}^{n} k^p</code>，得到 <code>sum_{x=b}^{e} f(x) = S(e) $-$ S(b$-$1)</code>。</li>
+<li><strong>DSL</strong>（<code>lang/sum.sl</code>）：把通项看成关于求和变量的多项式，用 Faulhaber 公式组合 <span class="arithmatex">\(sum_{k=1}^{n} k^p\)</span>，得到 <span class="arithmatex">\(sum_{x=b}^{e} f(x) = S(e) - S(b-1)\)</span>。</li>
 <li><strong>原生层</strong>（<code>lib/symsum.gs</code>）：<code>sym_prep</code> 复用多项式后端，把通项展开成关于 <span class="arithmatex">\(x\)</span> 的系数；其他变量作为符号系数；<code>sym_bern_init</code> 用有理数递推生成 Bernoulli 数；<code>sym_faul_coef(p,j)</code> 给出 <span class="arithmatex">\(n^{p+1-j}\)</span> 的系数；<code>sym_simp</code> 负责展开/化简闭式。</li>
 <li><strong>接入</strong>：<code>sum_range</code> 先调 <code>symsum_try</code>，成功用闭式，失败回落到数值循环。数值多项式区间也走闭式。</li>
 <li><strong>边界</strong>：数值上下界按大小交换；符号上下界按 <code>b &lt;= e</code>。非多项式通项在符号上下界下报 符号求和只支持多项式。</li>
