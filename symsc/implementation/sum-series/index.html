@@ -2828,19 +2828,31 @@
 <p>对应函数：<code>sum</code>、<code>prod</code>。</p>
 <h2 id="sum-prod">sum / prod<a class="headerlink" href="#sum-prod" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>快速项求值</strong>：通项是有理函数（<code>Num</code>/<code>Var</code>/<code>Add</code>/<code>Mul</code>/整数指数 <code>Pow</code>）时，用 <code>sum_fast_eval</code> 在整数 <code>k</code> 上直接算精确有理数，跳过 <code>subst_expr</code>/规则化简/<code>exact_fold</code>，失败才回退原路径。</li>
+<li><strong>快速项求值</strong>：通项是有理函数时，用 <code>sum_fast_eval</code> 在整数 <code>k</code> 上直接算精确有理数，跳过 <code>subst_expr</code>/规则化简/<code>exact_fold</code>，失败才回退原路径。</li>
 <li>有理数累加约分放最后。</li>
 </ol>
 <h2 id="_2">符号求和<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><strong>边界</strong>数值上下界按大小交换。</p>
+<p>符号上下界按 <span class="arithmatex">\(b \leq e\)</span>。非多项式通项在符号上下界下报 符号求和只支持多项式。</p>
 <ol>
-<li><strong>DSL</strong>（<code>lang/sum.sl</code>）：把通项看成关于求和变量的多项式，用 Faulhaber 公式组合 <span class="arithmatex">\(\sum_{k=1}^{n} k^p\)</span>，得到 <span class="arithmatex">\(\sum_{x=b}^{e} f(x) = S(e) - S(b-1)\)</span>。</li>
+<li><code>lang/sum.sl</code>层：把通项看成关于求和变量的多项式，用 Faulhaber 公式组合 <span class="arithmatex">\(\sum_{k=1}^{n} k^p\)</span>，得到 <span class="arithmatex">\(\sum_{x=b}^{e} f(x) = S(e) - S(b-1)\)</span>。</li>
 <li><strong>原生层</strong>（<code>lib/symsum.gs</code>）：<code>sym_prep</code> 复用多项式后端，把通项展开成关于 <span class="arithmatex">\(x\)</span> 的系数；其他变量作为符号系数；<code>sym_bern_init</code> 用有理数递推生成 Bernoulli 数；<code>sym_faul_coef(p,j)</code> 给出 <span class="arithmatex">\(n^{p+1-j}\)</span> 的系数；<code>sym_simp</code> 负责展开/化简闭式。</li>
 <li><strong>接入</strong>：<code>sum_range</code> 先调 <code>symsum_try</code>，成功用闭式，失败回落到数值循环。数值多项式区间也走闭式。</li>
-<li><strong>边界</strong>：数值上下界按大小交换；符号上下界按 <span class="arithmatex">\(b \leq e\)</span>。非多项式通项在符号上下界下报 符号求和只支持多项式。</li>
 </ol>
 <h2 id="_3">指数 / 几何求和<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p><code>sum</code> 的 DSL 先按加法拆项，多项式项走 Faulhaber / Bernoulli；<span class="arithmatex">\(c r^x\)</span> 项走几何级数 <span class="arithmatex">\(c \frac{r^{e+1}-r^b}{r-1}\)</span>；<span class="arithmatex">\(r=1\)</span> 退化为 <span class="arithmatex">\(c (e-b+1)\)</span>；数值底数、整数上下界用大整数幂。</p>
-<p>支持 <code>sum(2^x,x,a,b)</code>、<code>sum(3*2^x,x,0,5)</code>、<code>sum(2^x+x^2,x,1,n)</code>、<code>sum(a^x,x,0,n)</code>，还支持 <span class="arithmatex">\(P(x) r^x (\deg P \leq 2)\)</span>：<span class="arithmatex">\(\sum_{k=0}^{n} r^k\)</span>、<span class="arithmatex">\(k r^k\)</span>、<span class="arithmatex">\(k^2 r^k\)</span> 用显式公式，例如 <code>sum(x*2^x,x,0,n) = -(n+1)*2^(n+1)+n*2^(n+2)+2</code>。数值大区间退回精确数值循环。</p>
+<p><code>sum</code> 的 DSL 先按加法拆项，多项式项走 Faulhaber / Bernoulli；<span class="arithmatex">\(c r^x\)</span> 项走几何级数 <span class="arithmatex">\(c \frac{r^{e+1}-r^b}{r-1}\)</span>；</p>
+<p><span class="arithmatex">\(r=1\)</span> 退化为 <span class="arithmatex">\(c (e-b+1)\)</span>；数值底数、整数上下界用大整数幂。</p>
+<p>支持下面这些：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sum(2^x,x,a,b)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sum(3*2^x,x,0,5)
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sum(2^x+x^2,x,1,n)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sum(a^x,x,0,n)
+</code></pre></div></p>
+<p>还支持 <span class="arithmatex">\(P(x) r^x (\deg P \leq 2)\)</span>。<span class="arithmatex">\(\sum_{k=0}^{n} r^k\)</span>、<span class="arithmatex">\(k r^k\)</span>、<span class="arithmatex">\(k^2 r^k\)</span> 用显式公式，例如：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sum(x*2^x,x,0,n)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>&gt; -(n+1)*2^(n+1)+n*2^(n+2)+2
+</code></pre></div></p>
+<p>数值大区间退回精确数值循环。</p>
 
 
 
