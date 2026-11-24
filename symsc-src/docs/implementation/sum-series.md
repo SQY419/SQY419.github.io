@@ -9,7 +9,7 @@
 
 ## 符号求和
 
-1. **DSL**（`lang/sum.sl`）：把通项看成关于求和变量的多项式，用 Faulhaber 公式组合 `sum_{k=1}^{n} k^p`，得到 `sum_{x=b}^{e} f(x) = S(e) $-$ S(b$-$1)`。
+1. **DSL**（`lang/sum.sl`）：把通项看成关于求和变量的多项式，用 Faulhaber 公式组合 $sum_{k=1}^{n} k^p$，得到 $sum_{x=b}^{e} f(x) = S(e) - S(b-1)$。
 2. **原生层**（`lib/symsum.gs`）：`sym_prep` 复用多项式后端，把通项展开成关于 $x$ 的系数；其他变量作为符号系数；`sym_bern_init` 用有理数递推生成 Bernoulli 数；`sym_faul_coef(p,j)` 给出 $n^{p+1-j}$ 的系数；`sym_simp` 负责展开/化简闭式。
 3. **接入**：`sum_range` 先调 `symsum_try`，成功用闭式，失败回落到数值循环。数值多项式区间也走闭式。
 4. **边界**：数值上下界按大小交换；符号上下界按 `b <= e`。非多项式通项在符号上下界下报 符号求和只支持多项式。
