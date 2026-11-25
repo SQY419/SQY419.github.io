@@ -482,7 +482,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        裸表达式
+        命令
       
     </span>
   </a>
@@ -491,17 +491,6 @@
       
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        函数式命令
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         隐式乘法
@@ -523,29 +512,18 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        默认化简
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        三角倒数
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        化简是默认行为
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         比较运算
@@ -556,7 +534,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         报错
@@ -2833,7 +2811,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        裸表达式
+        命令
       
     </span>
   </a>
@@ -2842,17 +2820,6 @@
       
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        函数式命令
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         隐式乘法
@@ -2874,29 +2841,18 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        默认化简
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        三角倒数
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        化简是默认行为
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         比较运算
@@ -2907,7 +2863,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         报错
@@ -2934,13 +2890,12 @@
 
 
 
-<h1 id="_1">命令与表达式<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h1 id="_1">命令<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <div class="admonition tip">
 <p class="admonition-title">oo 与 Infinity</p>
 <p><code>oo</code> 与 <code>Infinity</code> 是等价的。一般情况下，<code>Infinity</code> 会自动变成 <code>oo</code>。</p>
 </div>
-<h2 id="_2">裸表达式<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>不需要包一层命令，直接写式子就会解析、化简并打印：</p>
+<p>直接输入表达式即可，例如下面：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>1+1
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>&gt; 2
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
@@ -2950,34 +2905,30 @@
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>1+1/x-(x+1)/x
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>&gt; 0
 </code></pre></div>
-<h2 id="_3">函数式命令<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>simplify(expr)              expand(expr)          factor(expr)
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>solve(eq, var)              solve({eqs}, {vars})
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>diff(expr[, var[, n]])      integrate(expr[, var])
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>subst(expr, var=expr)       eval(expr, var=value)  approx(expr)
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>limit(expr, x, a)           series(expr, x=a, n)
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>sum(expr, var, a, b)        prod(expr, var, a, b)
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>gcd(a, b)                   lcm(a, b)
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>lsolve(augmented_matrix)
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>isprime(n)                  ifactor(n)
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>perm(n, k)                  comb(n, k)              powmod(a, b, m)
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>mod(a, b)                   hold(expr)
+<h2 id="_2">命令<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>命令是函数式的。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>simplify(expr)              
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>expand(expr)          
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>factor(expr)
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>solve(eq, var)              
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>solve({eqs}, {vars})
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>diff(expr[, var[, n]])      
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>integrate(expr[, var])
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>subst(expr, var=expr)       
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>eval(expr, var=value)
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>approx(expr)
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>...
 </code></pre></div>
-<p>命令可以嵌套，内层先求值。</p>
-<p>每个命令的详细说明见 <a href="../../reference/functions/">函数参考</a>。</p>
-<div class="admonition tip">
-<p class="admonition-title"><code>limit</code> 的无穷远</p>
-<p><code>limit(expr, x, a)</code> 里 <code>a</code> 可以是 <code>oo</code> / <code>infinity</code>，此时走渐进展开式比较。</p>
-</div>
-<h2 id="_4">隐式乘法<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p>两个 token 挨着写会自动补乘号：</p>
+<p>函数可以嵌套。</p>
+<h2 id="_3">隐式乘法<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>两个词挨着写会自动补乘号：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>3x            -&gt; 3*x
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>2pi           -&gt; 2*pi
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>2(x+1)        -&gt; 2*(x + 1)
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>(2+x)(3+x)    -&gt; (x + 2)*(x + 3)
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>sin(x)cos(x)  -&gt; sin(x)*cos(x)
 </code></pre></div>
-<p><code>x(y)</code> 仍按函数调用解析，不会补乘号。</p>
+<p><code>x(y)</code> 按函数调用解析，不会补乘号。</p>
 <h2 id="mod"><code>%</code> 与 <code>mod</code><a class="headerlink" href="#mod" title="Permanent link">&para;</a></h2>
 <p><code>%</code> 的优先级和 <code>*</code>、<code>/</code> 相同，<code>mod(a,b)</code> 等价：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>10%3            -&gt; 1
@@ -2985,36 +2936,24 @@
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>10%3+1          -&gt; 2
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>mod(-10,3)      -&gt; 2
 </code></pre></div>
-<p>符号情形也会化简：<code>x%x -&gt; 0</code>。</p>
-<h2 id="_5">三角倒数<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p><code>csc</code> / <code>sec</code> / <code>cot</code> 在解析时直接重写成 <code>1/sin</code>、<code>1/cos</code>、<code>cos/sin</code>，
-因此求导、近似、打印都能直接用。</p>
-<h2 id="_6">化简是默认行为<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
-<p>每个输入先解析成节点树，再做化简、规则匹配和结构重写；结果最后送入终端。
-解析阶段就调用智能构造器，所以树里不会出现未化简的 <code>0+x</code>、<code>1*x</code>、<code>x^1</code>。</p>
-<p>分式相加会自动通分，并在分子中做多项式合并：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>1+1/x              -&gt; (x + 1)/x
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>1/x+1/y            -&gt; (x + y)/(x*y)
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>x/y+z/y            -&gt; (x + z)/y
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>1+1/x-(x+1)/x      -&gt; 0
-</code></pre></div>
-<p><code>expand</code> 才做分配律，<code>(x+1)*(x-1)</code> 默认保持乘积。</p>
-<h2 id="_7">比较运算<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>1&lt;2       -&gt; True
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>2&lt;1       -&gt; False
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>1==1      -&gt; True
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>1==2      -&gt; False
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>x&lt;2       -&gt; x &lt; 2
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>x==x      -&gt; True
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>sqrt(2)&lt;sqrt(3) -&gt; True
+<h2 id="_4">默认化简<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>每个输入先解析成节点树，再做化简、规则匹配和结构重写；结果最后送入终端。</p>
+<h2 id="_5">比较运算<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>1&lt;2       -&gt; True
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>2&lt;1       -&gt; False
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>1==1      -&gt; True
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>1==2      -&gt; False
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>x&lt;2       -&gt; x &lt; 2
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>x==x      -&gt; True
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>sqrt(2)&lt;sqrt(3) -&gt; True
 </code></pre></div>
 <p>无法直接判断时保留比较式，例如 <code>x &lt; 2</code>。</p>
-<h2 id="_8">报错<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>1+
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>&gt; Error: Missing operator number @ func 'tokenizer'
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>[1,2,3][0]
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>&gt; Error: Index out of range @ func 'index'
+<h2 id="_6">报错<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>1+
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>&gt; Error: Missing operator number @ func 'tokenizer'
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>[1,2,3][0]
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>&gt; Error: Index out of range @ func 'index'
 </code></pre></div>
 <p>错误信息会带上出错的内部函数名，方便定位。</p>
 
