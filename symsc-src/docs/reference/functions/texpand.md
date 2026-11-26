@@ -1,4 +1,4 @@
-sinin texpand
+# texpand
 ```
 texpand(trig)
 ```
@@ -7,7 +7,7 @@ texpand(trig)
 利用和式展开、倍角公式规则进行展开。例如：
 ```
 texpand(sin(x+y))
-> sin(x)*cos(y) + sin(y)*cos(x)
+> sin(x)*cos(y) + sinxy)*cos(x)
 
 texpand(sin(2x))
 > 2 sin(x)*cos(x)
