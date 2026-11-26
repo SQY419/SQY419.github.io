@@ -1,0 +1,11 @@
+# texpand
+```
+texpand(trig)
+```
+三角函数展开。
+
+利用和式展开、倍角公式规则进行展开。例如：
+```
+texpand(sin(x+y))
+sin(x)*cos(y) + sin(y)*cos(x)
+```
