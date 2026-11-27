@@ -62,6 +62,7 @@ nav:
       - 代数与化简:
           - simplify: reference/functions/simplify.md
           - expand: reference/functions/expand.md
+          - collect: reference/functions/collect.md
           - factor: reference/functions/factor.md
           - subst: reference/functions/subst.md
           - eval: reference/functions/eval.md
