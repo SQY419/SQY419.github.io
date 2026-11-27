@@ -103,6 +103,7 @@ nav:
           - texpand: reference/functions/texpand.md
           - tcollect: reference/functions/tcollect.md
           - tlinear: reference/functions/tlinear.md
+          - halftan: reference/functions/halftan.md
       - 系统:
           - help: reference/functions/help.md
           - purge: reference/functions/purge.md
