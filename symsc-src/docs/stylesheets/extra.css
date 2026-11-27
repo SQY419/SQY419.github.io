@@ -1,9 +1,41 @@
+/* ── 等宽字体：Source Code Pro ────────────────────── */
+/* 本地打包（assets/fonts/），不依赖 Google Fonts；只取 latin 子集，每个约 12 KB */
+@font-face {
+  font-family: "Source Code Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/source-code-pro-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Code Pro";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/source-code-pro-latin-400-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Code Pro";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/source-code-pro-latin-700-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Code Pro";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/source-code-pro-latin-700-italic.woff2") format("woff2");
+}
+
 /* 与 sqy419 主页保持一致的观感：纯白、无衬线、克制的圆角
    主题色使用 Scratch 黄 (#FFAB19)，页头文字用深色保证对比度 */
 :root {
   --md-text-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC",
     "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", Arial, sans-serif;
-  --md-code-font: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --md-code-font: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace;
   --scratch-yellow: #ffab19;
   --scratch-yellow-dark: #e09400;
 }
