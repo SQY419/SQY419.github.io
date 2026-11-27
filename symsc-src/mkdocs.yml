@@ -1,6 +1,6 @@
 site_name: symSC 文档
 site_description: symSC —— 用 GoboScript 编写、可编译到原版 Scratch 3.0 的符号计算引擎。
-site_author: SQY419
+site_author: SQY
 site_url: https://sqy.axolotlpower.com/symsc/
 repo_url: https://github.com/SQY419/symSC
 repo_name: SQY419/symSC
@@ -98,6 +98,10 @@ nav:
           - sin / cos / tan: reference/functions/trig.md
           - exp / ln / log: reference/functions/exp-log.md
           - mod / %: reference/functions/mod.md
+      - 改写:
+          - texpand: reference/functions/texpand.md
+          - tcollect: reference/functions/tcollect.md
+          - tlinear: reference/functions/tlinear.md
       - 系统:
           - help: reference/functions/help.md
           - purge: reference/functions/purge.md
